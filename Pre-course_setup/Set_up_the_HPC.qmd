@@ -1,0 +1,94 @@
+---
+title: "n2bin: Connecting to the HPC"
+subtitle: "The c3se High Performance Computing Cluster"
+author: "Kaisa Thorell, Tor Kling"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+This tutorial is to take you through the final steps of setting up and accessing the [c3se](https://www.c3se.chalmers.se/) 
+High Performance Computing infrastructure. The specific cluster we will use is called Vera. You will be introduced to this 
+cluster in the lecture and [here](https://www.c3se.chalmers.se/about/Vera/) you can find more information about it, including 
+what resources that are available, how to run jobs and other documentation. 
+
+We will walk you through step by step in this tutorial so that we (hopefully) can assist if there are any problems.
+
+
+::: {.callout-note}
+## Pre-course setup
+To be able to follow these steps you first have to have followed the steps of the **Pre-course Setup** 
+including registration at SUPR and application to the course HPC project.
+:::
+
+---
+
+# Setting up a Chalmers ID - **IF** you have the option to do so in the login portal - **else** continue to next step
+
+- Navigate to [https://myaccount.chalmers.se/](https://myaccount.chalmers.se/). 
+- Log in with your GU account.
+- Choose "Activate CID" and follow the instructions to activate your account
+
+::: {.callout-note}
+## Remember your password!
+The CID username and password are the ones you will use to log in to the cluster
+
+:::
+
+---
+
+# Adding Vera/c3se at SUPR
+- Log in to [SUPR](https://supr.naiss.se/)
+- Click "Accounts" in the left side menu
+- Request access to Vera/c3se
+
+
+::: {.callout-note}
+## Proceed even without a CID
+If you don’t have that option in the CID portal you should apply for Vera access in SUPR anyway. 
+They will then assign you a CID that you can access and create a PW for in the CID portal 
+when you have received an email notification about this.
+:::
+
+---
+
+# Setting up Chalmers VPN (if you don't already have a GU VPN)
+To be able to access c3se from other networks than in GU or Chalmers, you will need a Chalmers VPN
+
+- Navigate to [https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88](https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88)
+- Follow the instructions to set up the Chalmers VPN
+
+---
+
+# Connecting to the HPC using ssh in VSCode
+
+To be able to connect to the HPC in a manner that will let you use the full suite of tools available (or most of them at least) in VSCode, you will need to install the Remote - SSH extension.
+
+- Open VSCode
+- Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`
+- Search for "Remote - SSH" and install the extension by Microsoft (if youre unsure how install extensions, see [here](https://code.visualstudio.com/docs/getstarted/extensions))
+- After installation, you will see a new icon in the Activity Bar on the side of the window. Click on it to open the Remote Explorer view.
+  - If the SSH Targets are not visible, click on the drop down to expand the view
+- Click on the `+` ("New Remote") icon next to SSH header to add a new SSH host
+- In the input box that appears, enter the SSH connection string for Vera: `<your_chalmers_id>@vera1.c3se.chalmers.se` (replace `<your_chalmers_id>` with your actual Chalmers ID)
+- Press Enter to confirm
+- You will be prompted to select the SSH configuration file to update. Choose the default option (usually `~/.ssh/config`)
+
+Once you have added the SSH host, you can connect to Vera:
+
+- In the Remote Explorer view, find the Vera entry under SSH Targets (or by clicking on the blue "remote window" icon in the bottom left corner of VSCode)
+  -  Click on the "Connect to Host" icon (an arrow if you want the same window, square if you want a new one) next to the Vera entry
+  - If you clicked on the blue "remote window" icon, select "Remote-SSH: Connect to Host..." and then select the Vera entry
+- A new VSCode window will open, and you will be prompted to enter your Chalmers ID password
+- After entering your password, you should be connected to Vera, and you can start working on the HPC cluster directly from VSCode. Make sure that you open your home folder on Vera to open up a workspace.
+- You can verify that you are connected to Vera by opening a new terminal in VSCode (Terminal > New Terminal) and checking the hostname in the terminal prompt. It should show something like `your_chalmers_id@vera:~$`
+
+
+
