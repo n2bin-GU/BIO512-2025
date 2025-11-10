@@ -1,0 +1,24 @@
+/* Custom styles for BIO511 Genomics course website */
+
+body::after {
+  content: "";
+  /* Use project-relative image located at pages/images/logo.png */
+  background-image: url('images/logo.png');
+  background-repeat: no-repeat;
+  background-position: right 1cm bottom; /* bottom-right with left offset */
+  background-size: 190px auto; /* tweak size if needed */
+  opacity: 0.85;
+  position: fixed;
+  inset: 0; /* shorthand for top/right/bottom/left:0 */
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Optional: reduce visual impact on small screens */
+@media (max-width: 1000px) {
+  body::after {
+    background-size: 120px auto;
+    background-position: right 0.5cm bottom;
+    opacity: 0.6;
+  }
+}

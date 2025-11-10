@@ -1,0 +1,216 @@
+---
+title: "Protein Complex Structure Analysis with YASARA"
+subtitle: "BIO512 Structural Biology - Analyzing Barnase-Barstar Interactions"
+author: "Sayyed Jalil Mahdizadeh"
+date: November 10, 2025
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+The goal of this practical is to analyze protein-protein interactions using the classic model system of Barnase-Barstar from *Bacillus amyloliquefaciens* (PDB ID: 1BRS). This system represents an excellent example of protein-protein recognition and binding specificity.
+
+**Barnase** is a small extracellular ribonuclease that degrades RNA. On its own, it's toxic to the producing cell. **Barstar** is an intracellular protein inhibitor of Barnase that binds extremely tightly and blocks the RNase active site, protecting the bacterium until Barnase is secreted.
+
+In this practical, we will prepare the crystal structure, analyze the protein-protein interface, and identify key interacting residues that are critical for complex formation.
+
+::: {.callout-important}
+## REMEMBER: Create a working directory
+```bash
+# Create a new folder for this practical
+mkdir -p ~/BIO512/AF
+# All input and output files will be placed in this directory
+
+# Also note that you need to download the materials from the Vera 
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/AF/* ~/BIO512/AF/
+```
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Prepare protein complex structures for analysis using YASARA
+- Visualize and analyze protein-protein interactions
+- Identify hydrogen bonds at protein interfaces
+- Determine key residues involved in protein-protein recognition
+- Understand the structural basis of protein binding specificity
+
+:::
+
+---
+
+# Structure Preparation and Setup
+
+## Setting up YASARA workspace
+
+1. **Set the working directory** (important):
+   - Open YASARA
+   - Options > Working directory > navigate and find the 'AF' folder > OK
+
+2. **Download the crystal structure**:
+   - File > Load > PDB file from Internet > 1BRS
+   - You can see three identical Barnase-Barstar complexes where we need only one
+
+## Understanding the structure contents
+
+3. **Analyze the scene contents**:
+   In the right-hand panel, you can see a single object named 1BRS. Click on it to expand. There are 12 molecules under 1BRS:
+   
+   - **Mol A, B, C** = Barnase (ribonuclease)
+   - **Mol D, E, F** = Barstar (inhibitor)
+   - **Mol A, B, C, D, E, F (in red)** = water molecules
+
+## Structure cleaning
+
+4. **Remove redundant molecules**:
+   - Remove water molecules (highlighted in red) by right-clicking and choosing "Delete"
+   - Remove Mol B, C, E, F (right-click and choose "Delete")
+   - Now you have only one Barnase (Mol A)-Barstar (Mol D) complex
+
+5. **Center the structure**:
+   - Right-click on the object (1brs) from the right-hand panel and choose 'Center'
+
+6. **Add missing hydrogen atoms**:
+   - Edit > Clean > All
+
+## Force field and energy minimization
+
+7. **Select the force field**:
+   - Simulation > Force field > AMBER 14 > check the box next to 'use PME…' > OK
+
+8. **Minimize the energy**:
+   - Options > Energy minimization
+
+9. **Clean up simulation cell**:
+   - From the right-hand panel, right-click on SimCell and Delete
+
+10. **Save the prepared complex**:
+    - File > Save as > PDB file > select 1BRS from both Sequence and Name panels > OK > give a name (1BRS_complex.pdb)
+
+---
+
+# Protein-Protein Interface Analysis
+
+## Visualization setup
+
+11. **Optimize visualization**:
+    - View > Hide atoms > Aliphatic hydrogens
+
+## Hydrogen bond analysis
+
+12. **Visualize protein-protein interactions**:
+    - Open the command window (press space bar on your keyboard)
+    - Enter the command: `ShowHBoAtom Mol A with distance<2.6 from Mol D`
+    - Alternative command: `ShowHBoAtom Mol D with distance<2.6 from Mol A`
+    - You can now see hydrogen bonds between the two proteins shown as yellow dashed lines
+
+::: {.callout-tip}
+## Understanding the commands
+- `ShowHBoAtom` displays hydrogen bond atoms
+- `distance<2.6` sets the maximum distance for hydrogen bond detection (2.6 Å)
+- `Mol A` refers to Barnase, `Mol D` refers to Barstar
+:::
+
+## Identifying key interactions
+
+13. **Analyze the binding interface**:
+    - Take a closer look at the interface between the two proteins
+    - Focus on regions with multiple hydrogen bonds
+    - Note the types of residues involved in the interactions
+
+14. **Identify critical residues**:
+    Examine which residues of Barstar (Mol D) form the most hydrogen bonds with Barnase (Mol A):
+    
+    - **ASP39 of Barstar**: Forms 4 strong hydrogen bonds with LYS27, ARG83, and ARG87 of Barnase
+    - **ASP35 of Barstar**: Forms 2 hydrogen bonds with ARG59 and GLU60 of Barnase
+    
+::: {.callout-note}
+## Experimental validation
+Experimental mutagenesis analysis shows that ASP39 and ASP35 are the key residues in the interaction. Mutations of these residues significantly disrupt complex formation.
+:::
+
+## Sequence preparation for further analysis
+
+15. **Obtain sequences for downstream analysis**:
+    - Open your internet browser and go to www.rcsb.org
+    - Search for 1BRS
+    - Click on 'Download Files' and choose 'FASTA Sequence'
+    - Open the downloaded FASTA file using a text editor (notepad on Windows)
+    - You can see the sequences of both proteins that will be used in the next practical
+
+---
+
+# Analysis Questions
+
+Use your structural analysis to answer the following questions:
+
+## Structural Analysis
+
+1. **How many hydrogen bonds** do you observe at the Barnase-Barstar interface? Which regions show the highest density of interactions?
+
+2. **What types of amino acids** are predominantly involved in the protein-protein interface? Are they mostly charged, polar, or hydrophobic?
+
+3. **Why do you think ASP39 and ASP35** are particularly important for binding? Consider their chemical properties and interaction partners.
+
+## Interface Characterization
+
+4. **Describe the shape complementarity** between Barnase and Barstar. Is the interface flat or does it involve deep binding pockets?
+
+5. **What would you predict** would happen if ASP39 was mutated to:
+   - Alanine (A) - a small, nonpolar residue?
+   - Arginine (R) - a positively charged residue?
+
+6. **From a biological perspective**, why is tight binding between Barnase and Barstar essential for the bacterium?
+
+## Experimental Design
+
+7. **If you were to design experiments** to test the importance of the identified residues, what mutations would you make and what assays would you perform?
+
+8. **Besides hydrogen bonds**, what other types of interactions might be important at this interface? How could you analyze them?
+
+---
+
+# Key Structural Insights
+
+Based on your analysis, the Barnase-Barstar complex demonstrates several important principles:
+
+## Binding Specificity
+- **Electrostatic complementarity**: Negatively charged Asp residues in Barstar interact with positively charged Lys/Arg residues in Barnase
+- **Shape complementarity**: The proteins fit together like puzzle pieces
+- **Multiple contact points**: Several residues contribute to the overall binding affinity
+
+## Functional Implications
+- **Active site blocking**: Barstar binding prevents RNA access to Barnase active site
+- **Regulatory mechanism**: Tight binding allows controlled release of Barnase activity
+- **Evolutionary optimization**: The interface has evolved for maximum binding strength
+
+---
+
+::: {.callout-note}
+## Key Takeaways
+
+- Protein-protein interfaces involve multiple types of interactions working together
+- Hydrogen bonds can be visualized and analyzed using computational tools
+- Key residues often involve complementary charges and multiple contact points
+- Structural analysis provides insights into binding mechanisms and specificity
+- Crystal structures serve as valuable starting points for understanding protein function
+
+:::
+
+---
+
+## Preparation for Next Practical
+
+In the next practical, you will use AI-based structure prediction (AlphaFold3) to:
+- Predict the structure of the wild-type Barnase-Barstar complex
+- Model the effects of mutations on complex formation
+- Compare predicted structures with the crystal structure you analyzed today
+
+The sequences you obtained in step 15 will be used as input for AlphaFold3 predictions.

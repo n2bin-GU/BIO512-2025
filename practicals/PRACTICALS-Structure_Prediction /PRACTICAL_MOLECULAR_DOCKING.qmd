@@ -1,0 +1,206 @@
+---
+title: "Molecular Docking Analysis"
+subtitle: "BIO512 Structural Biology - Protein-Ligand Docking with YASARA"
+author: "Sayyed Jalil Mahdizadeh"
+date: November 10, 2025
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that "glues" them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.
+
+In this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.
+
+::: {.callout-important}
+## Create a new working directory
+```bash
+# Create a new folder for this practical
+# ex.
+mkdir -p ~/BIO512/MD_practicals
+# All input and output files will be placed in this directory
+
+# Also note that you need to download the materials from the Vera 
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/* ~/BIO512/MD_practicals/
+```
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Prepare protein structures for molecular docking using YASARA
+- Perform protein-ligand docking simulations
+- Analyze docking results and binding energies
+- Compare predicted poses with crystal structures using RMSD calculations
+- Evaluate the success of docking predictions
+
+:::
+
+---
+
+# Structure Preparation
+
+## Setting up YASARA workspace
+
+1. **Set the working directory** (important):
+   - Open YASARA
+   - Options > Working directory > navigate and find the 'Docking' folder > OK
+
+2. **Download the structure**:
+   - File > Load > PDB file from Internet > 3FAP
+
+## Understanding the structure
+
+In the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:
+
+- **Mol A** = chain A of the protein
+- **Mol B** = chain B of the protein  
+- **Mol A** = ligand (rapamycin)
+- **Mol A (in red)** = water molecules of chain A
+- **Mol B (in red)** = water molecules of chain B
+
+## Structure cleaning and preparation
+
+3. **Remove water molecules**:
+   - From the right-hand panel, right-click on both water entries and click 'Delete'
+
+4. **Add missing hydrogen atoms**:
+   - Edit > Clean > All
+
+5. **Minimize the energy of the system**:
+   - Options > Choose Experiment > Energy minimization
+   
+::: {.callout-tip}
+## Troubleshooting
+On Linux, you may need to pause the minimization and continue to make it work:
+Options > Control experiment > Pause/Continue
+:::
+
+6. **Delete SimCell**:
+   - From the right-hand panel, right-click on SimCell and Delete
+
+7. **Save the prepared complex**:
+   - File > Save as > PDB file > select 3FAP from both Sequence and Name panels > give a name (3FAP_complex.pdb)
+
+---
+
+# Receptor and Ligand Separation
+
+## Splitting the complex
+
+8. **Split receptor and ligand**:
+   - From the right-side panel, right click on 3FAP > split > Split at selected molecules > select the ligand (second A in the sequence panel)
+   - Now you can see two objects in the right-hand panel: receptor and ligand
+
+9. **Rename the objects**:
+   - Right click on the receptor object > Name > enter "Receptor"
+   - Right click on the ligand object > Name > enter "Ligand"
+
+## Saving individual components
+
+10. **Save the receptor**:
+    - File > Save as > PDB file > select Receptor > OK > give a name (3FAP_receptor.pdb)
+
+11. **Save the ligand**:
+    - File > Save as > Other file format > select Ligand from the Object panel > find sdf-MDL Mol from the Format panel > enter a name (3FAP_ligand) > OK
+
+At this point, you should have three files in your working directory:
+- 3FAP_complex.pdb
+- 3FAP_receptor.pdb
+- 3FAP_ligand.sdf
+
+---
+
+# Docking Simulation Setup
+
+## Defining the simulation cell
+
+12. **Generate the simulation cell**:
+    - From the right-hand panel, right-click on Ligand object > Select > newly
+    - Then Simulation > Define simulation cell > around selected atoms
+
+13. **Remove the ligand**:
+    - Right-click on the Ligand object > Delete
+
+14. **Save the receptor + simulation cell**:
+    - File > Save as > YASARA Scene > give a name (3FAP_receptor.sce)
+
+## Running the docking simulation
+
+15. **Set up docking**:
+    - Options > Macro & Movie > set target > select 3FAP_receptor.sce > select 'from underscore' > OK
+
+16. **Run docking**:
+    - Options > Macro & Movie > Play macro > find and click on dock_run.mcr > OK
+
+---
+
+# Results Analysis
+
+## Binding energy analysis
+
+17. **Analyze the results**:
+    - Check for the log file (3FAP.log) in the working directory
+    - Look at the binding energy values in the first table (Bind.energy)
+    - The first entry always has the best binding energy value
+
+## Visual inspection of docking poses
+
+18. **Open predicted and crystal structures**:
+    - Open the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)
+    - Open the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)
+
+19. **Optimize visualization**:
+    - View > Hide atoms > Aliphatic hydrogens
+    - View > Style atoms > Stick > ALL
+    - View > Hide atoms > Molecule > A (first entry in the Sequence panel)
+    - View > Hide atoms > Molecule > A (second entry in the Sequence panel)
+
+20. **Visual comparison**:
+    - Visually inspect how well the crystal pose and the predicted docking pose overlap
+    - Note any significant differences between the two poses
+
+## Quantitative assessment
+
+21. **Calculate RMSD from crystal pose**:
+    - Analyze > RMSD of > Molecules > docked ligand (second A in the Sequence panel) > OK > crystal ligand (third A in the Sequence panel) > OK > select Molecule > OK
+    - The RMSD value will be displayed in the panel below the screen
+
+::: {.callout-note}
+## Success Criteria
+Usually, RMSD < 2.0 Å is considered as a successful docking simulation.
+:::
+
+---
+
+# Review Questions
+
+1. **What was the binding energy of your best docking pose?** How does this compare to typical protein-ligand interactions?
+
+2. **What is the RMSD between your predicted pose and the crystal structure?** Is this considered a successful prediction?
+
+3. **Describe the key interactions** you observe between rapamycin and the protein complex. What makes this compound effective as a molecular glue?
+
+4. **What are the limitations** of molecular docking that you should be aware of when interpreting these results?
+
+5. **How might you improve** the docking results if the RMSD was too high?
+
+---
+
+::: {.callout-note}
+## Key Takeaways
+
+- Proper structure preparation is crucial for successful molecular docking
+- YASARA provides an integrated workflow for structure preparation, docking, and analysis
+- RMSD comparison with crystal structures validates docking accuracy
+- Molecular glues like rapamycin stabilize protein complexes through specific binding interactions
+- Visual inspection complements quantitative metrics in evaluating docking success
+
+:::

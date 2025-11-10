@@ -1,0 +1,266 @@
+---
+title: "AI-Based Protein Complex Prediction with AlphaFold3"
+subtitle: "BIO512 Structural Biology - Predicting Mutation Effects on Protein Complexes"
+author: "Sayyed Jalil Mahdizadeh"
+date: November 10, 2025
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+In this practical, we will apply AI-based protein complex structure prediction using AlphaFold3 (AF3). You will learn about the capabilities of AF3 in predicting protein complexes from wild-type sequences and the effects of mutations on complex formation.
+
+Building on the previous practical where you analyzed the crystal structure of the Barnase-Barstar complex and identified key interacting residues (ASP39 and ASP35), you will now use AF3 to predict how mutations to these critical residues affect complex stability and formation.
+
+::: {.callout-important}
+## Prerequisites
+- Completed analysis of 1BRS crystal structure from previous practical
+- FASTA sequences of Barnase and Barstar from PDB
+- Gmail account for AlphaFold server access
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Use AlphaFold3 server for protein complex prediction
+- Interpret AF3 confidence metrics (pTM and ipTM)
+- Design and analyze mutational studies computationally
+- Compare predicted structures with experimental crystal structures
+- Understand limitations of AI-based structure prediction for mutations
+
+:::
+
+---
+
+# AlphaFold3 Prediction Setup
+
+## Preparing sequences
+
+You should have obtained the FASTA sequences from the previous practical. If not:
+
+1. **Get the sequences**:
+   - Open www.rcsb.org and search for 1BRS
+   - Click on 'Download Files' and choose 'FASTA Sequence'
+   - Open the downloaded FASTA file with a text editor
+   - You'll see sequences for both Barnase and Barstar
+
+## Wild-type complex prediction
+
+2. **Access AlphaFold3 server**:
+   - Navigate to https://alphafoldserver.com
+   - Log in with your Gmail account
+
+3. **Submit wild-type prediction**:
+   - Enter the WT sequence of **Barstar** (first protein)
+   - Add entity as "protein"
+   - Enter the WT sequence of **Barnase** (second protein)
+   - Add entity as "protein"
+   - Click "Continue and preview job"
+   - Give a name to the job: `wtBarnase-wtBarstar`
+   - Submit the job
+
+::: {.callout-note}
+## Processing time
+AF3 jobs can take several hours to complete. You may need to check back later or use pre-computed results if available.
+:::
+
+4. **Download results**:
+   - Once completed, click on the job
+   - Note the confidence metrics:
+     - **pTM (global metric)**: Confidence in individual protein structures
+     - **ipTM (interface metric)**: Confidence in protein-protein interface
+   - Download results by clicking "Download"
+   - Rename the file to `wtBarnase_wtBarstar.zip`
+   - Extract: `unzip wtBarnase_wtBarstar.zip -d wtBarnase_wtBarstar`
+
+---
+
+# Mutational Analysis
+
+Based on the previous structural analysis, we identified that ASP39 and ASP35 of Barstar are critical for binding. We'll test two different mutation scenarios:
+
+## Mutation to Alanine (conservative)
+
+5. **Prepare D39A-D35A mutant sequences**:
+   - Take the Barstar sequence from the FASTA file
+   - Find position 39 (ASP/D) and replace with Alanine (A)
+   - Find position 35 (ASP/D) and replace with Alanine (A)
+   - Keep Barnase sequence unchanged
+
+6. **Submit D39A-D35A prediction**:
+   - Enter the mutated Barstar sequence
+   - Enter the WT Barnase sequence
+   - Job name: `wtBarnase_D39A-D35ABarstar`
+   - Submit and download results when complete
+
+## Mutation to Arginine (charge reversal)
+
+7. **Prepare D39R-D35R mutant sequences**:
+   - Take the Barstar sequence from the FASTA file
+   - Find position 39 (ASP/D) and replace with Arginine (R)
+   - Find position 35 (ASP/D) and replace with Arginine (R)
+   - Keep Barnase sequence unchanged
+
+8. **Submit D39R-D35R prediction**:
+   - Enter the mutated Barstar sequence
+   - Enter the WT Barnase sequence
+   - Job name: `wtBarnase_D39R-D35RBarstar`
+   - Submit and download results when complete
+
+---
+
+# Results Analysis
+
+## Confidence metrics comparison
+
+9. **Compare AF3 confidence scores**:
+
+| Complex | ipTM | pTM |
+|---------|------|-----|
+| WT | 0.93 | 0.94 |
+| D39A-D35A | 0.89 | 0.92 |
+| D39R-D35R | 0.25 | 0.62 |
+
+::: {.callout-note}
+## Interpreting metrics
+- **pTM**: Confidence in overall fold (0-1 scale, >0.8 is high confidence)
+- **ipTM**: Confidence in interface prediction (0-1 scale, >0.8 is high confidence)
+- Lower scores indicate less confidence in the predicted structure
+:::
+
+## Structural comparison with crystal structure
+
+10. **Prepare YASARA for comparison**:
+    - Clean up YASARA screen: File > New > Yes
+    - Open the prepared crystal structure: `1BRS_complex.pdb`
+    - Open the AF3 predicted WT structure: `model_0.cif` (from wtBarnase_wtBarstar folder)
+
+::: {.callout-tip}
+## AF3 output format
+AF3 predicts 5 models (model_0 to model_4) where model_0 always has the highest-ranking confidence value.
+:::
+
+11. **Superpose predicted on crystal structure**:
+    - Analyze > Superpose > Objects
+    - Select "fold_wtbaranase…" (predicted structure) from Sequence panel > OK
+    - Select "1BRS_complex…" (crystal structure) from Sequence panel > OK
+    - In "Set parameters" window: Uncheck all boxes except "Residue name" and "Residue number" > OK
+
+12. **Calculate RMSD for Barstar**:
+    - Analyze > RMSD of > Molecules
+    - Choose "D" (Barstar of crystal structure) from Sequence panel > OK
+    - Choose "A" (predicted Barstar) > OK > OK
+    - RMSD value will be shown in the command window
+
+13. **Repeat for mutant structures**:
+    - Clean up YASARA screen and repeat steps 10-12 for both mutant predictions
+    - Complete the RMSD comparison table:
+
+| Comparison Pair | RMSD (Å) |
+|-----------------|----------|
+| Crystal vs WT | 2.76 |
+| Crystal vs D39A-D35A | 2.90 |
+| Crystal vs D39R-D35R | 9.42 |
+
+---
+
+# Interpretation and Discussion
+
+## Understanding the results
+
+14. **Analysis of AF3 performance**:
+
+The results reveal important insights about AF3's capabilities and limitations:
+
+### Alanine mutations (D39A-D35A):
+- **Small decrease** in confidence metrics (ipTM: 0.93→0.89)
+- **Minimal structural change** (RMSD: 2.76→2.90 Å)
+- **AF3 prediction**: Minor effect on complex formation
+- **Experimental reality**: These mutations drastically reduce binding affinity
+
+### Arginine mutations (D39R-D35R):
+- **Dramatic decrease** in confidence metrics (ipTM: 0.93→0.25)
+- **Large structural deviation** (RMSD: 2.76→9.42 Å)
+- **AF3 prediction**: Major disruption of complex formation
+- **Experimental expectation**: Strong electrostatic repulsion would indeed disrupt binding
+
+## Critical analysis questions
+
+Answer the following questions based on your results:
+
+### AF3 Performance Assessment
+
+1. **How well does AF3 predict the wild-type complex?** Compare the confidence metrics and RMSD with the crystal structure.
+
+2. **What do the confidence metrics tell us** about AF3's certainty in its predictions for each variant?
+
+3. **Why might AF3 fail to capture the effect** of alanine mutations but successfully predict the impact of arginine mutations?
+
+### Structural Biology Insights
+
+4. **From a chemical perspective**, explain why:
+   - D39A and D35A mutations might be more disruptive experimentally than AF3 predicts
+   - D39R and D35R mutations show large effects in both experiments and AF3 predictions
+
+5. **What does this tell us about** the different types of interactions that stabilize protein complexes?
+
+### Methodological Considerations
+
+6. **What are the limitations** of using AF3 for mutational studies? When might it be reliable vs unreliable?
+
+7. **How could you validate** these computational predictions experimentally?
+
+8. **What other computational approaches** could complement AF3 for studying mutation effects?
+
+---
+
+# Advanced Analysis (Optional)
+
+For students interested in deeper analysis:
+
+## Detailed structural comparison
+- Analyze specific interface regions in detail
+- Compare hydrogen bonding patterns between structures
+- Examine conformational changes upon mutation
+
+## Additional mutations
+- Predict effects of single mutations (D39A only, D35A only)
+- Test conservative mutations (D39E, D35E)
+- Explore mutations in Barnase instead of Barstar
+
+---
+
+::: {.callout-note}
+## Key Takeaways
+
+- **AF3 excels** at predicting wild-type protein complex structures with high confidence
+- **Mutation effects** are not always accurately captured, especially for subtle changes
+- **Charge-reversal mutations** (D→R) are better predicted than loss-of-function mutations (D→A)
+- **Confidence metrics** (pTM, ipTM) provide valuable information about prediction reliability
+- **Experimental validation** remains essential for understanding mutation effects
+- **AI predictions** should be interpreted alongside structural and chemical principles
+
+:::
+
+---
+
+## Biological Significance
+
+This analysis demonstrates that:
+
+1. **Protein-protein interfaces** rely on multiple, subtle interactions that may not be fully captured by current AI models
+
+2. **Electrostatic interactions** are crucial for the Barnase-Barstar interface and are better predicted than hydrophobic or entropic effects
+
+3. **AF3 represents a powerful tool** for structural biology but has limitations that must be understood
+
+4. **Computational and experimental approaches** are complementary for understanding protein function
+
+The Barnase-Barstar system serves as an excellent model for understanding both the capabilities and limitations of AI-based structure prediction in the context of protein evolution and design.

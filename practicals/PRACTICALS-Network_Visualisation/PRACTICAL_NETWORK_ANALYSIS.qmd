@@ -1,0 +1,312 @@
+---
+title: "Gene Co-Expression Network Analysis"
+subtitle: "BIO512 Transcriptomics – Building and Exploring Networks with iGraph"
+author: "Muhammad Arif"
+date: November 10, 2025
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+In this practical, you will construct (or load) a gene co-expression network from normalized RNA-seq counts and analyze its topology. You will compute centrality measures, detect modules via Leiden clustering, and perform functional enrichment on selected clusters.
+
+If time is limited, you may skip network construction and use the pre-generated `coexpression_network.txt` produced earlier.
+
+::: {.callout-important}
+## Create a working directory and gather inputs
+```bash
+mkdir -p ~/BIO512/Network_analysis
+cd ~/BIO512/Network_analysis
+
+# Required files can be fetched from the Cluster
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/Network_analysis/* ~/BIO512/Network_analysis/
+
+# For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.
+myvariable = {__}
+# should be replaced with actual code.
+myvariable = "Hello, World!"
+```
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Generate a gene co-expression network using Spearman correlation
+- Load and visualize networks in iGraph
+- Quantify network properties (nodes, edges, diameter, density)
+- Compute and interpret centrality measures (degree, betweenness, closeness, eigenvector)
+- Detect modules using Leiden clustering and perform GO enrichment
+:::
+
+---
+
+# Files and setup
+
+Ensure packages: pandas, numpy, seaborn, matplotlib, pybiomart, gseapy, igraph, scipy, statsmodels.
+
+## Library
+
+```python
+%matplotlib inline
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+import seaborn as sns
+import matplotlib
+sns.set(font="Arial")
+sns.set_style("white")
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
+
+from pydeseq2.dds import DeseqDataSet
+from pydeseq2.default_inference import DefaultInference
+from pydeseq2.ds import DeseqStats
+from statsmodels.sandbox.stats.multicomp import multipletests
+
+from pca import pca
+from pybiomart import Dataset
+
+from sklearn.decomposition import PCA as sklearnPCA
+import os, math
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+import pickle
+
+from scipy.stats import zscore, spearmanr
+import gseapy as gp
+import igraph as ig
+
+def coexpression_generation(norm_count,padj_thr=0.05):
+    print('Calculating Correlation..')
+    temp=spearmanr(norm_count.T)
+    corr=pd.DataFrame(temp[0],columns=list(norm_count.index),index=list(norm_count.index))
+    pval=pd.DataFrame(temp[1],columns=list(norm_count.index),index=list(norm_count.index))
+    print('Filtering the matrix Correlation..')
+    corr=corr.where(np.triu(np.ones(corr.shape)).astype(np.bool))
+    pval=pval.where(np.triu(np.ones(pval.shape)).astype(np.bool))
+    print('Making long table of Correlation..')
+    corr2=corr.unstack().reset_index(name='weight')
+    pval2=pval.unstack().reset_index(name='pval')
+    res=corr2.merge(pval2,on=['level_0','level_1'])
+    res=res[res['level_0'] != res['level_1']]
+    res=res.dropna()
+    print('Adjusting P-val')
+    res['padj']=multipletests(res['pval'],method='fdr_bh')[1]
+    res=res[res.padj < padj_thr].reset_index(drop=True)
+    res=res[['level_0','level_1','weight']]
+    print('Done!!')
+    return res
+```
+
+---
+
+# (Optional) Network construction from normalized counts
+
+This step is optional because I have generated the pre-calculated network based on the our Leishmania data. **We will focus more on the downstream analysis in this lab**. I would suggest you to go through the "coexpression_generation" function above to learn more about the detailed process. This function was taken from the pipeline used in this this paper:
+https://pubmed.ncbi.nlm.nih.gov/37038090/
+
+If you want to follow the steps:
+
+### Load normalized count file
+
+In generating gene co-expression network, we use normalized count instead of raw counts. It can be TPM, FPKM, RPKM, or any normalization. For this lab, we are going to use normalized count from the DESeq lab.
+
+```python
+import pandas as pd
+import numpy as np
+from scipy.stats import spearmanr
+from statsmodels.sandbox.stats.multicomp import multipletests
+
+norm_count = pd.read_csv("Deseq2_NormalizedCount.txt", sep="\t", index_col=0)
+norm_count = norm_count[norm_count.sum(1) > 0]
+```
+
+### Generating Gene Co-Expression Network
+
+```python
+
+def coexpression_generation(norm_count,padj_thr=0.05):
+    print('Calculating Correlation..')
+    temp=spearmanr(norm_count.T)
+    corr=pd.DataFrame(temp[0],columns=list(norm_count.index),index=list(norm_count.index))
+    pval=pd.DataFrame(temp[1],columns=list(norm_count.index),index=list(norm_count.index))
+    print('Filtering the matrix Correlation..')
+    corr=corr.where(np.triu(np.ones(corr.shape)).astype(np.bool))
+    pval=pval.where(np.triu(np.ones(pval.shape)).astype(np.bool))
+    print('Making long table of Correlation..')
+    corr2=corr.unstack().reset_index(name='weight')
+    pval2=pval.unstack().reset_index(name='pval')
+    res=corr2.merge(pval2,on=['level_0','level_1'])
+    res=res[res['level_0'] != res['level_1']]
+    res=res.dropna()
+    print('Adjusting P-val')
+    res['padj']=multipletests(res['pval'],method='fdr_bh')[1]
+    res=res[res.padj < padj_thr].reset_index(drop=True)
+    res=res[['level_0','level_1','weight']]
+    print('Done!!')
+    return res
+```
+
+```python
+coexp_network = coexpression_generation(norm_count)
+coexp_network = coexp_network[coexp_network["weight"] > 0]
+coexp_network.to_csv("coexpression_network.txt", sep = "\t", index = False)
+```
+
+Map to gene names (optional):
+
+```python
+from pybiomart import Dataset
+
+dataset = Dataset(name='hsapiens_gene_ensembl', host='http://www.ensembl.org')
+mapping = dataset.query(attributes=['ensembl_gene_id', 'external_gene_name'])
+coexp_network.replace(mapping.set_index("Gene stable ID")["Gene name"]).dropna().to_csv("coexpression_network.txt", sep = "\t", index = False)
+```
+
+---
+
+# Load network and visualize
+
+```python
+import pandas as pd
+import igraph as ig
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+coexp_network = pd.read_csv("coexpression_network.txt", sep = "\t")
+g = ig.Graph.TupleList(zip(coexp_network['level_0'],coexp_network['level_1']))
+layout = g.layout(layout='auto')
+
+fig, ax = plt.subplots()
+ig.plot(g, layout=layout, target=ax)
+fig.set_size_inches(8, 8)
+```
+
+### Questions
+- Q1.1: How many nodes and edges?
+- Q1.2: Network diameter and density? Interpret their meaning.
+
+```python
+g.vcount(), g.ecount(), g.diameter(), g.density()
+```
+
+---
+
+# Centrality analysis
+
+Centrality measures help identify important or influential genes within a co-expression network. 
+Different measures capture different aspects of "importance":
+
+- Degree Centrality: Number of direct connections a gene has. Hub genes often play central biological roles.  
+- Betweenness Centrality: How often a gene lies on the shortest paths between other genes. High betweenness genes may act as bridges between modules.  
+- Closeness Centrality: How close a gene is to all other genes in the network. Genes with high closeness can quickly influence or be influenced by others.  
+- Eigenvector Centrality: Importance of a gene based not only on its connections, but also on the importance of its neighbors.
+
+Read iGraph Python manual https://python.igraph.org/en/stable/
+
+### Questions
+Hint 1: The output of centrality measures in iGraph Python are lists. To convert to Pandas Series for easy analysis, use `pd.Series(list, index = g.vs["name"])`
+
+Hint 2: Use the Pandas sort_values function to rank the Series https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sort_values.html
+- Q2.1: Which genes are hubs (high degree centrality)? (top 10)  
+- Q2.2: Which genes act as bridges between modules (high betweenness)? (top 10)  
+- Q2.3: Perform Closeness and Eigenvector centrality analysis. Looking at top 40 most central genes for each measurement, is there any intersection between different methods? Which methods are more similar? Why?  
+- Q2.4: Compare biological functions of hub vs. bridge genes — do they play different roles? (Hint: Use the Enrichr website or GSEAPY module from DESeq2 lab to identify their functions) https://maayanlab.cloud/Enrichr/
+
+Compute measures (fill the {__}):
+
+```python
+# Calculate centrality measures
+degree_centrality = {__}
+betweenness_centrality = {__}
+closeness_centrality = {__}
+eigenvector_centrality = {__}
+
+# Add centrality values as node attributes
+g.vs["degree"] = degree_centrality
+g.vs["betweenness"] = betweenness_centrality
+g.vs["closeness"] = closeness_centrality
+g.vs["eigenvector"] = eigenvector_centrality
+
+# Create a DF to present different centrality analyses
+centrality_df = pd.DataFrame({
+    "gene": g.vs["name"],
+    "degree": degree_centrality,
+    "betweenness": betweenness_centrality,
+    "closeness": closeness_centrality,
+    "eigenvector": eigenvector_centrality
+})
+```
+
+Optional: Use centrality as node size
+
+```python
+fig, ax = plt.subplots()
+ig.plot(g, layout = layout, target=ax, vertex_size=g.degree())
+fig.set_size_inches(8, 8)
+```
+
+---
+
+# Module (community) detection
+
+Gene co-expression networks often show a modular structure, where groups of genes are more strongly connected than to the rest of the network. These modules (or clusters) can reveal shared biological functions, pathways, or regulatory programs.
+
+Common Approaches
+- Community Detection Algorithms:
+  - Louvain / Leiden: Partition the network into communities by maximizing modularity.
+  - Walktrap: Uses random walks to detect densely connected subgraphs.
+  - Fastgreedy: Greedy optimization of modularity.
+- Hierarchical Clustering: Applied to adjacency or topological overlap matrices (TOM).
+- WGCNA Modules: Modules defined via dynamic tree cutting on the TOM.
+
+Key Concepts
+- Module: A set of tightly co-expressed genes.
+- Module Eigengene: The first principal component of a module’s gene expression — represents the overall expression profile of the module.
+- Module Size: The number of genes in the module; larger modules may represent broad pathways, smaller modules more specific processes.
+
+Leiden Algorithm (read options): https://igraph.org/python/api/0.9.11/igraph.Graph.html#community_leiden
+
+```python
+clustering = g.community_leiden(objective_function='modularity', n_iterations=-1, resolution=0.2)
+memberships = pd.Series(clustering.membership, index = g.vs["name"])
+```
+
+Inspect sizes:
+
+```python
+cluster_sizes = memberships.value_counts()
+cluster_sizes.head()
+```
+
+### Questions to Explore
+
+- Q3.1: How many modules/clusters can you detect in the network?  
+- Q3.2: Which module is the largest? Which is the smallest?  
+- Q3.3: Which modules contain the most hub genes identified earlier?  
+- Q3.4: If you pick the largest module, what biological function might it represent? Make a visualization of top 10 most enriched processes (Hint: Use the Enrichr website or GSEAPY module from DESeq2 lab to identify their functions) https://maayanlab.cloud/Enrichr/
+
+---
+
+# Optional: Cluster visualization
+
+```python
+fig, ax = plt.subplots()
+ig.plot(clustering, target=ax, layout=layout, mark_groups=True, vertex_size=g.degree())
+fig.set_size_inches(8, 8)
+```
+
+---
+
+# What to append to your submission
+
+- Complete code notebook for supplementary material
+- "More to add here"
+
