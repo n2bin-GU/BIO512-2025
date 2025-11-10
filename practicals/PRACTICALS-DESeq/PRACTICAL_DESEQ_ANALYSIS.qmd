@@ -1,0 +1,402 @@
+---
+title: "Differential Expression and Enrichment Analysis"
+subtitle: "BIO512 Transcriptomics – PyDESeq2, PCA, and GO BP Enrichment"
+author: "Muhammad Arif"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+In this practical, you will perform differential expression analysis using PyDESeq2, explore the data structure with PCA, and interpret results via GO Biological Process enrichment. You will work from raw counts and sample metadata, then save normalized counts and DE results for downstream network analysis.
+
+::: {.callout-important}
+## Create a working directory and gather inputs
+```bash
+mkdir -p ~/BIO512/DESeq_lab
+cd ~/BIO512/DESeq_lab
+
+# Required files can be fetched from the Cluster
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/DeSeq/* ~/BIO512/practicals/DeSeq/
+
+# For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.
+myvariable = {__}
+# should be replaced with actual code.
+myvariable = "Hello, World!"
+```
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Load RNA-seq counts and metadata and perform PCA
+- Run PyDESeq2 to identify differentially expressed genes (DEGs)
+- Visualize adjusted p-values and MA plot
+- Save normalized counts and DE results for reuse
+- Run GO BP enrichment (via GSEAPY/Enrichr) after mapping Ensembl IDs to gene names
+:::
+
+---
+
+# Files and setup
+
+- Count matrix: counts.tsv
+- Sample metadata: metadata.txt
+- Output (produced here):
+  - Deseq2_Results.txt
+  - Deseq2_NormalizedCount.txt
+
+Ensure you have the following packages: pandas, numpy, seaborn, matplotlib, pydeseq2, pca, gseapy, pybiomart, scipy.
+
+---
+
+# Basic run-through
+
+Follow these steps and add short notes under each result.
+
+## Library
+
+```python
+%matplotlib inline
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+import seaborn as sns
+import matplotlib
+# Adding these 4 lines will make our life easier if we need 
+# to do figure post-processing in other software
+sns.set(font="Arial")
+sns.set_style("white")
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
+
+from pydeseq2.dds import DeseqDataSet
+from pydeseq2.default_inference import DefaultInference
+from pydeseq2.ds import DeseqStats
+
+from pca import pca
+from pybiomart import Dataset
+
+from sklearn.decomposition import PCA as sklearnPCA
+import os, math
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+import pickle
+
+from scipy.stats import zscore, spearmanr
+import gseapy as gp
+```
+
+## Load Count Data
+
+We begin by importing the raw data into Python for downstream analysis. The count and metadata was those generated in the previous exercises. The dataset consists of two files:
+
+1. Count file – This file contains the raw gene expression counts. Each row corresponds to a gene, and each column corresponds to a sample (identified by its sample ID).
+
+2. Metadata file – This file provides the experimental information for each sample, including the sample ID, condition (normal vs. infected), and replicate number.
+
+We load both files into pandas DataFrames for easier handling
+
+```python
+# Load the count data, tab separated
+count = pd.read_csv("counts.tsv", sep = "\t")
+
+# Load the metadata, tab separated
+metadata = pd.read_csv("metadata.txt", sep = "\t")
+```
+
+**Q1: How many genes and samples do you have in your matrix?**
+
+## Exploratory Data Analysis: PCA
+
+Before performing downstream statistical tests, it is important to explore the overall structure of the data. EDA is an incredibly useful dogma in data analysis, using the data itself to plot and visualize relationships that will guide downstream analysis. It is a great way to get to know your data in depth and identify potential issues or interesting patterns. Principal Component Analysis (PCA) is a common dimensionality reduction technique that allows us to visualize high-dimensional gene expression data in just two or three dimensions. This helps us to:
+
+1. Identify major sources of variation in the dataset.
+2. Assess whether samples cluster according to their experimental conditions (e.g., normal vs. infected).
+3. Detect potential outliers or batch effects.
+
+Since PCA requires numerical input, we apply it directly to the count matrix, using the samples as observations and the genes as features. The counts are typically log-transformed (or otherwise normalized) prior to PCA to reduce the effect of extreme values.
+
+For this PCA analysis, we are going to use this PCA module: https://erdogant.github.io/pca/pages/html/index.html 
+
+There are two ways to initialize PCA:
+
+1. By retaining enough components to explain X% of the variance (95% for this example, maximum 1 aka 100%)
+   `model = pca(n_components=0.95)`
+   
+2. By limiting the number of principal components (3 PCs in this example, to allow for 3D visualizaiton if needed)
+   `model = pca(n_components=3)`
+
+### Steps
+
+1. Let's use the 2nd initialization method, limiting the PCs to 3
+
+```python
+model = pca(n_components=3)
+```
+
+2. Setting up the dataframe for analysis
+    1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".
+    2. Replace the sample ID to their conditions (normal or infected) (Tips: we make sure that the sample sequence in the count file is the same with metadata)
+       - Hint: A pythonic way to do this `count_PCA = count_PCA.rename(columns = metadata["Conditions"])`
+    3.  Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?
+
+```python
+# Setting up the dataframe for analysis
+## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".
+count_PCA = count[{__}]
+
+## 2. Replace the sample ID to their conditions (normal or infected)
+### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)
+count_PCA = count_PCA[metadata.index]
+
+### 2.2. replacing the column names with their metadata["Conditions"] column
+count_PCA.columns = {__}
+
+
+## 3. Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?
+count_PCA = {__}
+```
+
+3. Perform the PCA analysis, on logged data using model.fit_transform() function (Note: This package requires gene names as the column names and the sample ID as the row names, so we have to transpose our dataframe (.T in the end))
+
+```python
+results = model.fit_transform(count_PCA.T)
+```
+
+4. Plot the PCA analysis with a scatter plot (Note: figsize option is to limit the dimension of the plot. Can be adjusted to fit your preference. Play around with it.)
+
+```python
+fig, ax = {__}
+```
+
+### Questions:
+**Q2.1: What is your interpretation of the PCA analysis? Is there any outliers? Justify your opinion.**
+**Q2.2: Is the plot title total variant same as the PC1 + PC2 explained variant? If not, why?**
+
+### PCA Cheatsheet:
+1. model.scatter3d() --> 3D PCA plotting
+2. model.biplot() --> Plotting top loading factors (model.biplot3d for 3D PCA)
+3. Explore "model.results" for detailed information of the PCA model, including "explained_var", "variance_ratio", "loadings", etc
+
+More info: https://erdogant.github.io/pca/pages/html/index.html
+
+## Statistical Analysis: DESeq2  
+
+To identify differentially expressed genes (DEGs) between infected and normal samples, we applied **DESeq2 methodology**. DESeq2 is a widely used statistical framework for RNA-seq data analysis, based on modeling count data with negative binomial distributions. It provides robust normalization, variance estimation, and statistical testing to identify genes whose expression is significantly associated with the experimental condition.  
+
+In this analysis, we make use of **PyDESeq2**, a Python implementation of the DESeq2 workflow. This allows us to perform the entire statistical analysis in Python while maintaining compatibility with the established DESeq2 methods.  
+
+https://pydeseq2.readthedocs.io/en/stable/
+
+The results of this analysis will yield:  
+
+- A list of genes with significant differential expression (adjusted p-value cutoff).  
+- Fold changes indicating the direction and magnitude of regulation (upregulated or downregulated in infected samples).  
+- Statistical confidence measures that account for biological variability and replicate structure.  
+
+Now we can proceed with the differential expression testing. The deseq2() function does all the hard work, it basically performs three steps:
+
+1. Compute a scaling factor for each sample to account for differences in read depth and complexity between samples
+2. Estimate the variance among samples
+3. Test for differences in expression among groups
+
+Before executing the deseq2() function, we have to prepare the input object (lets call it dds, Deseq Data Set). If you inspect the help pages, there are several arguments that we could use. For this particular exercise it would be just enough to use the default values.
+
+Extract the results using the results() function into an object called res and have a look.
+
+### Steps: 
+
+1. Create dds object. Use the original unfiltered count and metadata variables. For the design option, let's use the "Conditions" column on metadata
+
+```python
+dds = DeseqDataSet(
+    counts=count.T,
+    metadata=metadata,
+    design="~Conditions",
+    refit_cooks=True,
+)
+```
+
+2. Perform the DESeq2 analysis with deseq2() function (It may take a few mins)
+
+```python
+dds.deseq2()
+```
+
+OPTIONAL: Look at the sub-variables inside the dds object
+
+3. Perform the comparison between Infected and Normal group using DeseqStats() function
+
+```python
+ds = DeseqStats(dds, contrast=["Conditions", "Infected", "Normal"])
+```
+
+4. Retrieve the results and assign it to a different object, e.g. deseq_results (hint: ds.results_df after running ds.summary()).
+   
+Remember that since we are doing a lot of tests, as many tests as genes in our experiment, we need to correct our pvalues. DESeq already did this while testing for differences among our groups, so let's create a histogram of these adjusted pvalues and an MA-plot to inspect if there is any enrichment of DE genes.
+
+```python
+ds.summary()
+```
+```python
+deseq_results = ds.results_df
+```
+
+5. Make a histogram using the hist() function on the padj column of the results object. Change arguments in the placeholder to make a nice histogram (eg. add some color, a title etc.)
+
+```python
+deseq_results["padj"].hist(bins = 100, {__})
+```
+
+6. Create a MA-plot with the plot_MA() function from DeseqStats object (not dds!).
+
+```python
+ds.plot_MA()
+```
+
+7. Let's remove the genes with NAN adjusted p-values. Use the .notna() function on the padj column of the results object to keep those that has valid adjusted p-values.
+
+```python
+notna_deseq = {__}
+notna_deseq.shape
+```
+
+### Questions:
+
+- **Q3.1: How many significantly differentially expressed genes in this comparison? (padj < 0.05)**
+- **Q3.2: What does the histogram tell you? Looking at the MA plot, approximately what are your highest and lowest Foldchanges?**
+- **Q3.3: How many genes with a p-adjusted value of NA did you have?**
+- **Q3.4: What is the top 5 most significantly differentially expressed genes based on their log2FoldChange? (padj < 0.05)Look for their gene names using online tools (e.g. ENSG00000166211 is SPIC).**
+
+::: {.callout-tip}
+Remember: There are up and down-regulated genes, make sure that you sort it based on their absolute values. Hint: .sort_values("log2FoldChange", key = abs)
+:::
+
+```python
+notna_deseq[notna_deseq["padj"] < 0.05].sort_values("log2FoldChange", key = abs)
+```
+
+#### Save the normalized count from DESeq2 and final result without the NAs as a tab-separated file
+
+```python
+notna_deseq[notna_deseq["padj"] < 0.05].to_csv("Deseq2_Results.txt", sep = "\t")
+pd.DataFrame(dds.layers["normed_counts"], columns = dds.var_names, index=dds.obs_names).T.to_csv("Deseq2_NormalizedCount.txt", sep = "\t")
+```
+
+## Enrichment Analysis: GO Biological Process  
+
+To gain functional insight into the differentially expressed genes (DEGs), we performed a **Gene Ontology (GO) enrichment analysis**, focusing on the **Biological Process (BP)** category. This analysis identifies biological pathways and processes that are statistically overrepresented among the DEGs compared to what would be expected by chance.  
+
+Key goals of this analysis include: 
+
+- Highlighting biological processes that are upregulated or downregulated in response to infection.  
+- Linking the transcriptional changes to relevant cellular mechanisms such as immune response, stress response, or metabolic pathways.  
+- Providing a higher-level interpretation of the DEG list beyond individual genes.  
+
+The output of this step will be a ranked list of enriched GO Biological Process terms, along with their associated enrichment scores and adjusted p-values. This helps us interpret how the infection condition impacts cellular and molecular functions.  
+
+For enrichment analysis, we will use **Gseapy** package, specifically the Enrichr API (GUI: https://maayanlab.cloud/Enrichr/)
+
+https://gseapy.readthedocs.io/en/latest/gseapy_example.html
+
+### Steps
+
+0. Since our the gene names are using "Ensembl Gene ID" and most enrichment analysis packages supports only "Gene Name" or "HGNC ID", let's first convert them. We will use the pyBioMart package to help us retrieving the mapping file.
+
+```python
+# Starting connections to ensembl website using the "Dataset" function from pyBioMart
+dataset = Dataset(name='hsapiens_gene_ensembl', host='http://www.ensembl.org')
+
+# Retrieving name mapping dataframe between "Esembl ID" and External Gene Name (HGNC)
+mapping = dataset.query(attributes=['ensembl_gene_id', 'external_gene_name'])
+
+#Look at the mapping structure
+mapping.head()
+```
+
+```python
+# Let's copy the deseq results again, focusing only on differentially expressed genes
+significant_deseq = {__}
+
+# Now we are merging the mapping dataframe to the significant_deseq object. read more on Pandas Merging function if needed
+significant_deseq = significant_deseq.merge(mapping, left_index = True, right_on = "Gene stable ID")
+
+#Lets remove those with no gene names
+significant_deseq = {__}
+
+#Look at the new significant_deseq structure
+significant_deseq.head()
+```
+
+1. Make two lists of significantly differentially expressed genes (signficant_deseq object): up and down-regulated genes (use the Gene name columns)
+
+- up-regulated: Log2FoldChange > 0 (and padj < 0.05) --> 80 genes
+- down-regulated: Log2FoldChange < 0 (and padj < 0.05) --> 66 genes
+
+```python
+up = {__}
+down = {__}
+```
+
+```python
+len(up)
+```
+```python
+len(down)
+```
+
+2. Perform enrichment analysis using Enrichr API from GSEAPY. Do one enrichment analysis for each direction (one for up and one for down-regulated genes). For uniformity, please use the object name enr_up and enr_down.
+
+https://gseapy.readthedocs.io/en/latest/gseapy_example.html#Enrichr-Web-Serives-(without-a-backgound-input) 
+
+```python
+enr_up = {__}
+```
+```python
+enr_down = {__}
+```
+
+3. To get detailed output of the enrichment analysis results in dataframe format, access the .res2d variable under enr_up and enr_down
+
+```python
+enr_up.res2d.head()
+```
+```python
+enr_down.res2d.head()
+```
+
+4. Plot the enrichment analysis results focusing on the top 10 most enriched processes for each up and down-regulated genes. Explore all the plotting options and pretify it with the options. (use the option cutoff=1, since we do not have that many genes to enrich)
+
+https://gseapy.readthedocs.io/en/latest/gseapy_example.html#Plotting
+
+```python
+ax = {__}
+```
+```python
+ax = {__}
+```
+
+### Questions:
+
+- **Q4.1: How many significantly enriched processes for up- and down-regulated genes? (Adjusted P-value < 0.11, arbitrary cut off)**
+- **Q4.2: What does "Combined Score" mean? Check https://maayanlab.cloud/Enrichr/help#basics**
+- **Q4.3: What are the genes associated with the process with the highest combined score in each direction?**
+- **Q4.4: What are the top 10 enriched processes for the up- and down-regulated genes? Include a figure for each direction.**
+
+---
+
+# Things to append to your submission
+
+- Save your notebook as PRACTICAL_DESEQ_ANALYSIS_yourname.ipynb
+- Include your answers to all DESeq and enrichment questions
+- Include plots: PCA plot, histogram of adjusted p-values, MA plot, and enrichment dotplots (up and down)
+
+

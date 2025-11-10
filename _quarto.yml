@@ -1,0 +1,47 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository"
+  description: "Practical exercises for BIO512: Transcriptomics and Protein Structure Analysis"
+  navbar:
+    background: light
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Transcriptomics"
+        menu:
+          - text: "DESeq2 Analysis"
+            href: "practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ANALYSIS.qmd"
+          - text: "Advanced PCA & Correlation"
+            href: "practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ADVANCED.qmd"
+      - text: "Structure & Modeling"
+        menu:
+          - text: "Protein Complex Structure Analysis"
+            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd"
+          - text: "AlphaFold3 Prediction"
+            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd"
+          - text: "Molecular Docking"
+            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd"
+          - text: "MD Analysis"
+            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd"
+      - text: "Machine Learning"
+        href: "practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"
+      - text: "Computer Setup"
+        menu:
+          - text: "Personal Computer Setup"
+            href: "setup/Pre-course-setup_n2bin.qmd"
+          - text: "HPC Setup"
+            href: "setup/Set_up_the_HPC.qmd"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    link-external-newwindow: true
+    css: pages/styles.css

@@ -1,0 +1,69 @@
+---
+title: "Advanced DESeq Analysis: Data Grouping and Visualization"
+subtitle: "BIO512 Transcriptomics – Advanced PCA and Sample Correlation"
+author: "Muhammad Arif"
+date: November 10, 2025
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+This companion to the DeSeq practical focuses on grouping, advanced PCA using DE-only genes, and sample correlation heatmaps.
+
+::: {.callout-note}
+## Learning Objectives
+- Redo PCA on DE-only features and interpret separation
+- Understand PCA loadings and identify top-loading features
+- Compute and plot sample-to-sample correlation heatmaps
+:::
+
+---
+
+# Advanced PCA
+
+Now we will redo PCA using only the differentially expressed (DE) genes identified in the previous DESeq analysis. This approach often enhances the separation between experimental groups by focusing on the most informative features.
+
+### Questions
+
+- **Q5.1: Do you see any improvement in the separation of the Normal and Infected group? What variable(s) that you observe?**
+- **Q5.2: Explain what is "loading" in PCA. Identify top-loading (best performing features) separating Normal and Infected groups. (hint: https://erdogant.github.io/pca/pages/html/Algorithm.html#loadings)**
+
+---
+
+# Exploratory Data Analysis: Sample Correlation Heatmap  
+
+A sample-to-sample correlation heatmap was generated to assess the similarity between replicates and experimental conditions. The heatmap provides an overview of how well biological replicates cluster together and whether the infection condition separates clearly from the normal condition. High within-group correlations indicate good data quality and consistent sample preparation.  
+
+We will use Seaborn Clustermap to plot the sample correlations
+
+## Steps
+1. Calculate the sample correlations using ".corr()" functions from pandas. Remember that we want to calculate the distance between samples rather than among genes. (Suggestion: use the count_PCA variable instead of count)
+
+```python
+corr = {__}
+```
+
+2. Use sns.clustermap() to plot your correlation matrix (Suggestion: use "cmap = 'RdYlBu'" to have better color map)
+
+```python
+sns.{__}
+```
+
+### Questions:
+
+- **Q6.1: What do you conclude from the clustering, do the PCA and the heatmap reflect eachother? Are there any sample outliers?**
+- **Q6.2: Can you identify which correlation method that you use?**
+
+---
+
+# Things to append to your submission
+
+- Save your notebook as PRACTICAL_DESEQ_ADVANCED_yourname.ipynb
+- Include answers to Q5.1–Q6.2
+- Include figures: PCA scree plot (DE-only) and correlation heatmap

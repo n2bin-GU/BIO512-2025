@@ -1,0 +1,257 @@
+---
+title: "Peptide Classification with Machine Learning"
+subtitle: "BIO512 ML Lab – Encoding peptide features and training classifiers"
+author: "Gergely Katona"
+date: November 10, 2025
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+Protein–protein interactions (PPIs) are central to almost every biological process, yet their complexity often makes them difficult to describe and predict. Traditional models emphasize short-range atomic contacts or electrostatic complementarity, but these approaches can fail to capture the broader physicochemical principles that govern biomolecular recognition.
+
+In the paper “Deciphering peptide–protein interactions via composition-based prediction: a case study with survivin/BIRC5” (Anindya et al., 2024), a different approach was introduced. Instead of focusing on the detailed three-dimensional structures of proteins, the study analyzed their composition (the number and types of atoms or functional groups within peptides) and used this as a predictive descriptor of interaction with the human protein survivin (BIRC5)
+
+The goal of this practical is to build a classifier that predicts peptide binding signal from microarray data using encoded features derived from amino-acid properties. You will first perform a basic run-through of the provided notebook, then complete a set of ML-focused tasks.
+
+Use the annotated notebook aa_scan2_clean_annotated.ipynb for the exercise.
+
+::: {.callout-important}
+## Create a working directory
+```bash
+# Create a new folder for this practical
+mkdir -p ~/BIO512/ML_lab
+
+# Fetch the required files from Vera
+# do note that <__> is a placeholder for your vera username
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/Peptide_Classification/* ~/BIO512/Peptide_Classification/
+```
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Encode peptide sequences into feature vectors using an AA property table
+- Compare classifiers with cross validation using robust metrics
+- Interpret influential features in biochemical terms
+- Report reproducible results with seeds, versions, and parameters
+:::
+
+---
+
+# Files and setup
+
+- Notebook: aa_scan2_clean_annotated.ipynb
+- Property table: aa_properties.xlsx
+- Microarray data: Clean_results_2_2019.xlsx
+
+1. Open the notebook in VS Code or Jupyter from your working directory. You can run this locally or on Vera.
+2. Ensure packages are available: pandas, numpy, seaborn, scikit-learn, matplotlib.
+
+---
+
+# Basic run-through
+
+Follow these steps in the notebook. Add short notes under each result.
+
+## 1. Imports
+
+- Import core libraries. If an import fails, install and re-run.
+
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pylab as plt
+import numpy as np
+```
+
+## 2. Load the encoding table
+
+- Load aa_properties.xlsx and confirm it contains the AA letter column (e.g., `aa`) and feature columns.
+
+```python
+#Positionwise carbon (C-Pos)
+df=pd.read_excel("aa_properties.xlsx")
+# H-wise Carbon (C-Coord)
+#df=pd.read_excel("aa_properties2.xlsx")
+# identity (AA-Letter)
+#df=pd.read_excel("aa_properties3.xlsx")
+df
+```
+
+## 3. Define the encoder
+
+- Implement a function that sums feature rows for each amino acid
+
+```python
+def peptrans(peptide):
+    rows=[]
+    for l in peptide:
+        rows.append(df[df.aa==l])
+    return pd.concat(rows).sum()
+```
+
+## 4. Load microarray data
+
+- Load the microarray dataset (Clean_results_2_2019.xlsx).
+
+```python
+pf=pd.read_excel("Clean_results_2_2019.xlsx")
+pf
+```
+
+## 5. Apply encoding
+
+- Map peptrans over the peptide sequence to produce feature vectors.
+
+```python
+transpf=pf['Peptide'].apply(peptrans)
+transpf
+```
+
+## 6. Merge feature vectors with original data
+
+- Concatenate features with the original dataframe.
+
+```python
+mergepf = pd.concat([pf, transpf], axis=1, sort=False)
+mergepf
+```
+
+## 7. Tidy metadata and target
+
+- Create `Prot_pep` and `Prot_res_pep` for better metadata
+- Set index to `Prot_res_pep` so that we use the most informative descriptor
+- Rename target Survivin label to `Fluorescence`.
+
+```python
+mergepf["Prot_pep"] = mergepf["Protein"].map(str) +"_"+ mergepf["Peptide"]
+mergepf["Prot_res_pep"] = mergepf["Protein"].map(str) +"_"+ mergepf["Residue number"].map(str)+"_"+ mergepf["Peptide"]
+mergepf=mergepf.set_index('Prot_res_pep')
+mergepf=mergepf.rename(columns={u'Survivin, 1 µg/ml': u'Fluorescence'})
+mergepf
+```
+
+## 8. Baseline model
+The main engine block of the notebook has multiple configurations of various classifiers prepared. These classifiers all come as part of the [scikit-learn](https://scikit-learn.org/stable/supervised_learning.html) library. To use a different classifier, simply uncomment the relevant line and comment out the rest.
+
+- Use the default MLPClassifier block from the notebook to build a baseline.
+
+```python
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
+from sklearn import datasets, svm, metrics
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+#clf = svm.SVC(gamma=0.001)
+#clf = RandomForestClassifier(max_depth=None, n_estimators=100, max_features='auto')
+#clf = MLPClassifier(solver='lbfgs',random_state=1, max_iter=10000)
+clf = MLPClassifier(hidden_layer_sizes=(2,), random_state=1, max_iter=10000)
+#clf = GaussianProcessClassifier(1.0 * RBF(1.0))
+#clf = DecisionTreeClassifier(max_depth=5)
+#clf = KNeighborsClassifier(5)
+#clf = AdaBoostClassifier()
+
+feature_names=[u'CA-Gly', u'Pro-MC', u'CB', u'CB-Pro',
+        u'Carboxyl', u'Amide',
+        u'His', u'Trp', u'Phe-Tyr', u'OH-Tyr', u'CG', u'CD', u'CE',
+        u'OH', u'SH', u'S', u'NH3', u'Arg',u'MC']
+X = np.array(mergepf[feature_names])
+
+# Other array setups #
+
+Y=np.array(mergepf[u'Fluorescence']>0)
+
+# Other array setups #
+
+sc=StandardScaler()
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, Y, test_size=0.5, shuffle=True)
+
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+clf.fit(X_train, y_train)
+predict=clf.predict(X_test)
+predict
+```
+
+## 9. Diagnostics
+
+- Plot the confusion matrix and print the classification report.
+
+```python
+from sklearn.metrics import ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+disp = ConfusionMatrixDisplay.from_estimator(
+    clf, X_test, y_test, cmap='Blues'
+)
+disp.ax_.set_title("Confusion Matrix")
+
+print("Confusion matrix:\n", disp.confusion_matrix)
+plt.show()
+```
+
+```python
+print(f"Classification report for classifier {clf}:\n"
+      f"{metrics.classification_report(y_test, predict)}\n")
+```
+
+::: {.callout-tip}
+## Recommended improvements for later tasks
+- Prefer stratified splits and wrap scaling + model in a Pipeline to avoid leakage.
+- Use macro F1, balanced accuracy, and PR curves when classes are imbalanced.
+:::
+
+---
+
+# Tasks (complete after the basic run-through)
+
+Complete these in new cells in the same notebook. Keep answers concise.
+
+1. Baseline reproduction
+   - Report: train accuracy, test accuracy, macro F1, confusion matrix. Comment on class balance.
+
+2. Stratified split + pipeline
+   - Replace the split with a stratified split. Wrap StandardScaler + MLP in a Pipeline. Report metrics as in Task 1.
+
+3. Model comparison
+   - Compare DecisionTreeClassifier and RandomForestClassifier with stratified 5-fold CV. Report mean ± std macro F1.
+
+4. Compact hyperparameter search
+   - For MLP, scan hidden_layer_sizes (1–8 neurons) with CV. Report best params and CV macro F1.
+
+5. Threshold and PR analysis
+   - For one probabilistic model, plot Precision-Recall and ROC. Discuss an operating threshold if imbalance exists.
+
+6. Robustness across seeds
+   - Repeat the train/test split with three seeds. Refit the chosen model and report variance of macro F1.
+
+7. Feature interpretation
+   - Identify top five influential features (permutation importance, RF importances, or MLP weights). Interpret biochemically.
+
+8. Reproducibility bundle
+   - Save random seeds, package versions, selected hyperparameters, and final metrics in a summary cell.
+
+---
+
+# Things to append to your submission
+
+- Notebook runs top-to-bottom without errors
+- Your reproducibility bundle
+- Plots: an example confusion matrix and network weights
+- A one-paragraph reflection on the challenges for using ML in peptide binding prediction
+

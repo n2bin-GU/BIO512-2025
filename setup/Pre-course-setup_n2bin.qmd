@@ -1,0 +1,111 @@
+---
+title: "Pre-course setup"
+subtitle: "Setup to be completed before the course"
+pagetitle: "Pre-course setup | n2bin"
+description: ""
+date: November 10, 2025
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+## Welcome to the world of bioinformatics :)
+
+Here is a tutorial to guide you through how to set up your computers for the BIO511 and 
+following courses. Throughout the course we will both teach you how to use your local 
+computer for bioinformatics but also, for more heavy duty stuff, use the [c3se](https://www.c3se.chalmers.se/)
+high performance computing cluster (HPC). The setup will therefore prepare you for both 
+cases.
+
+Some of you might already have done some kinds of bioinformatics and have other setups 
+and if you are comfortable with those, that's fine by us. We will however not be able 
+to give support/trouble shoot different kinds of setups so we ask you to make sure you 
+have what's below as a minimum.
+
+
+## Setup for Mac / Linux users
+
+macOS is Unix-based (specifically, it's a certified Unix system built on BSD) and 
+therefore one can run many Linux-compatible tools without modification directly. You can 
+basically just use the built in **Terminal** app and start coding. The Terminal runs the 
+zsh shell by default.
+
+However, to get a better user experience, especially when we further on are going to 
+access the HPC we will recommend using the 
+integrated development environment (IDE) Visual Studio Code (VS Code). Please follow 
+[these instructions](https://code.visualstudio.com/docs/setup/mac#_install-vs-code-on-macos) 
+to do so.
+
+
+## Setup for Windows users
+
+Using a Windows computer for bioinformatic work has sadly not been ideal most of
+the time, but large advances in recent years have made this quite feasible
+through the _Windows Subsystem for Linux (WSL)_.
+
+Apart from the Linux kernel provided by WSL, we also recommend installing the integrated
+development environment (IDE) Visual Studio Code (VS Code), and the tutorial will guide 
+you through how to set up WSL integrated in VS Code. If you already feel comfortable with 
+another IDE such and PyCharm since before, that's ok but we may not be able to trouble 
+shoot your setup during the course.
+
+There are two substantially different versions of the Linux subsystem, WSL1 and
+WSL2. We strongly recommend using **WSL2**, which offers an essentially complete
+Linux experience and better performance.
+
+Using the Linux subsystem will give you access to a full command-line bash shell
+and a Linux implementation on your Windows 10 or 11 PC. For the difference between
+the Linux Bash Shell and the Windows PowerShell, see _e.g._ [this article](https://searchitoperations.techtarget.com/tip/On-Windows-PowerShell-vs-Bash-comparison-gets-interesting).
+
+The installation has three main steps:
+
+1. Install WSL2 on Windows 10 or 11, follow the instructions here: [Installing the Windows Subsystem and the Linux Bash](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+::: {.callout-note}
+If you run into error messages when trying to download files through the Linux
+shell (_e.g._ `curl:(6) Could not resolve host`) then try adding the Google
+name server to the internet configuration by running `sudo nano
+/etc/resolv.conf` then add `nameserver 8.8.8.8` to the bottom of the file and
+save it.
+:::
+
+::: {.callout-caution}
+Whenever a setup instruction specifies Mac or Linux (_i.e._ only those two, with
+no alternative for Windows), **please follow the Linux instructions.**
+:::
+
+
+2. Install [Visual Studio Code](https://code.visualstudio.com/) on the Windows side 
+(not in WSL).
+
+::: {.callout-note}
+Note: When prompted to **Select Additional Tasks** during installation, be sure to check 
+the **Add to PATH** option so you can easily open a folder in WSL using the `code` command.
+:::
+
+3. Install the [WSL extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl). 
+If you plan to work with other remote extensions in VS Code, you may choose to install 
+the [Remote Development extension pack](https://aka.ms/vscode-remote/download/extension).
+
+
+## Getting access to the High Performance computing cluster **c3se**
+
+Now you have your local computer setup for bioinformatics. However, for many of the practicals
+we will use a high performance computing cluster, both so that you get familiar with that 
+way of working, to keep a more controlled environment for you in the beginning and to let 
+you perform analyses that require a bit more heavy duty computing power than your local machines.
+
+This setup will be the same regardless of your OS.
+
+1. Register yourself at [SUPR](https://supr.naiss.se/person/register/). SUPR is the database 
+for the National Swedish Infrastructure for Supercomputing (NAISS) and SUPR is used to keep 
+track of persons, projects, project proposals and more. Please register **with** Federated 
+Identity using your GU email address.
+
+2. When you have registered, please send an email to [kaisa.thorell@gu.se](kaisa.thorell@gu.se) 
+and I will add you to the c3se project.
+

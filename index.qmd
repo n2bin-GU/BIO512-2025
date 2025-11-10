@@ -1,0 +1,52 @@
+---
+title: "BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository"
+subtitle: "Welcome to the practical exercises for BIO512"
+author: "Tor Kling"
+date: November 10, 2025
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+    css: pages/styles.css
+---
+
+## Course Overview
+
+This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.
+
+### Transcriptomics
+
+- DESeq2 workflow:
+  - [Practical: DESeq2 Analysis 🔒](practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ANALYSIS.qmd)
+  - [Practical: Data Grouping and Visualisation 🔒](practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ADVANCED.qmd)
+- Network analysis:
+  - [Practical: Network visualisation and Centrality analysis 🔒](practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd)
+
+### Machine Learning
+
+- Peptide classification in Scikit-Learn:
+  - [Practical: Peptide Classification with ML 🔒](practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd)
+
+### Protein Structure and Modeling
+
+- Structure analysis (YASARA):
+  - [Practical: Protein Complex Structure Analysis 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd)
+- Structure prediction:
+  - [Practical: AlphaFold3 Prediction 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd)
+- Docking and MD:
+  - [Practical: Molecular Docking 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd)
+  - [Practical: MD Analysis 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd)
+
+### Computer Setup
+
+- Computer setup:
+  - [Pre-course Setup](setup/Pre-course-setup_n2bin.qmd)
+- HPC Cluster access:
+  - [Setting up the HPC](setup/Set_up_the_HPC.qmd)
+
+---
+
+For questions or issues, please contact the course instructors.

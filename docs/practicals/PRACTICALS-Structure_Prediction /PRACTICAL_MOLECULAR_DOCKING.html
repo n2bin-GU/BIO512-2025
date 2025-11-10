@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sayyed Jalil Mahdizadeh">
+<meta name="dcterms.date" content="2025-11-10">
+
+<title>Molecular Docking Analysis – BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8eb531ae3802ad7925fa8367121b26c6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../pages/styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-transcriptomics" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Transcriptomics</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-transcriptomics">    
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ANALYSIS.qmd">
+ <span class="dropdown-text">DESeq2 Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ADVANCED.qmd">
+ <span class="dropdown-text">Advanced PCA &amp; Correlation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-structure--modeling" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Structure &amp; Modeling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-structure--modeling">    
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd">
+ <span class="dropdown-text">Protein Complex Structure Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd">
+ <span class="dropdown-text">AlphaFold3 Prediction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd">
+ <span class="dropdown-text">Molecular Docking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd">
+ <span class="dropdown-text">MD Analysis</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-computer-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Computer Setup</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-computer-setup">    
+        <li>
+    <a class="dropdown-item" href="../../setup/Pre-course-setup_n2bin.html">
+ <span class="dropdown-text">Personal Computer Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../setup/Set_up_the_HPC.html">
+ <span class="dropdown-text">HPC Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#structure-preparation" id="toc-structure-preparation" class="nav-link" data-scroll-target="#structure-preparation"><span class="header-section-number">2</span> Structure Preparation</a>
+  <ul class="collapse">
+  <li><a href="#setting-up-yasara-workspace" id="toc-setting-up-yasara-workspace" class="nav-link" data-scroll-target="#setting-up-yasara-workspace"><span class="header-section-number">2.1</span> Setting up YASARA workspace</a></li>
+  <li><a href="#understanding-the-structure" id="toc-understanding-the-structure" class="nav-link" data-scroll-target="#understanding-the-structure"><span class="header-section-number">2.2</span> Understanding the structure</a></li>
+  <li><a href="#structure-cleaning-and-preparation" id="toc-structure-cleaning-and-preparation" class="nav-link" data-scroll-target="#structure-cleaning-and-preparation"><span class="header-section-number">2.3</span> Structure cleaning and preparation</a></li>
+  </ul></li>
+  <li><a href="#receptor-and-ligand-separation" id="toc-receptor-and-ligand-separation" class="nav-link" data-scroll-target="#receptor-and-ligand-separation"><span class="header-section-number">3</span> Receptor and Ligand Separation</a>
+  <ul class="collapse">
+  <li><a href="#splitting-the-complex" id="toc-splitting-the-complex" class="nav-link" data-scroll-target="#splitting-the-complex"><span class="header-section-number">3.1</span> Splitting the complex</a></li>
+  <li><a href="#saving-individual-components" id="toc-saving-individual-components" class="nav-link" data-scroll-target="#saving-individual-components"><span class="header-section-number">3.2</span> Saving individual components</a></li>
+  </ul></li>
+  <li><a href="#docking-simulation-setup" id="toc-docking-simulation-setup" class="nav-link" data-scroll-target="#docking-simulation-setup"><span class="header-section-number">4</span> Docking Simulation Setup</a>
+  <ul class="collapse">
+  <li><a href="#defining-the-simulation-cell" id="toc-defining-the-simulation-cell" class="nav-link" data-scroll-target="#defining-the-simulation-cell"><span class="header-section-number">4.1</span> Defining the simulation cell</a></li>
+  <li><a href="#running-the-docking-simulation" id="toc-running-the-docking-simulation" class="nav-link" data-scroll-target="#running-the-docking-simulation"><span class="header-section-number">4.2</span> Running the docking simulation</a></li>
+  </ul></li>
+  <li><a href="#results-analysis" id="toc-results-analysis" class="nav-link" data-scroll-target="#results-analysis"><span class="header-section-number">5</span> Results Analysis</a>
+  <ul class="collapse">
+  <li><a href="#binding-energy-analysis" id="toc-binding-energy-analysis" class="nav-link" data-scroll-target="#binding-energy-analysis"><span class="header-section-number">5.1</span> Binding energy analysis</a></li>
+  <li><a href="#visual-inspection-of-docking-poses" id="toc-visual-inspection-of-docking-poses" class="nav-link" data-scroll-target="#visual-inspection-of-docking-poses"><span class="header-section-number">5.2</span> Visual inspection of docking poses</a></li>
+  <li><a href="#quantitative-assessment" id="toc-quantitative-assessment" class="nav-link" data-scroll-target="#quantitative-assessment"><span class="header-section-number">5.3</span> Quantitative assessment</a></li>
+  </ul></li>
+  <li><a href="#review-questions" id="toc-review-questions" class="nav-link" data-scroll-target="#review-questions"><span class="header-section-number">6</span> Review Questions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Molecular Docking Analysis</h1>
+<p class="subtitle lead">BIO512 Structural Biology - Protein-Ligand Docking with YASARA</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sayyed Jalil Mahdizadeh </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that “glues” them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.</p>
+<p>In this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Create a new working directory
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new folder for this practical</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ex.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/BIO512/MD_practicals</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># All input and output files will be placed in this directory</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Also note that you need to download the materials from the Vera </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>your_vera_username<span class="op">&gt;</span>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/<span class="pp">*</span> ~/BIO512/MD_practicals/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end you should be able to:</p>
+<ul>
+<li>Prepare protein structures for molecular docking using YASARA</li>
+<li>Perform protein-ligand docking simulations</li>
+<li>Analyze docking results and binding energies</li>
+<li>Compare predicted poses with crystal structures using RMSD calculations</li>
+<li>Evaluate the success of docking predictions</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="structure-preparation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Structure Preparation</h1>
+<section id="setting-up-yasara-workspace" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="setting-up-yasara-workspace"><span class="header-section-number">2.1</span> Setting up YASARA workspace</h2>
+<ol type="1">
+<li><strong>Set the working directory</strong> (important):
+<ul>
+<li>Open YASARA</li>
+<li>Options &gt; Working directory &gt; navigate and find the ‘Docking’ folder &gt; OK</li>
+</ul></li>
+<li><strong>Download the structure</strong>:
+<ul>
+<li>File &gt; Load &gt; PDB file from Internet &gt; 3FAP</li>
+</ul></li>
+</ol>
+</section>
+<section id="understanding-the-structure" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="understanding-the-structure"><span class="header-section-number">2.2</span> Understanding the structure</h2>
+<p>In the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:</p>
+<ul>
+<li><strong>Mol A</strong> = chain A of the protein</li>
+<li><strong>Mol B</strong> = chain B of the protein<br>
+</li>
+<li><strong>Mol A</strong> = ligand (rapamycin)</li>
+<li><strong>Mol A (in red)</strong> = water molecules of chain A</li>
+<li><strong>Mol B (in red)</strong> = water molecules of chain B</li>
+</ul>
+</section>
+<section id="structure-cleaning-and-preparation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="structure-cleaning-and-preparation"><span class="header-section-number">2.3</span> Structure cleaning and preparation</h2>
+<ol start="3" type="1">
+<li><strong>Remove water molecules</strong>:
+<ul>
+<li>From the right-hand panel, right-click on both water entries and click ‘Delete’</li>
+</ul></li>
+<li><strong>Add missing hydrogen atoms</strong>:
+<ul>
+<li>Edit &gt; Clean &gt; All</li>
+</ul></li>
+<li><strong>Minimize the energy of the system</strong>:
+<ul>
+<li>Options &gt; Choose Experiment &gt; Energy minimization</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Troubleshooting
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On Linux, you may need to pause the minimization and continue to make it work: Options &gt; Control experiment &gt; Pause/Continue</p>
+</div>
+</div>
+<ol start="6" type="1">
+<li><strong>Delete SimCell</strong>:
+<ul>
+<li>From the right-hand panel, right-click on SimCell and Delete</li>
+</ul></li>
+<li><strong>Save the prepared complex</strong>:
+<ul>
+<li>File &gt; Save as &gt; PDB file &gt; select 3FAP from both Sequence and Name panels &gt; give a name (3FAP_complex.pdb)</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="receptor-and-ligand-separation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Receptor and Ligand Separation</h1>
+<section id="splitting-the-complex" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="splitting-the-complex"><span class="header-section-number">3.1</span> Splitting the complex</h2>
+<ol start="8" type="1">
+<li><strong>Split receptor and ligand</strong>:
+<ul>
+<li>From the right-side panel, right click on 3FAP &gt; split &gt; Split at selected molecules &gt; select the ligand (second A in the sequence panel)</li>
+<li>Now you can see two objects in the right-hand panel: receptor and ligand</li>
+</ul></li>
+<li><strong>Rename the objects</strong>:
+<ul>
+<li>Right click on the receptor object &gt; Name &gt; enter “Receptor”</li>
+<li>Right click on the ligand object &gt; Name &gt; enter “Ligand”</li>
+</ul></li>
+</ol>
+</section>
+<section id="saving-individual-components" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="saving-individual-components"><span class="header-section-number">3.2</span> Saving individual components</h2>
+<ol start="10" type="1">
+<li><strong>Save the receptor</strong>:
+<ul>
+<li>File &gt; Save as &gt; PDB file &gt; select Receptor &gt; OK &gt; give a name (3FAP_receptor.pdb)</li>
+</ul></li>
+<li><strong>Save the ligand</strong>:
+<ul>
+<li>File &gt; Save as &gt; Other file format &gt; select Ligand from the Object panel &gt; find sdf-MDL Mol from the Format panel &gt; enter a name (3FAP_ligand) &gt; OK</li>
+</ul></li>
+</ol>
+<p>At this point, you should have three files in your working directory: - 3FAP_complex.pdb - 3FAP_receptor.pdb - 3FAP_ligand.sdf</p>
+<hr>
+</section>
+</section>
+<section id="docking-simulation-setup" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Docking Simulation Setup</h1>
+<section id="defining-the-simulation-cell" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="defining-the-simulation-cell"><span class="header-section-number">4.1</span> Defining the simulation cell</h2>
+<ol start="12" type="1">
+<li><strong>Generate the simulation cell</strong>:
+<ul>
+<li>From the right-hand panel, right-click on Ligand object &gt; Select &gt; newly</li>
+<li>Then Simulation &gt; Define simulation cell &gt; around selected atoms</li>
+</ul></li>
+<li><strong>Remove the ligand</strong>:
+<ul>
+<li>Right-click on the Ligand object &gt; Delete</li>
+</ul></li>
+<li><strong>Save the receptor + simulation cell</strong>:
+<ul>
+<li>File &gt; Save as &gt; YASARA Scene &gt; give a name (3FAP_receptor.sce)</li>
+</ul></li>
+</ol>
+</section>
+<section id="running-the-docking-simulation" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="running-the-docking-simulation"><span class="header-section-number">4.2</span> Running the docking simulation</h2>
+<ol start="15" type="1">
+<li><strong>Set up docking</strong>:
+<ul>
+<li>Options &gt; Macro &amp; Movie &gt; set target &gt; select 3FAP_receptor.sce &gt; select ‘from underscore’ &gt; OK</li>
+</ul></li>
+<li><strong>Run docking</strong>:
+<ul>
+<li>Options &gt; Macro &amp; Movie &gt; Play macro &gt; find and click on dock_run.mcr &gt; OK</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="results-analysis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Results Analysis</h1>
+<section id="binding-energy-analysis" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="binding-energy-analysis"><span class="header-section-number">5.1</span> Binding energy analysis</h2>
+<ol start="17" type="1">
+<li><strong>Analyze the results</strong>:
+<ul>
+<li>Check for the log file (3FAP.log) in the working directory</li>
+<li>Look at the binding energy values in the first table (Bind.energy)</li>
+<li>The first entry always has the best binding energy value</li>
+</ul></li>
+</ol>
+</section>
+<section id="visual-inspection-of-docking-poses" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="visual-inspection-of-docking-poses"><span class="header-section-number">5.2</span> Visual inspection of docking poses</h2>
+<ol start="18" type="1">
+<li><strong>Open predicted and crystal structures</strong>:
+<ul>
+<li>Open the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)</li>
+<li>Open the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)</li>
+</ul></li>
+<li><strong>Optimize visualization</strong>:
+<ul>
+<li>View &gt; Hide atoms &gt; Aliphatic hydrogens</li>
+<li>View &gt; Style atoms &gt; Stick &gt; ALL</li>
+<li>View &gt; Hide atoms &gt; Molecule &gt; A (first entry in the Sequence panel)</li>
+<li>View &gt; Hide atoms &gt; Molecule &gt; A (second entry in the Sequence panel)</li>
+</ul></li>
+<li><strong>Visual comparison</strong>:
+<ul>
+<li>Visually inspect how well the crystal pose and the predicted docking pose overlap</li>
+<li>Note any significant differences between the two poses</li>
+</ul></li>
+</ol>
+</section>
+<section id="quantitative-assessment" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="quantitative-assessment"><span class="header-section-number">5.3</span> Quantitative assessment</h2>
+<ol start="21" type="1">
+<li><strong>Calculate RMSD from crystal pose</strong>:
+<ul>
+<li>Analyze &gt; RMSD of &gt; Molecules &gt; docked ligand (second A in the Sequence panel) &gt; OK &gt; crystal ligand (third A in the Sequence panel) &gt; OK &gt; select Molecule &gt; OK</li>
+<li>The RMSD value will be displayed in the panel below the screen</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Success Criteria
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Usually, RMSD &lt; 2.0 Å is considered as a successful docking simulation.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="review-questions" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Review Questions</h1>
+<ol type="1">
+<li><p><strong>What was the binding energy of your best docking pose?</strong> How does this compare to typical protein-ligand interactions?</p></li>
+<li><p><strong>What is the RMSD between your predicted pose and the crystal structure?</strong> Is this considered a successful prediction?</p></li>
+<li><p><strong>Describe the key interactions</strong> you observe between rapamycin and the protein complex. What makes this compound effective as a molecular glue?</p></li>
+<li><p><strong>What are the limitations</strong> of molecular docking that you should be aware of when interpreting these results?</p></li>
+<li><p><strong>How might you improve</strong> the docking results if the RMSD was too high?</p></li>
+</ol>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Proper structure preparation is crucial for successful molecular docking</li>
+<li>YASARA provides an integrated workflow for structure preparation, docking, and analysis</li>
+<li>RMSD comparison with crystal structures validates docking accuracy</li>
+<li>Molecular glues like rapamycin stabilize protein complexes through specific binding interactions</li>
+<li>Visual inspection complements quantitative metrics in evaluating docking success</li>
+</ul>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

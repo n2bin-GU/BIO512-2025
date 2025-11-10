@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Muhammad Arif">
+<meta name="dcterms.date" content="2025-11-10">
+
+<title>Differential Expression and Enrichment Analysis – BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8eb531ae3802ad7925fa8367121b26c6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../pages/styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-transcriptomics" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Transcriptomics</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-transcriptomics">    
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ANALYSIS.qmd">
+ <span class="dropdown-text">DESeq2 Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ADVANCED.qmd">
+ <span class="dropdown-text">Advanced PCA &amp; Correlation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-structure--modeling" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Structure &amp; Modeling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-structure--modeling">    
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd">
+ <span class="dropdown-text">Protein Complex Structure Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd">
+ <span class="dropdown-text">AlphaFold3 Prediction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd">
+ <span class="dropdown-text">Molecular Docking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd">
+ <span class="dropdown-text">MD Analysis</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-computer-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Computer Setup</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-computer-setup">    
+        <li>
+    <a class="dropdown-item" href="../../setup/Pre-course-setup_n2bin.html">
+ <span class="dropdown-text">Personal Computer Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../setup/Set_up_the_HPC.html">
+ <span class="dropdown-text">HPC Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#files-and-setup" id="toc-files-and-setup" class="nav-link" data-scroll-target="#files-and-setup"><span class="header-section-number">2</span> Files and setup</a></li>
+  <li><a href="#basic-run-through" id="toc-basic-run-through" class="nav-link" data-scroll-target="#basic-run-through"><span class="header-section-number">3</span> Basic run-through</a>
+  <ul class="collapse">
+  <li><a href="#library" id="toc-library" class="nav-link" data-scroll-target="#library"><span class="header-section-number">3.1</span> Library</a></li>
+  <li><a href="#load-count-data" id="toc-load-count-data" class="nav-link" data-scroll-target="#load-count-data"><span class="header-section-number">3.2</span> Load Count Data</a></li>
+  <li><a href="#exploratory-data-analysis-pca" id="toc-exploratory-data-analysis-pca" class="nav-link" data-scroll-target="#exploratory-data-analysis-pca"><span class="header-section-number">3.3</span> Exploratory Data Analysis: PCA</a>
+  <ul class="collapse">
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps"><span class="header-section-number">3.3.1</span> Steps</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions"><span class="header-section-number">3.3.2</span> Questions:</a></li>
+  <li><a href="#pca-cheatsheet" id="toc-pca-cheatsheet" class="nav-link" data-scroll-target="#pca-cheatsheet"><span class="header-section-number">3.3.3</span> PCA Cheatsheet:</a></li>
+  </ul></li>
+  <li><a href="#statistical-analysis-deseq2" id="toc-statistical-analysis-deseq2" class="nav-link" data-scroll-target="#statistical-analysis-deseq2"><span class="header-section-number">3.4</span> Statistical Analysis: DESeq2</a>
+  <ul class="collapse">
+  <li><a href="#steps-1" id="toc-steps-1" class="nav-link" data-scroll-target="#steps-1"><span class="header-section-number">3.4.1</span> Steps:</a></li>
+  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1"><span class="header-section-number">3.4.2</span> Questions:</a></li>
+  </ul></li>
+  <li><a href="#enrichment-analysis-go-biological-process" id="toc-enrichment-analysis-go-biological-process" class="nav-link" data-scroll-target="#enrichment-analysis-go-biological-process"><span class="header-section-number">3.5</span> Enrichment Analysis: GO Biological Process</a>
+  <ul class="collapse">
+  <li><a href="#steps-2" id="toc-steps-2" class="nav-link" data-scroll-target="#steps-2"><span class="header-section-number">3.5.1</span> Steps</a></li>
+  <li><a href="#questions-2" id="toc-questions-2" class="nav-link" data-scroll-target="#questions-2"><span class="header-section-number">3.5.2</span> Questions:</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#things-to-append-to-your-submission" id="toc-things-to-append-to-your-submission" class="nav-link" data-scroll-target="#things-to-append-to-your-submission"><span class="header-section-number">4</span> Things to append to your submission</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Differential Expression and Enrichment Analysis</h1>
+<p class="subtitle lead">BIO512 Transcriptomics – PyDESeq2, PCA, and GO BP Enrichment</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Muhammad Arif </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>In this practical, you will perform differential expression analysis using PyDESeq2, explore the data structure with PCA, and interpret results via GO Biological Process enrichment. You will work from raw counts and sample metadata, then save normalized counts and DE results for downstream network analysis.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Create a working directory and gather inputs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/BIO512/DESeq_lab</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/BIO512/DESeq_lab</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Required files can be fetched from the Cluster</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>your_vera_username<span class="op">&gt;</span>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/DeSeq/<span class="pp">*</span> ~/BIO512/practicals/DeSeq/</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">myvariable</span> = {__}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># should be replaced with actual code.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">myvariable</span> = <span class="st">"Hello, World!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end you should be able to:</p>
+<ul>
+<li>Load RNA-seq counts and metadata and perform PCA</li>
+<li>Run PyDESeq2 to identify differentially expressed genes (DEGs)</li>
+<li>Visualize adjusted p-values and MA plot</li>
+<li>Save normalized counts and DE results for reuse</li>
+<li>Run GO BP enrichment (via GSEAPY/Enrichr) after mapping Ensembl IDs to gene names</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="files-and-setup" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Files and setup</h1>
+<ul>
+<li>Count matrix: counts.tsv</li>
+<li>Sample metadata: metadata.txt</li>
+<li>Output (produced here):
+<ul>
+<li>Deseq2_Results.txt</li>
+<li>Deseq2_NormalizedCount.txt</li>
+</ul></li>
+</ul>
+<p>Ensure you have the following packages: pandas, numpy, seaborn, matplotlib, pydeseq2, pca, gseapy, pybiomart, scipy.</p>
+<hr>
+</section>
+<section id="basic-run-through" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Basic run-through</h1>
+<p>Follow these steps and add short notes under each result.</p>
+<section id="library" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="library"><span class="header-section-number">3.1</span> Library</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding these 4 lines will make our life easier if we need </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to do figure post-processing in other software</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(font<span class="op">=</span><span class="st">"Arial"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"white"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams[<span class="st">'pdf.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams[<span class="st">'ps.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.dds <span class="im">import</span> DeseqDataSet</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.default_inference <span class="im">import</span> DefaultInference</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.ds <span class="im">import</span> DeseqStats</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pca <span class="im">import</span> pca</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pybiomart <span class="im">import</span> Dataset</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA <span class="im">as</span> sklearnPCA</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, math</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">'KMP_DUPLICATE_LIB_OK'</span>]<span class="op">=</span><span class="st">'True'</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> zscore, spearmanr</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gseapy <span class="im">as</span> gp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="load-count-data" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="load-count-data"><span class="header-section-number">3.2</span> Load Count Data</h2>
+<p>We begin by importing the raw data into Python for downstream analysis. The count and metadata was those generated in the previous exercises. The dataset consists of two files:</p>
+<ol type="1">
+<li><p>Count file – This file contains the raw gene expression counts. Each row corresponds to a gene, and each column corresponds to a sample (identified by its sample ID).</p></li>
+<li><p>Metadata file – This file provides the experimental information for each sample, including the sample ID, condition (normal vs.&nbsp;infected), and replicate number.</p></li>
+</ol>
+<p>We load both files into pandas DataFrames for easier handling</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the count data, tab separated</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> pd.read_csv(<span class="st">"counts.tsv"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the metadata, tab separated</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> pd.read_csv(<span class="st">"metadata.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Q1: How many genes and samples do you have in your matrix?</strong></p>
+</section>
+<section id="exploratory-data-analysis-pca" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="exploratory-data-analysis-pca"><span class="header-section-number">3.3</span> Exploratory Data Analysis: PCA</h2>
+<p>Before performing downstream statistical tests, it is important to explore the overall structure of the data. EDA is an incredibly useful dogma in data analysis, using the data itself to plot and visualize relationships that will guide downstream analysis. It is a great way to get to know your data in depth and identify potential issues or interesting patterns. Principal Component Analysis (PCA) is a common dimensionality reduction technique that allows us to visualize high-dimensional gene expression data in just two or three dimensions. This helps us to:</p>
+<ol type="1">
+<li>Identify major sources of variation in the dataset.</li>
+<li>Assess whether samples cluster according to their experimental conditions (e.g., normal vs.&nbsp;infected).</li>
+<li>Detect potential outliers or batch effects.</li>
+</ol>
+<p>Since PCA requires numerical input, we apply it directly to the count matrix, using the samples as observations and the genes as features. The counts are typically log-transformed (or otherwise normalized) prior to PCA to reduce the effect of extreme values.</p>
+<p>For this PCA analysis, we are going to use this PCA module: https://erdogant.github.io/pca/pages/html/index.html</p>
+<p>There are two ways to initialize PCA:</p>
+<ol type="1">
+<li><p>By retaining enough components to explain X% of the variance (95% for this example, maximum 1 aka 100%) <code>model = pca(n_components=0.95)</code></p></li>
+<li><p>By limiting the number of principal components (3 PCs in this example, to allow for 3D visualizaiton if needed) <code>model = pca(n_components=3)</code></p></li>
+</ol>
+<section id="steps" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="steps"><span class="header-section-number">3.3.1</span> Steps</h3>
+<ol type="1">
+<li>Let’s use the 2nd initialization method, limiting the PCs to 3</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pca(n_components<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Setting up the dataframe for analysis
+<ol type="1">
+<li>Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to “count_PCA”.</li>
+<li>Replace the sample ID to their conditions (normal or infected) (Tips: we make sure that the sample sequence in the count file is the same with metadata)
+<ul>
+<li>Hint: A pythonic way to do this <code>count_PCA = count_PCA.rename(columns = metadata["Conditions"])</code></li>
+</ul></li>
+<li>Log-transform the count_PCA. Read about “log1p” function from numpy, what does it mean?</li>
+</ol></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up the dataframe for analysis</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count[{__}]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 2. Replace the sample ID to their conditions (normal or infected)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count_PCA[metadata.index]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.2. replacing the column names with their metadata["Conditions"] column</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>count_PCA.columns <span class="op">=</span> {__}</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 3. Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Perform the PCA analysis, on logged data using model.fit_transform() function (Note: This package requires gene names as the column names and the sample ID as the row names, so we have to transpose our dataframe (.T in the end))</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit_transform(count_PCA.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>Plot the PCA analysis with a scatter plot (Note: figsize option is to limit the dimension of the plot. Can be adjusted to fit your preference. Play around with it.)</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="questions" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="questions"><span class="header-section-number">3.3.2</span> Questions:</h3>
+<p><strong>Q2.1: What is your interpretation of the PCA analysis? Is there any outliers? Justify your opinion.</strong> <strong>Q2.2: Is the plot title total variant same as the PC1 + PC2 explained variant? If not, why?</strong></p>
+</section>
+<section id="pca-cheatsheet" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="pca-cheatsheet"><span class="header-section-number">3.3.3</span> PCA Cheatsheet:</h3>
+<ol type="1">
+<li>model.scatter3d() –&gt; 3D PCA plotting</li>
+<li>model.biplot() –&gt; Plotting top loading factors (model.biplot3d for 3D PCA)</li>
+<li>Explore “model.results” for detailed information of the PCA model, including “explained_var”, “variance_ratio”, “loadings”, etc</li>
+</ol>
+<p>More info: https://erdogant.github.io/pca/pages/html/index.html</p>
+</section>
+</section>
+<section id="statistical-analysis-deseq2" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="statistical-analysis-deseq2"><span class="header-section-number">3.4</span> Statistical Analysis: DESeq2</h2>
+<p>To identify differentially expressed genes (DEGs) between infected and normal samples, we applied <strong>DESeq2 methodology</strong>. DESeq2 is a widely used statistical framework for RNA-seq data analysis, based on modeling count data with negative binomial distributions. It provides robust normalization, variance estimation, and statistical testing to identify genes whose expression is significantly associated with the experimental condition.</p>
+<p>In this analysis, we make use of <strong>PyDESeq2</strong>, a Python implementation of the DESeq2 workflow. This allows us to perform the entire statistical analysis in Python while maintaining compatibility with the established DESeq2 methods.</p>
+<p>https://pydeseq2.readthedocs.io/en/stable/</p>
+<p>The results of this analysis will yield:</p>
+<ul>
+<li>A list of genes with significant differential expression (adjusted p-value cutoff).<br>
+</li>
+<li>Fold changes indicating the direction and magnitude of regulation (upregulated or downregulated in infected samples).<br>
+</li>
+<li>Statistical confidence measures that account for biological variability and replicate structure.</li>
+</ul>
+<p>Now we can proceed with the differential expression testing. The deseq2() function does all the hard work, it basically performs three steps:</p>
+<ol type="1">
+<li>Compute a scaling factor for each sample to account for differences in read depth and complexity between samples</li>
+<li>Estimate the variance among samples</li>
+<li>Test for differences in expression among groups</li>
+</ol>
+<p>Before executing the deseq2() function, we have to prepare the input object (lets call it dds, Deseq Data Set). If you inspect the help pages, there are several arguments that we could use. For this particular exercise it would be just enough to use the default values.</p>
+<p>Extract the results using the results() function into an object called res and have a look.</p>
+<section id="steps-1" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="steps-1"><span class="header-section-number">3.4.1</span> Steps:</h3>
+<ol type="1">
+<li>Create dds object. Use the original unfiltered count and metadata variables. For the design option, let’s use the “Conditions” column on metadata</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dds <span class="op">=</span> DeseqDataSet(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    counts<span class="op">=</span>count.T,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    metadata<span class="op">=</span>metadata,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    design<span class="op">=</span><span class="st">"~Conditions"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    refit_cooks<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Perform the DESeq2 analysis with deseq2() function (It may take a few mins)</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dds.deseq2()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>OPTIONAL: Look at the sub-variables inside the dds object</p>
+<ol start="3" type="1">
+<li>Perform the comparison between Infected and Normal group using DeseqStats() function</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> DeseqStats(dds, contrast<span class="op">=</span>[<span class="st">"Conditions"</span>, <span class="st">"Infected"</span>, <span class="st">"Normal"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>Retrieve the results and assign it to a different object, e.g.&nbsp;deseq_results (hint: ds.results_df after running ds.summary()).</li>
+</ol>
+<p>Remember that since we are doing a lot of tests, as many tests as genes in our experiment, we need to correct our pvalues. DESeq already did this while testing for differences among our groups, so let’s create a histogram of these adjusted pvalues and an MA-plot to inspect if there is any enrichment of DE genes.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ds.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>deseq_results <span class="op">=</span> ds.results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li>Make a histogram using the hist() function on the padj column of the results object. Change arguments in the placeholder to make a nice histogram (eg. add some color, a title etc.)</li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>deseq_results[<span class="st">"padj"</span>].hist(bins <span class="op">=</span> <span class="dv">100</span>, {__})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li>Create a MA-plot with the plot_MA() function from DeseqStats object (not dds!).</li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ds.plot_MA()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="7" type="1">
+<li>Let’s remove the genes with NAN adjusted p-values. Use the .notna() function on the padj column of the results object to keep those that has valid adjusted p-values.</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>notna_deseq <span class="op">=</span> {__}</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>notna_deseq.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="questions-1" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="questions-1"><span class="header-section-number">3.4.2</span> Questions:</h3>
+<ul>
+<li><strong>Q3.1: How many significantly differentially expressed genes in this comparison? (padj &lt; 0.05)</strong></li>
+<li><strong>Q3.2: What does the histogram tell you? Looking at the MA plot, approximately what are your highest and lowest Foldchanges?</strong></li>
+<li><strong>Q3.3: How many genes with a p-adjusted value of NA did you have?</strong></li>
+<li><strong>Q3.4: What is the top 5 most significantly differentially expressed genes based on their log2FoldChange? (padj &lt; 0.05)Look for their gene names using online tools (e.g.&nbsp;ENSG00000166211 is SPIC).</strong></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember: There are up and down-regulated genes, make sure that you sort it based on their absolute values. Hint: .sort_values(“log2FoldChange”, key = abs)</p>
+</div>
+</div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>notna_deseq[notna_deseq[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>].sort_values(<span class="st">"log2FoldChange"</span>, key <span class="op">=</span> <span class="bu">abs</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="save-the-normalized-count-from-deseq2-and-final-result-without-the-nas-as-a-tab-separated-file" class="level4" data-number="3.4.2.1">
+<h4 data-number="3.4.2.1" class="anchored" data-anchor-id="save-the-normalized-count-from-deseq2-and-final-result-without-the-nas-as-a-tab-separated-file"><span class="header-section-number">3.4.2.1</span> Save the normalized count from DESeq2 and final result without the NAs as a tab-separated file</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>notna_deseq[notna_deseq[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>].to_csv(<span class="st">"Deseq2_Results.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(dds.layers[<span class="st">"normed_counts"</span>], columns <span class="op">=</span> dds.var_names, index<span class="op">=</span>dds.obs_names).T.to_csv(<span class="st">"Deseq2_NormalizedCount.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="enrichment-analysis-go-biological-process" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="enrichment-analysis-go-biological-process"><span class="header-section-number">3.5</span> Enrichment Analysis: GO Biological Process</h2>
+<p>To gain functional insight into the differentially expressed genes (DEGs), we performed a <strong>Gene Ontology (GO) enrichment analysis</strong>, focusing on the <strong>Biological Process (BP)</strong> category. This analysis identifies biological pathways and processes that are statistically overrepresented among the DEGs compared to what would be expected by chance.</p>
+<p>Key goals of this analysis include:</p>
+<ul>
+<li>Highlighting biological processes that are upregulated or downregulated in response to infection.<br>
+</li>
+<li>Linking the transcriptional changes to relevant cellular mechanisms such as immune response, stress response, or metabolic pathways.<br>
+</li>
+<li>Providing a higher-level interpretation of the DEG list beyond individual genes.</li>
+</ul>
+<p>The output of this step will be a ranked list of enriched GO Biological Process terms, along with their associated enrichment scores and adjusted p-values. This helps us interpret how the infection condition impacts cellular and molecular functions.</p>
+<p>For enrichment analysis, we will use <strong>Gseapy</strong> package, specifically the Enrichr API (GUI: https://maayanlab.cloud/Enrichr/)</p>
+<p>https://gseapy.readthedocs.io/en/latest/gseapy_example.html</p>
+<section id="steps-2" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="steps-2"><span class="header-section-number">3.5.1</span> Steps</h3>
+<ol start="0" type="1">
+<li>Since our the gene names are using “Ensembl Gene ID” and most enrichment analysis packages supports only “Gene Name” or “HGNC ID”, let’s first convert them. We will use the pyBioMart package to help us retrieving the mapping file.</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Starting connections to ensembl website using the "Dataset" function from pyBioMart</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> Dataset(name<span class="op">=</span><span class="st">'hsapiens_gene_ensembl'</span>, host<span class="op">=</span><span class="st">'http://www.ensembl.org'</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving name mapping dataframe between "Esembl ID" and External Gene Name (HGNC)</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>mapping <span class="op">=</span> dataset.query(attributes<span class="op">=</span>[<span class="st">'ensembl_gene_id'</span>, <span class="st">'external_gene_name'</span>])</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at the mapping structure</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>mapping.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's copy the deseq results again, focusing only on differentially expressed genes</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> {__}</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we are merging the mapping dataframe to the significant_deseq object. read more on Pandas Merging function if needed</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> significant_deseq.merge(mapping, left_index <span class="op">=</span> <span class="va">True</span>, right_on <span class="op">=</span> <span class="st">"Gene stable ID"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Lets remove those with no gene names</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> {__}</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at the new significant_deseq structure</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>significant_deseq.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li>Make two lists of significantly differentially expressed genes (signficant_deseq object): up and down-regulated genes (use the Gene name columns)</li>
+</ol>
+<ul>
+<li>up-regulated: Log2FoldChange &gt; 0 (and padj &lt; 0.05) –&gt; 80 genes</li>
+<li>down-regulated: Log2FoldChange &lt; 0 (and padj &lt; 0.05) –&gt; 66 genes</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>up <span class="op">=</span> {__}</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>down <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(up)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(down)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Perform enrichment analysis using Enrichr API from GSEAPY. Do one enrichment analysis for each direction (one for up and one for down-regulated genes). For uniformity, please use the object name enr_up and enr_down.</li>
+</ol>
+<p>https://gseapy.readthedocs.io/en/latest/gseapy_example.html#Enrichr-Web-Serives-(without-a-backgound-input)</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>enr_up <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>enr_down <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>To get detailed output of the enrichment analysis results in dataframe format, access the .res2d variable under enr_up and enr_down</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>enr_up.res2d.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>enr_down.res2d.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>Plot the enrichment analysis results focusing on the top 10 most enriched processes for each up and down-regulated genes. Explore all the plotting options and pretify it with the options. (use the option cutoff=1, since we do not have that many genes to enrich)</li>
+</ol>
+<p>https://gseapy.readthedocs.io/en/latest/gseapy_example.html#Plotting</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="questions-2" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="questions-2"><span class="header-section-number">3.5.2</span> Questions:</h3>
+<ul>
+<li><strong>Q4.1: How many significantly enriched processes for up- and down-regulated genes? (Adjusted P-value &lt; 0.11, arbitrary cut off)</strong></li>
+<li><strong>Q4.2: What does “Combined Score” mean? Check https://maayanlab.cloud/Enrichr/help#basics</strong></li>
+<li><strong>Q4.3: What are the genes associated with the process with the highest combined score in each direction?</strong></li>
+<li><strong>Q4.4: What are the top 10 enriched processes for the up- and down-regulated genes? Include a figure for each direction.</strong></li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="things-to-append-to-your-submission" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Things to append to your submission</h1>
+<ul>
+<li>Save your notebook as PRACTICAL_DESEQ_ANALYSIS_yourname.ipynb</li>
+<li>Include your answers to all DESeq and enrichment questions</li>
+<li>Include plots: PCA plot, histogram of adjusted p-values, MA plot, and enrichment dotplots (up and down)</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

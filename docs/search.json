@@ -1,0 +1,569 @@
+[
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "",
+    "text": "The goal of this practical is to analyze protein-protein interactions using the classic model system of Barnase-Barstar from Bacillus amyloliquefaciens (PDB ID: 1BRS). This system represents an excellent example of protein-protein recognition and binding specificity.\nBarnase is a small extracellular ribonuclease that degrades RNA. On its own, it’s toxic to the producing cell. Barstar is an intracellular protein inhibitor of Barnase that binds extremely tightly and blocks the RNase active site, protecting the bacterium until Barnase is secreted.\nIn this practical, we will prepare the crystal structure, analyze the protein-protein interface, and identify key interacting residues that are critical for complex formation.\n\n\n\n\n\n\nREMEMBER: Create a working directory\n\n\n\n# Create a new folder for this practical\nmkdir -p ~/BIO512/AF\n# All input and output files will be placed in this directory\n\n# Also note that you need to download the materials from the Vera \nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/AF/* ~/BIO512/AF/\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nPrepare protein complex structures for analysis using YASARA\nVisualize and analyze protein-protein interactions\nIdentify hydrogen bonds at protein interfaces\nDetermine key residues involved in protein-protein recognition\nUnderstand the structural basis of protein binding specificity"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#setting-up-yasara-workspace",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#setting-up-yasara-workspace",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "2.1 Setting up YASARA workspace",
+    "text": "2.1 Setting up YASARA workspace\n\nSet the working directory (important):\n\nOpen YASARA\nOptions &gt; Working directory &gt; navigate and find the ‘AF’ folder &gt; OK\n\nDownload the crystal structure:\n\nFile &gt; Load &gt; PDB file from Internet &gt; 1BRS\nYou can see three identical Barnase-Barstar complexes where we need only one"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#understanding-the-structure-contents",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#understanding-the-structure-contents",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "2.2 Understanding the structure contents",
+    "text": "2.2 Understanding the structure contents\n\nAnalyze the scene contents: In the right-hand panel, you can see a single object named 1BRS. Click on it to expand. There are 12 molecules under 1BRS:\n\nMol A, B, C = Barnase (ribonuclease)\nMol D, E, F = Barstar (inhibitor)\nMol A, B, C, D, E, F (in red) = water molecules"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structure-cleaning",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structure-cleaning",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "2.3 Structure cleaning",
+    "text": "2.3 Structure cleaning\n\nRemove redundant molecules:\n\nRemove water molecules (highlighted in red) by right-clicking and choosing “Delete”\nRemove Mol B, C, E, F (right-click and choose “Delete”)\nNow you have only one Barnase (Mol A)-Barstar (Mol D) complex\n\nCenter the structure:\n\nRight-click on the object (1brs) from the right-hand panel and choose ‘Center’\n\nAdd missing hydrogen atoms:\n\nEdit &gt; Clean &gt; All"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#force-field-and-energy-minimization",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#force-field-and-energy-minimization",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "2.4 Force field and energy minimization",
+    "text": "2.4 Force field and energy minimization\n\nSelect the force field:\n\nSimulation &gt; Force field &gt; AMBER 14 &gt; check the box next to ‘use PME…’ &gt; OK\n\nMinimize the energy:\n\nOptions &gt; Energy minimization\n\nClean up simulation cell:\n\nFrom the right-hand panel, right-click on SimCell and Delete\n\nSave the prepared complex:\n\nFile &gt; Save as &gt; PDB file &gt; select 1BRS from both Sequence and Name panels &gt; OK &gt; give a name (1BRS_complex.pdb)"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#visualization-setup",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#visualization-setup",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "3.1 Visualization setup",
+    "text": "3.1 Visualization setup\n\nOptimize visualization:\n\nView &gt; Hide atoms &gt; Aliphatic hydrogens"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#hydrogen-bond-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#hydrogen-bond-analysis",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "3.2 Hydrogen bond analysis",
+    "text": "3.2 Hydrogen bond analysis\n\nVisualize protein-protein interactions:\n\nOpen the command window (press space bar on your keyboard)\nEnter the command: ShowHBoAtom Mol A with distance&lt;2.6 from Mol D\nAlternative command: ShowHBoAtom Mol D with distance&lt;2.6 from Mol A\nYou can now see hydrogen bonds between the two proteins shown as yellow dashed lines\n\n\n\n\n\n\n\n\nUnderstanding the commands\n\n\n\n\nShowHBoAtom displays hydrogen bond atoms\ndistance&lt;2.6 sets the maximum distance for hydrogen bond detection (2.6 Å)\nMol A refers to Barnase, Mol D refers to Barstar"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#identifying-key-interactions",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#identifying-key-interactions",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "3.3 Identifying key interactions",
+    "text": "3.3 Identifying key interactions\n\nAnalyze the binding interface:\n\nTake a closer look at the interface between the two proteins\nFocus on regions with multiple hydrogen bonds\nNote the types of residues involved in the interactions\n\nIdentify critical residues: Examine which residues of Barstar (Mol D) form the most hydrogen bonds with Barnase (Mol A):\n\nASP39 of Barstar: Forms 4 strong hydrogen bonds with LYS27, ARG83, and ARG87 of Barnase\nASP35 of Barstar: Forms 2 hydrogen bonds with ARG59 and GLU60 of Barnase\n\n\n\n\n\n\n\n\nExperimental validation\n\n\n\nExperimental mutagenesis analysis shows that ASP39 and ASP35 are the key residues in the interaction. Mutations of these residues significantly disrupt complex formation."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#sequence-preparation-for-further-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#sequence-preparation-for-further-analysis",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "3.4 Sequence preparation for further analysis",
+    "text": "3.4 Sequence preparation for further analysis\n\nObtain sequences for downstream analysis:\n\nOpen your internet browser and go to www.rcsb.org\nSearch for 1BRS\nClick on ‘Download Files’ and choose ‘FASTA Sequence’\nOpen the downloaded FASTA file using a text editor (notepad on Windows)\nYou can see the sequences of both proteins that will be used in the next practical"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structural-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structural-analysis",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "4.1 Structural Analysis",
+    "text": "4.1 Structural Analysis\n\nHow many hydrogen bonds do you observe at the Barnase-Barstar interface? Which regions show the highest density of interactions?\nWhat types of amino acids are predominantly involved in the protein-protein interface? Are they mostly charged, polar, or hydrophobic?\nWhy do you think ASP39 and ASP35 are particularly important for binding? Consider their chemical properties and interaction partners."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#interface-characterization",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#interface-characterization",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "4.2 Interface Characterization",
+    "text": "4.2 Interface Characterization\n\nDescribe the shape complementarity between Barnase and Barstar. Is the interface flat or does it involve deep binding pockets?\nWhat would you predict would happen if ASP39 was mutated to:\n\nAlanine (A) - a small, nonpolar residue?\nArginine (R) - a positively charged residue?\n\nFrom a biological perspective, why is tight binding between Barnase and Barstar essential for the bacterium?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#experimental-design",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#experimental-design",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "4.3 Experimental Design",
+    "text": "4.3 Experimental Design\n\nIf you were to design experiments to test the importance of the identified residues, what mutations would you make and what assays would you perform?\nBesides hydrogen bonds, what other types of interactions might be important at this interface? How could you analyze them?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#binding-specificity",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#binding-specificity",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "5.1 Binding Specificity",
+    "text": "5.1 Binding Specificity\n\nElectrostatic complementarity: Negatively charged Asp residues in Barstar interact with positively charged Lys/Arg residues in Barnase\nShape complementarity: The proteins fit together like puzzle pieces\nMultiple contact points: Several residues contribute to the overall binding affinity"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#functional-implications",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#functional-implications",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "5.2 Functional Implications",
+    "text": "5.2 Functional Implications\n\nActive site blocking: Barstar binding prevents RNA access to Barnase active site\nRegulatory mechanism: Tight binding allows controlled release of Barnase activity\nEvolutionary optimization: The interface has evolved for maximum binding strength\n\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nProtein-protein interfaces involve multiple types of interactions working together\nHydrogen bonds can be visualized and analyzed using computational tools\nKey residues often involve complementary charges and multiple contact points\nStructural analysis provides insights into binding mechanisms and specificity\nCrystal structures serve as valuable starting points for understanding protein function"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#preparation-for-next-practical",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#preparation-for-next-practical",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "5.3 Preparation for Next Practical",
+    "text": "5.3 Preparation for Next Practical\nIn the next practical, you will use AI-based structure prediction (AlphaFold3) to: - Predict the structure of the wild-type Barnase-Barstar complex - Model the effects of mutations on complex formation - Compare predicted structures with the crystal structure you analyzed today\nThe sequences you obtained in step 15 will be used as input for AlphaFold3 predictions."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "",
+    "text": "In this practical, we will apply AI-based protein complex structure prediction using AlphaFold3 (AF3). You will learn about the capabilities of AF3 in predicting protein complexes from wild-type sequences and the effects of mutations on complex formation.\nBuilding on the previous practical where you analyzed the crystal structure of the Barnase-Barstar complex and identified key interacting residues (ASP39 and ASP35), you will now use AF3 to predict how mutations to these critical residues affect complex stability and formation.\n\n\n\n\n\n\nPrerequisites\n\n\n\n\nCompleted analysis of 1BRS crystal structure from previous practical\nFASTA sequences of Barnase and Barstar from PDB\nGmail account for AlphaFold server access\n\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nUse AlphaFold3 server for protein complex prediction\nInterpret AF3 confidence metrics (pTM and ipTM)\nDesign and analyze mutational studies computationally\nCompare predicted structures with experimental crystal structures\nUnderstand limitations of AI-based structure prediction for mutations"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#preparing-sequences",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#preparing-sequences",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "2.1 Preparing sequences",
+    "text": "2.1 Preparing sequences\nYou should have obtained the FASTA sequences from the previous practical. If not:\n\nGet the sequences:\n\nOpen www.rcsb.org and search for 1BRS\nClick on ‘Download Files’ and choose ‘FASTA Sequence’\nOpen the downloaded FASTA file with a text editor\nYou’ll see sequences for both Barnase and Barstar"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#wild-type-complex-prediction",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#wild-type-complex-prediction",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "2.2 Wild-type complex prediction",
+    "text": "2.2 Wild-type complex prediction\n\nAccess AlphaFold3 server:\n\nNavigate to https://alphafoldserver.com\nLog in with your Gmail account\n\nSubmit wild-type prediction:\n\nEnter the WT sequence of Barstar (first protein)\nAdd entity as “protein”\nEnter the WT sequence of Barnase (second protein)\nAdd entity as “protein”\nClick “Continue and preview job”\nGive a name to the job: wtBarnase-wtBarstar\nSubmit the job\n\n\n\n\n\n\n\n\nProcessing time\n\n\n\nAF3 jobs can take several hours to complete. You may need to check back later or use pre-computed results if available.\n\n\n\nDownload results:\n\nOnce completed, click on the job\nNote the confidence metrics:\n\npTM (global metric): Confidence in individual protein structures\nipTM (interface metric): Confidence in protein-protein interface\n\nDownload results by clicking “Download”\nRename the file to wtBarnase_wtBarstar.zip\nExtract: unzip wtBarnase_wtBarstar.zip -d wtBarnase_wtBarstar"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-alanine-conservative",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-alanine-conservative",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "3.1 Mutation to Alanine (conservative)",
+    "text": "3.1 Mutation to Alanine (conservative)\n\nPrepare D39A-D35A mutant sequences:\n\nTake the Barstar sequence from the FASTA file\nFind position 39 (ASP/D) and replace with Alanine (A)\nFind position 35 (ASP/D) and replace with Alanine (A)\nKeep Barnase sequence unchanged\n\nSubmit D39A-D35A prediction:\n\nEnter the mutated Barstar sequence\nEnter the WT Barnase sequence\nJob name: wtBarnase_D39A-D35ABarstar\nSubmit and download results when complete"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-arginine-charge-reversal",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-arginine-charge-reversal",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "3.2 Mutation to Arginine (charge reversal)",
+    "text": "3.2 Mutation to Arginine (charge reversal)\n\nPrepare D39R-D35R mutant sequences:\n\nTake the Barstar sequence from the FASTA file\nFind position 39 (ASP/D) and replace with Arginine (R)\nFind position 35 (ASP/D) and replace with Arginine (R)\nKeep Barnase sequence unchanged\n\nSubmit D39R-D35R prediction:\n\nEnter the mutated Barstar sequence\nEnter the WT Barnase sequence\nJob name: wtBarnase_D39R-D35RBarstar\nSubmit and download results when complete"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#confidence-metrics-comparison",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#confidence-metrics-comparison",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "4.1 Confidence metrics comparison",
+    "text": "4.1 Confidence metrics comparison\n\nCompare AF3 confidence scores:\n\n\n\n\nComplex\nipTM\npTM\n\n\n\n\nWT\n0.93\n0.94\n\n\nD39A-D35A\n0.89\n0.92\n\n\nD39R-D35R\n0.25\n0.62\n\n\n\n\n\n\n\n\n\nInterpreting metrics\n\n\n\n\npTM: Confidence in overall fold (0-1 scale, &gt;0.8 is high confidence)\nipTM: Confidence in interface prediction (0-1 scale, &gt;0.8 is high confidence)\nLower scores indicate less confidence in the predicted structure"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#structural-comparison-with-crystal-structure",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#structural-comparison-with-crystal-structure",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "4.2 Structural comparison with crystal structure",
+    "text": "4.2 Structural comparison with crystal structure\n\nPrepare YASARA for comparison:\n\nClean up YASARA screen: File &gt; New &gt; Yes\nOpen the prepared crystal structure: 1BRS_complex.pdb\nOpen the AF3 predicted WT structure: model_0.cif (from wtBarnase_wtBarstar folder)\n\n\n\n\n\n\n\n\nAF3 output format\n\n\n\nAF3 predicts 5 models (model_0 to model_4) where model_0 always has the highest-ranking confidence value.\n\n\n\nSuperpose predicted on crystal structure:\n\nAnalyze &gt; Superpose &gt; Objects\nSelect “fold_wtbaranase…” (predicted structure) from Sequence panel &gt; OK\nSelect “1BRS_complex…” (crystal structure) from Sequence panel &gt; OK\nIn “Set parameters” window: Uncheck all boxes except “Residue name” and “Residue number” &gt; OK\n\nCalculate RMSD for Barstar:\n\nAnalyze &gt; RMSD of &gt; Molecules\nChoose “D” (Barstar of crystal structure) from Sequence panel &gt; OK\nChoose “A” (predicted Barstar) &gt; OK &gt; OK\nRMSD value will be shown in the command window\n\nRepeat for mutant structures:\n\nClean up YASARA screen and repeat steps 10-12 for both mutant predictions\nComplete the RMSD comparison table:\n\n\n\n\n\nComparison Pair\nRMSD (Å)\n\n\n\n\nCrystal vs WT\n2.76\n\n\nCrystal vs D39A-D35A\n2.90\n\n\nCrystal vs D39R-D35R\n9.42"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#understanding-the-results",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#understanding-the-results",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "5.1 Understanding the results",
+    "text": "5.1 Understanding the results\n\nAnalysis of AF3 performance:\n\nThe results reveal important insights about AF3’s capabilities and limitations:\n\n5.1.1 Alanine mutations (D39A-D35A):\n\nSmall decrease in confidence metrics (ipTM: 0.93→0.89)\nMinimal structural change (RMSD: 2.76→2.90 Å)\nAF3 prediction: Minor effect on complex formation\nExperimental reality: These mutations drastically reduce binding affinity\n\n\n\n5.1.2 Arginine mutations (D39R-D35R):\n\nDramatic decrease in confidence metrics (ipTM: 0.93→0.25)\nLarge structural deviation (RMSD: 2.76→9.42 Å)\nAF3 prediction: Major disruption of complex formation\nExperimental expectation: Strong electrostatic repulsion would indeed disrupt binding"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#critical-analysis-questions",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#critical-analysis-questions",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "5.2 Critical analysis questions",
+    "text": "5.2 Critical analysis questions\nAnswer the following questions based on your results:\n\n5.2.1 AF3 Performance Assessment\n\nHow well does AF3 predict the wild-type complex? Compare the confidence metrics and RMSD with the crystal structure.\nWhat do the confidence metrics tell us about AF3’s certainty in its predictions for each variant?\nWhy might AF3 fail to capture the effect of alanine mutations but successfully predict the impact of arginine mutations?\n\n\n\n5.2.2 Structural Biology Insights\n\nFrom a chemical perspective, explain why:\n\nD39A and D35A mutations might be more disruptive experimentally than AF3 predicts\nD39R and D35R mutations show large effects in both experiments and AF3 predictions\n\nWhat does this tell us about the different types of interactions that stabilize protein complexes?\n\n\n\n5.2.3 Methodological Considerations\n\nWhat are the limitations of using AF3 for mutational studies? When might it be reliable vs unreliable?\nHow could you validate these computational predictions experimentally?\nWhat other computational approaches could complement AF3 for studying mutation effects?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#detailed-structural-comparison",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#detailed-structural-comparison",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "6.1 Detailed structural comparison",
+    "text": "6.1 Detailed structural comparison\n\nAnalyze specific interface regions in detail\nCompare hydrogen bonding patterns between structures\nExamine conformational changes upon mutation"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#additional-mutations",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#additional-mutations",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "6.2 Additional mutations",
+    "text": "6.2 Additional mutations\n\nPredict effects of single mutations (D39A only, D35A only)\nTest conservative mutations (D39E, D35E)\nExplore mutations in Barnase instead of Barstar\n\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nAF3 excels at predicting wild-type protein complex structures with high confidence\nMutation effects are not always accurately captured, especially for subtle changes\nCharge-reversal mutations (D→R) are better predicted than loss-of-function mutations (D→A)\nConfidence metrics (pTM, ipTM) provide valuable information about prediction reliability\nExperimental validation remains essential for understanding mutation effects\nAI predictions should be interpreted alongside structural and chemical principles"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#biological-significance",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#biological-significance",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "6.3 Biological Significance",
+    "text": "6.3 Biological Significance\nThis analysis demonstrates that:\n\nProtein-protein interfaces rely on multiple, subtle interactions that may not be fully captured by current AI models\nElectrostatic interactions are crucial for the Barnase-Barstar interface and are better predicted than hydrophobic or entropic effects\nAF3 represents a powerful tool for structural biology but has limitations that must be understood\nComputational and experimental approaches are complementary for understanding protein function\n\nThe Barnase-Barstar system serves as an excellent model for understanding both the capabilities and limitations of AI-based structure prediction in the context of protein evolution and design."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "",
+    "text": "Protein–protein interactions (PPIs) are central to almost every biological process, yet their complexity often makes them difficult to describe and predict. Traditional models emphasize short-range atomic contacts or electrostatic complementarity, but these approaches can fail to capture the broader physicochemical principles that govern biomolecular recognition.\nIn the paper “Deciphering peptide–protein interactions via composition-based prediction: a case study with survivin/BIRC5” (Anindya et al., 2024), a different approach was introduced. Instead of focusing on the detailed three-dimensional structures of proteins, the study analyzed their composition (the number and types of atoms or functional groups within peptides) and used this as a predictive descriptor of interaction with the human protein survivin (BIRC5)\nThe goal of this practical is to build a classifier that predicts peptide binding signal from microarray data using encoded features derived from amino-acid properties. You will first perform a basic run-through of the provided notebook, then complete a set of ML-focused tasks.\nUse the annotated notebook aa_scan2_clean_annotated.ipynb for the exercise.\n\n\n\n\n\n\nCreate a working directory\n\n\n\n# Create a new folder for this practical\nmkdir -p ~/BIO512/ML_lab\n\n# Fetch the required files from Vera\n# do note that &lt;__&gt; is a placeholder for your vera username\nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/Peptide_Classification/* ~/BIO512/Peptide_Classification/\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nEncode peptide sequences into feature vectors using an AA property table\nCompare classifiers with cross validation using robust metrics\nInterpret influential features in biochemical terms\nReport reproducible results with seeds, versions, and parameters"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#imports",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#imports",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.1 1. Imports",
+    "text": "3.1 1. Imports\n\nImport core libraries. If an import fails, install and re-run.\n\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pylab as plt\nimport numpy as np"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#load-the-encoding-table",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#load-the-encoding-table",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.2 2. Load the encoding table",
+    "text": "3.2 2. Load the encoding table\n\nLoad aa_properties.xlsx and confirm it contains the AA letter column (e.g., aa) and feature columns.\n\n#Positionwise carbon (C-Pos)\ndf=pd.read_excel(\"aa_properties.xlsx\")\n# H-wise Carbon (C-Coord)\n#df=pd.read_excel(\"aa_properties2.xlsx\")\n# identity (AA-Letter)\n#df=pd.read_excel(\"aa_properties3.xlsx\")\ndf"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#define-the-encoder",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#define-the-encoder",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.3 3. Define the encoder",
+    "text": "3.3 3. Define the encoder\n\nImplement a function that sums feature rows for each amino acid\n\ndef peptrans(peptide):\n    rows=[]\n    for l in peptide:\n        rows.append(df[df.aa==l])\n    return pd.concat(rows).sum()"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#load-microarray-data",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#load-microarray-data",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.4 4. Load microarray data",
+    "text": "3.4 4. Load microarray data\n\nLoad the microarray dataset (Clean_results_2_2019.xlsx).\n\npf=pd.read_excel(\"Clean_results_2_2019.xlsx\")\npf"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#apply-encoding",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#apply-encoding",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.5 5. Apply encoding",
+    "text": "3.5 5. Apply encoding\n\nMap peptrans over the peptide sequence to produce feature vectors.\n\ntranspf=pf['Peptide'].apply(peptrans)\ntranspf"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#merge-feature-vectors-with-original-data",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#merge-feature-vectors-with-original-data",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.6 6. Merge feature vectors with original data",
+    "text": "3.6 6. Merge feature vectors with original data\n\nConcatenate features with the original dataframe.\n\nmergepf = pd.concat([pf, transpf], axis=1, sort=False)\nmergepf"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#tidy-metadata-and-target",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#tidy-metadata-and-target",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.7 7. Tidy metadata and target",
+    "text": "3.7 7. Tidy metadata and target\n\nCreate Prot_pep and Prot_res_pep for better metadata\nSet index to Prot_res_pep so that we use the most informative descriptor\nRename target Survivin label to Fluorescence.\n\nmergepf[\"Prot_pep\"] = mergepf[\"Protein\"].map(str) +\"_\"+ mergepf[\"Peptide\"]\nmergepf[\"Prot_res_pep\"] = mergepf[\"Protein\"].map(str) +\"_\"+ mergepf[\"Residue number\"].map(str)+\"_\"+ mergepf[\"Peptide\"]\nmergepf=mergepf.set_index('Prot_res_pep')\nmergepf=mergepf.rename(columns={u'Survivin, 1 µg/ml': u'Fluorescence'})\nmergepf"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#baseline-model",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#baseline-model",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.8 8. Baseline model",
+    "text": "3.8 8. Baseline model\nThe main engine block of the notebook has multiple configurations of various classifiers prepared. These classifiers all come as part of the scikit-learn library. To use a different classifier, simply uncomment the relevant line and comment out the rest.\n\nUse the default MLPClassifier block from the notebook to build a baseline.\n\nfrom sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.neural_network import MLPClassifier\nfrom sklearn.gaussian_process import GaussianProcessClassifier\nfrom sklearn.gaussian_process.kernels import RBF\nfrom sklearn import datasets, svm, metrics\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler, MinMaxScaler\n#clf = svm.SVC(gamma=0.001)\n#clf = RandomForestClassifier(max_depth=None, n_estimators=100, max_features='auto')\n#clf = MLPClassifier(solver='lbfgs',random_state=1, max_iter=10000)\nclf = MLPClassifier(hidden_layer_sizes=(2,), random_state=1, max_iter=10000)\n#clf = GaussianProcessClassifier(1.0 * RBF(1.0))\n#clf = DecisionTreeClassifier(max_depth=5)\n#clf = KNeighborsClassifier(5)\n#clf = AdaBoostClassifier()\n\nfeature_names=[u'CA-Gly', u'Pro-MC', u'CB', u'CB-Pro',\n        u'Carboxyl', u'Amide',\n        u'His', u'Trp', u'Phe-Tyr', u'OH-Tyr', u'CG', u'CD', u'CE',\n        u'OH', u'SH', u'S', u'NH3', u'Arg',u'MC']\nX = np.array(mergepf[feature_names])\n\n# Other array setups #\n\nY=np.array(mergepf[u'Fluorescence']&gt;0)\n\n# Other array setups #\n\nsc=StandardScaler()\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, Y, test_size=0.5, shuffle=True)\n\nX_train = sc.fit_transform(X_train)\nX_test = sc.transform(X_test)\n\nclf.fit(X_train, y_train)\npredict=clf.predict(X_test)\npredict"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#diagnostics",
+    "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html#diagnostics",
+    "title": "Peptide Classification with Machine Learning",
+    "section": "3.9 9. Diagnostics",
+    "text": "3.9 9. Diagnostics\n\nPlot the confusion matrix and print the classification report.\n\nfrom sklearn.metrics import ConfusionMatrixDisplay\nimport matplotlib.pyplot as plt\n\ndisp = ConfusionMatrixDisplay.from_estimator(\n    clf, X_test, y_test, cmap='Blues'\n)\ndisp.ax_.set_title(\"Confusion Matrix\")\n\nprint(\"Confusion matrix:\\n\", disp.confusion_matrix)\nplt.show()\nprint(f\"Classification report for classifier {clf}:\\n\"\n      f\"{metrics.classification_report(y_test, predict)}\\n\")\n\n\n\n\n\n\nRecommended improvements for later tasks\n\n\n\n\nPrefer stratified splits and wrap scaling + model in a Pipeline to avoid leakage.\nUse macro F1, balanced accuracy, and PR curves when classes are imbalanced."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.html",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.html",
+    "title": "Advanced DESeq Analysis: Data Grouping and Visualization",
+    "section": "",
+    "text": "This companion to the DeSeq practical focuses on grouping, advanced PCA using DE-only genes, and sample correlation heatmaps.\n\n\n\n\n\n\nLearning Objectives\n\n\n\n\nRedo PCA on DE-only features and interpret separation\nUnderstand PCA loadings and identify top-loading features\nCompute and plot sample-to-sample correlation heatmaps"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.html#steps",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.html#steps",
+    "title": "Advanced DESeq Analysis: Data Grouping and Visualization",
+    "section": "3.1 Steps",
+    "text": "3.1 Steps\n\nCalculate the sample correlations using “.corr()” functions from pandas. Remember that we want to calculate the distance between samples rather than among genes. (Suggestion: use the count_PCA variable instead of count)\n\ncorr = {__}\n\nUse sns.clustermap() to plot your correlation matrix (Suggestion: use “cmap = ‘RdYlBu’” to have better color map)\n\nsns.{__}\n\n3.1.1 Questions:\n\nQ6.1: What do you conclude from the clustering, do the PCA and the heatmap reflect eachother? Are there any sample outliers?\nQ6.2: Can you identify which correlation method that you use?"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.\n\n\n\nDESeq2 workflow:\n\nPractical: DESeq2 Analysis 🔒\nPractical: Data Grouping and Visualisation 🔒\n\nNetwork analysis:\n\nPractical: Network visualisation and Centrality analysis 🔒\n\n\n\n\n\n\nPeptide classification in Scikit-Learn:\n\nPractical: Peptide Classification with ML 🔒\n\n\n\n\n\n\nStructure analysis (YASARA):\n\nPractical: Protein Complex Structure Analysis 🔒\n\nStructure prediction:\n\nPractical: AlphaFold3 Prediction 🔒\n\nDocking and MD:\n\nPractical: Molecular Docking 🔒\nPractical: MD Analysis 🔒\n\n\n\n\n\n\nComputer setup:\n\nPre-course Setup\n\nHPC Cluster access:\n\nSetting up the HPC\n\n\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.\n\n\n\nDESeq2 workflow:\n\nPractical: DESeq2 Analysis 🔒\nPractical: Data Grouping and Visualisation 🔒\n\nNetwork analysis:\n\nPractical: Network visualisation and Centrality analysis 🔒\n\n\n\n\n\n\nPeptide classification in Scikit-Learn:\n\nPractical: Peptide Classification with ML 🔒\n\n\n\n\n\n\nStructure analysis (YASARA):\n\nPractical: Protein Complex Structure Analysis 🔒\n\nStructure prediction:\n\nPractical: AlphaFold3 Prediction 🔒\n\nDocking and MD:\n\nPractical: Molecular Docking 🔒\nPractical: MD Analysis 🔒\n\n\n\n\n\n\nComputer setup:\n\nPre-course Setup\n\nHPC Cluster access:\n\nSetting up the HPC\n\n\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "setup/Set_up_the_HPC.html",
+    "href": "setup/Set_up_the_HPC.html",
+    "title": "n2bin: Connecting to the HPC",
+    "section": "",
+    "text": "1 Introduction\nThis tutorial is to take you through the final steps of setting up and accessing the c3se High Performance Computing infrastructure. The specific cluster we will use is called Vera. You will be introduced to this cluster in the lecture and here you can find more information about it, including what resources that are available, how to run jobs and other documentation.\nWe will walk you through step by step in this tutorial so that we (hopefully) can assist if there are any problems.\n\n\n\n\n\n\nPre-course setup\n\n\n\nTo be able to follow these steps you first have to have followed the steps of the Pre-course Setup including registration at SUPR and application to the course HPC project.\n\n\n\n\n\n2 Setting up a Chalmers ID - IF you have the option to do so in the login portal - else continue to next step\n\nNavigate to https://myaccount.chalmers.se/.\nLog in with your GU account.\nChoose “Activate CID” and follow the instructions to activate your account\n\n\n\n\n\n\n\nRemember your password!\n\n\n\nThe CID username and password are the ones you will use to log in to the cluster\n\n\n\n\n\n3 Adding Vera/c3se at SUPR\n\nLog in to SUPR\nClick “Accounts” in the left side menu\nRequest access to Vera/c3se\n\n\n\n\n\n\n\nProceed even without a CID\n\n\n\nIf you don’t have that option in the CID portal you should apply for Vera access in SUPR anyway. They will then assign you a CID that you can access and create a PW for in the CID portal when you have received an email notification about this.\n\n\n\n\n\n4 Setting up Chalmers VPN (if you don’t already have a GU VPN)\nTo be able to access c3se from other networks than in GU or Chalmers, you will need a Chalmers VPN\n\nNavigate to https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88\nFollow the instructions to set up the Chalmers VPN\n\n\n\n\n5 Connecting to the HPC using ssh in VSCode\nTo be able to connect to the HPC in a manner that will let you use the full suite of tools available (or most of them at least) in VSCode, you will need to install the Remote - SSH extension.\n\nOpen VSCode\nGo to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing Ctrl+Shift+X\nSearch for “Remote - SSH” and install the extension by Microsoft (if youre unsure how install extensions, see here)\nAfter installation, you will see a new icon in the Activity Bar on the side of the window. Click on it to open the Remote Explorer view.\n\nIf the SSH Targets are not visible, click on the drop down to expand the view\n\nClick on the + (“New Remote”) icon next to SSH header to add a new SSH host\nIn the input box that appears, enter the SSH connection string for Vera: &lt;your_chalmers_id&gt;@vera1.c3se.chalmers.se (replace &lt;your_chalmers_id&gt; with your actual Chalmers ID)\nPress Enter to confirm\nYou will be prompted to select the SSH configuration file to update. Choose the default option (usually ~/.ssh/config)\n\nOnce you have added the SSH host, you can connect to Vera:\n\nIn the Remote Explorer view, find the Vera entry under SSH Targets (or by clicking on the blue “remote window” icon in the bottom left corner of VSCode)\n\nClick on the “Connect to Host” icon (an arrow if you want the same window, square if you want a new one) next to the Vera entry\nIf you clicked on the blue “remote window” icon, select “Remote-SSH: Connect to Host…” and then select the Vera entry\n\nA new VSCode window will open, and you will be prompted to enter your Chalmers ID password\nAfter entering your password, you should be connected to Vera, and you can start working on the HPC cluster directly from VSCode. Make sure that you open your home folder on Vera to open up a workspace.\nYou can verify that you are connected to Vera by opening a new terminal in VSCode (Terminal &gt; New Terminal) and checking the hostname in the terminal prompt. It should show something like your_chalmers_id@vera:~$"
+  },
+  {
+    "objectID": "setup/Pre-course-setup_n2bin.html",
+    "href": "setup/Pre-course-setup_n2bin.html",
+    "title": "Pre-course setup",
+    "section": "",
+    "text": "Here is a tutorial to guide you through how to set up your computers for the BIO511 and following courses. Throughout the course we will both teach you how to use your local computer for bioinformatics but also, for more heavy duty stuff, use the c3se high performance computing cluster (HPC). The setup will therefore prepare you for both cases.\nSome of you might already have done some kinds of bioinformatics and have other setups and if you are comfortable with those, that’s fine by us. We will however not be able to give support/trouble shoot different kinds of setups so we ask you to make sure you have what’s below as a minimum."
+  },
+  {
+    "objectID": "setup/Pre-course-setup_n2bin.html#welcome-to-the-world-of-bioinformatics",
+    "href": "setup/Pre-course-setup_n2bin.html#welcome-to-the-world-of-bioinformatics",
+    "title": "Pre-course setup",
+    "section": "",
+    "text": "Here is a tutorial to guide you through how to set up your computers for the BIO511 and following courses. Throughout the course we will both teach you how to use your local computer for bioinformatics but also, for more heavy duty stuff, use the c3se high performance computing cluster (HPC). The setup will therefore prepare you for both cases.\nSome of you might already have done some kinds of bioinformatics and have other setups and if you are comfortable with those, that’s fine by us. We will however not be able to give support/trouble shoot different kinds of setups so we ask you to make sure you have what’s below as a minimum."
+  },
+  {
+    "objectID": "setup/Pre-course-setup_n2bin.html#setup-for-mac-linux-users",
+    "href": "setup/Pre-course-setup_n2bin.html#setup-for-mac-linux-users",
+    "title": "Pre-course setup",
+    "section": "2 Setup for Mac / Linux users",
+    "text": "2 Setup for Mac / Linux users\nmacOS is Unix-based (specifically, it’s a certified Unix system built on BSD) and therefore one can run many Linux-compatible tools without modification directly. You can basically just use the built in Terminal app and start coding. The Terminal runs the zsh shell by default.\nHowever, to get a better user experience, especially when we further on are going to access the HPC we will recommend using the integrated development environment (IDE) Visual Studio Code (VS Code). Please follow these instructions to do so."
+  },
+  {
+    "objectID": "setup/Pre-course-setup_n2bin.html#setup-for-windows-users",
+    "href": "setup/Pre-course-setup_n2bin.html#setup-for-windows-users",
+    "title": "Pre-course setup",
+    "section": "3 Setup for Windows users",
+    "text": "3 Setup for Windows users\nUsing a Windows computer for bioinformatic work has sadly not been ideal most of the time, but large advances in recent years have made this quite feasible through the Windows Subsystem for Linux (WSL).\nApart from the Linux kernel provided by WSL, we also recommend installing the integrated development environment (IDE) Visual Studio Code (VS Code), and the tutorial will guide you through how to set up WSL integrated in VS Code. If you already feel comfortable with another IDE such and PyCharm since before, that’s ok but we may not be able to trouble shoot your setup during the course.\nThere are two substantially different versions of the Linux subsystem, WSL1 and WSL2. We strongly recommend using WSL2, which offers an essentially complete Linux experience and better performance.\nUsing the Linux subsystem will give you access to a full command-line bash shell and a Linux implementation on your Windows 10 or 11 PC. For the difference between the Linux Bash Shell and the Windows PowerShell, see e.g. this article.\nThe installation has three main steps:\n\nInstall WSL2 on Windows 10 or 11, follow the instructions here: Installing the Windows Subsystem and the Linux Bash\n\n\n\n\n\n\n\nNote\n\n\n\nIf you run into error messages when trying to download files through the Linux shell (e.g. curl:(6) Could not resolve host) then try adding the Google name server to the internet configuration by running sudo nano /etc/resolv.conf then add nameserver 8.8.8.8 to the bottom of the file and save it.\n\n\n\n\n\n\n\n\nCaution\n\n\n\nWhenever a setup instruction specifies Mac or Linux (i.e. only those two, with no alternative for Windows), please follow the Linux instructions.\n\n\n\nInstall Visual Studio Code on the Windows side (not in WSL).\n\n\n\n\n\n\n\nNote\n\n\n\nNote: When prompted to Select Additional Tasks during installation, be sure to check the Add to PATH option so you can easily open a folder in WSL using the code command.\n\n\n\nInstall the WSL extension. If you plan to work with other remote extensions in VS Code, you may choose to install the Remote Development extension pack."
+  },
+  {
+    "objectID": "setup/Pre-course-setup_n2bin.html#getting-access-to-the-high-performance-computing-cluster-c3se",
+    "href": "setup/Pre-course-setup_n2bin.html#getting-access-to-the-high-performance-computing-cluster-c3se",
+    "title": "Pre-course setup",
+    "section": "4 Getting access to the High Performance computing cluster c3se",
+    "text": "4 Getting access to the High Performance computing cluster c3se\nNow you have your local computer setup for bioinformatics. However, for many of the practicals we will use a high performance computing cluster, both so that you get familiar with that way of working, to keep a more controlled environment for you in the beginning and to let you perform analyses that require a bit more heavy duty computing power than your local machines.\nThis setup will be the same regardless of your OS.\n\nRegister yourself at SUPR. SUPR is the database for the National Swedish Infrastructure for Supercomputing (NAISS) and SUPR is used to keep track of persons, projects, project proposals and more. Please register with Federated Identity using your GU email address.\nWhen you have registered, please send an email to kaisa.thorell@gu.se and I will add you to the c3se project."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html",
+    "title": "Differential Expression and Enrichment Analysis",
+    "section": "",
+    "text": "In this practical, you will perform differential expression analysis using PyDESeq2, explore the data structure with PCA, and interpret results via GO Biological Process enrichment. You will work from raw counts and sample metadata, then save normalized counts and DE results for downstream network analysis.\n\n\n\n\n\n\nCreate a working directory and gather inputs\n\n\n\nmkdir -p ~/BIO512/DESeq_lab\ncd ~/BIO512/DESeq_lab\n\n# Required files can be fetched from the Cluster\nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/DeSeq/* ~/BIO512/practicals/DeSeq/\n\n# For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.\nmyvariable = {__}\n# should be replaced with actual code.\nmyvariable = \"Hello, World!\"\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nLoad RNA-seq counts and metadata and perform PCA\nRun PyDESeq2 to identify differentially expressed genes (DEGs)\nVisualize adjusted p-values and MA plot\nSave normalized counts and DE results for reuse\nRun GO BP enrichment (via GSEAPY/Enrichr) after mapping Ensembl IDs to gene names"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#library",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#library",
+    "title": "Differential Expression and Enrichment Analysis",
+    "section": "3.1 Library",
+    "text": "3.1 Library\n%matplotlib inline\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nimport seaborn as sns\nimport matplotlib\n# Adding these 4 lines will make our life easier if we need \n# to do figure post-processing in other software\nsns.set(font=\"Arial\")\nsns.set_style(\"white\")\nmatplotlib.rcParams['pdf.fonttype'] = 42\nmatplotlib.rcParams['ps.fonttype'] = 42\n\nfrom pydeseq2.dds import DeseqDataSet\nfrom pydeseq2.default_inference import DefaultInference\nfrom pydeseq2.ds import DeseqStats\n\nfrom pca import pca\nfrom pybiomart import Dataset\n\nfrom sklearn.decomposition import PCA as sklearnPCA\nimport os, math\nos.environ['KMP_DUPLICATE_LIB_OK']='True'\nimport pickle\n\nfrom scipy.stats import zscore, spearmanr\nimport gseapy as gp"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#load-count-data",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#load-count-data",
+    "title": "Differential Expression and Enrichment Analysis",
+    "section": "3.2 Load Count Data",
+    "text": "3.2 Load Count Data\nWe begin by importing the raw data into Python for downstream analysis. The count and metadata was those generated in the previous exercises. The dataset consists of two files:\n\nCount file – This file contains the raw gene expression counts. Each row corresponds to a gene, and each column corresponds to a sample (identified by its sample ID).\nMetadata file – This file provides the experimental information for each sample, including the sample ID, condition (normal vs. infected), and replicate number.\n\nWe load both files into pandas DataFrames for easier handling\n# Load the count data, tab separated\ncount = pd.read_csv(\"counts.tsv\", sep = \"\\t\")\n\n# Load the metadata, tab separated\nmetadata = pd.read_csv(\"metadata.txt\", sep = \"\\t\")\nQ1: How many genes and samples do you have in your matrix?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#exploratory-data-analysis-pca",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#exploratory-data-analysis-pca",
+    "title": "Differential Expression and Enrichment Analysis",
+    "section": "3.3 Exploratory Data Analysis: PCA",
+    "text": "3.3 Exploratory Data Analysis: PCA\nBefore performing downstream statistical tests, it is important to explore the overall structure of the data. EDA is an incredibly useful dogma in data analysis, using the data itself to plot and visualize relationships that will guide downstream analysis. It is a great way to get to know your data in depth and identify potential issues or interesting patterns. Principal Component Analysis (PCA) is a common dimensionality reduction technique that allows us to visualize high-dimensional gene expression data in just two or three dimensions. This helps us to:\n\nIdentify major sources of variation in the dataset.\nAssess whether samples cluster according to their experimental conditions (e.g., normal vs. infected).\nDetect potential outliers or batch effects.\n\nSince PCA requires numerical input, we apply it directly to the count matrix, using the samples as observations and the genes as features. The counts are typically log-transformed (or otherwise normalized) prior to PCA to reduce the effect of extreme values.\nFor this PCA analysis, we are going to use this PCA module: https://erdogant.github.io/pca/pages/html/index.html\nThere are two ways to initialize PCA:\n\nBy retaining enough components to explain X% of the variance (95% for this example, maximum 1 aka 100%) model = pca(n_components=0.95)\nBy limiting the number of principal components (3 PCs in this example, to allow for 3D visualizaiton if needed) model = pca(n_components=3)\n\n\n3.3.1 Steps\n\nLet’s use the 2nd initialization method, limiting the PCs to 3\n\nmodel = pca(n_components=3)\n\nSetting up the dataframe for analysis\n\nRemove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to “count_PCA”.\nReplace the sample ID to their conditions (normal or infected) (Tips: we make sure that the sample sequence in the count file is the same with metadata)\n\nHint: A pythonic way to do this count_PCA = count_PCA.rename(columns = metadata[\"Conditions\"])\n\nLog-transform the count_PCA. Read about “log1p” function from numpy, what does it mean?\n\n\n# Setting up the dataframe for analysis\n## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to \"count_PCA\".\ncount_PCA = count[{__}]\n\n## 2. Replace the sample ID to their conditions (normal or infected)\n### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)\ncount_PCA = count_PCA[metadata.index]\n\n### 2.2. replacing the column names with their metadata[\"Conditions\"] column\ncount_PCA.columns = {__}\n\n\n## 3. Log-transform the count_PCA. Read about \"log1p\" function from numpy, what does it mean?\ncount_PCA = {__}\n\nPerform the PCA analysis, on logged data using model.fit_transform() function (Note: This package requires gene names as the column names and the sample ID as the row names, so we have to transpose our dataframe (.T in the end))\n\nresults = model.fit_transform(count_PCA.T)\n\nPlot the PCA analysis with a scatter plot (Note: figsize option is to limit the dimension of the plot. Can be adjusted to fit your preference. Play around with it.)\n\nfig, ax = {__}\n\n\n3.3.2 Questions:\nQ2.1: What is your interpretation of the PCA analysis? Is there any outliers? Justify your opinion. Q2.2: Is the plot title total variant same as the PC1 + PC2 explained variant? If not, why?\n\n\n3.3.3 PCA Cheatsheet:\n\nmodel.scatter3d() –&gt; 3D PCA plotting\nmodel.biplot() –&gt; Plotting top loading factors (model.biplot3d for 3D PCA)\nExplore “model.results” for detailed information of the PCA model, including “explained_var”, “variance_ratio”, “loadings”, etc\n\nMore info: https://erdogant.github.io/pca/pages/html/index.html"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#statistical-analysis-deseq2",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#statistical-analysis-deseq2",
+    "title": "Differential Expression and Enrichment Analysis",
+    "section": "3.4 Statistical Analysis: DESeq2",
+    "text": "3.4 Statistical Analysis: DESeq2\nTo identify differentially expressed genes (DEGs) between infected and normal samples, we applied DESeq2 methodology. DESeq2 is a widely used statistical framework for RNA-seq data analysis, based on modeling count data with negative binomial distributions. It provides robust normalization, variance estimation, and statistical testing to identify genes whose expression is significantly associated with the experimental condition.\nIn this analysis, we make use of PyDESeq2, a Python implementation of the DESeq2 workflow. This allows us to perform the entire statistical analysis in Python while maintaining compatibility with the established DESeq2 methods.\nhttps://pydeseq2.readthedocs.io/en/stable/\nThe results of this analysis will yield:\n\nA list of genes with significant differential expression (adjusted p-value cutoff).\n\nFold changes indicating the direction and magnitude of regulation (upregulated or downregulated in infected samples).\n\nStatistical confidence measures that account for biological variability and replicate structure.\n\nNow we can proceed with the differential expression testing. The deseq2() function does all the hard work, it basically performs three steps:\n\nCompute a scaling factor for each sample to account for differences in read depth and complexity between samples\nEstimate the variance among samples\nTest for differences in expression among groups\n\nBefore executing the deseq2() function, we have to prepare the input object (lets call it dds, Deseq Data Set). If you inspect the help pages, there are several arguments that we could use. For this particular exercise it would be just enough to use the default values.\nExtract the results using the results() function into an object called res and have a look.\n\n3.4.1 Steps:\n\nCreate dds object. Use the original unfiltered count and metadata variables. For the design option, let’s use the “Conditions” column on metadata\n\ndds = DeseqDataSet(\n    counts=count.T,\n    metadata=metadata,\n    design=\"~Conditions\",\n    refit_cooks=True,\n)\n\nPerform the DESeq2 analysis with deseq2() function (It may take a few mins)\n\ndds.deseq2()\nOPTIONAL: Look at the sub-variables inside the dds object\n\nPerform the comparison between Infected and Normal group using DeseqStats() function\n\nds = DeseqStats(dds, contrast=[\"Conditions\", \"Infected\", \"Normal\"])\n\nRetrieve the results and assign it to a different object, e.g. deseq_results (hint: ds.results_df after running ds.summary()).\n\nRemember that since we are doing a lot of tests, as many tests as genes in our experiment, we need to correct our pvalues. DESeq already did this while testing for differences among our groups, so let’s create a histogram of these adjusted pvalues and an MA-plot to inspect if there is any enrichment of DE genes.\nds.summary()\ndeseq_results = ds.results_df\n\nMake a histogram using the hist() function on the padj column of the results object. Change arguments in the placeholder to make a nice histogram (eg. add some color, a title etc.)\n\ndeseq_results[\"padj\"].hist(bins = 100, {__})\n\nCreate a MA-plot with the plot_MA() function from DeseqStats object (not dds!).\n\nds.plot_MA()\n\nLet’s remove the genes with NAN adjusted p-values. Use the .notna() function on the padj column of the results object to keep those that has valid adjusted p-values.\n\nnotna_deseq = {__}\nnotna_deseq.shape\n\n\n3.4.2 Questions:\n\nQ3.1: How many significantly differentially expressed genes in this comparison? (padj &lt; 0.05)\nQ3.2: What does the histogram tell you? Looking at the MA plot, approximately what are your highest and lowest Foldchanges?\nQ3.3: How many genes with a p-adjusted value of NA did you have?\nQ3.4: What is the top 5 most significantly differentially expressed genes based on their log2FoldChange? (padj &lt; 0.05)Look for their gene names using online tools (e.g. ENSG00000166211 is SPIC).\n\n\n\n\n\n\n\nTip\n\n\n\nRemember: There are up and down-regulated genes, make sure that you sort it based on their absolute values. Hint: .sort_values(“log2FoldChange”, key = abs)\n\n\nnotna_deseq[notna_deseq[\"padj\"] &lt; 0.05].sort_values(\"log2FoldChange\", key = abs)\n\n3.4.2.1 Save the normalized count from DESeq2 and final result without the NAs as a tab-separated file\nnotna_deseq[notna_deseq[\"padj\"] &lt; 0.05].to_csv(\"Deseq2_Results.txt\", sep = \"\\t\")\npd.DataFrame(dds.layers[\"normed_counts\"], columns = dds.var_names, index=dds.obs_names).T.to_csv(\"Deseq2_NormalizedCount.txt\", sep = \"\\t\")"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#enrichment-analysis-go-biological-process",
+    "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html#enrichment-analysis-go-biological-process",
+    "title": "Differential Expression and Enrichment Analysis",
+    "section": "3.5 Enrichment Analysis: GO Biological Process",
+    "text": "3.5 Enrichment Analysis: GO Biological Process\nTo gain functional insight into the differentially expressed genes (DEGs), we performed a Gene Ontology (GO) enrichment analysis, focusing on the Biological Process (BP) category. This analysis identifies biological pathways and processes that are statistically overrepresented among the DEGs compared to what would be expected by chance.\nKey goals of this analysis include:\n\nHighlighting biological processes that are upregulated or downregulated in response to infection.\n\nLinking the transcriptional changes to relevant cellular mechanisms such as immune response, stress response, or metabolic pathways.\n\nProviding a higher-level interpretation of the DEG list beyond individual genes.\n\nThe output of this step will be a ranked list of enriched GO Biological Process terms, along with their associated enrichment scores and adjusted p-values. This helps us interpret how the infection condition impacts cellular and molecular functions.\nFor enrichment analysis, we will use Gseapy package, specifically the Enrichr API (GUI: https://maayanlab.cloud/Enrichr/)\nhttps://gseapy.readthedocs.io/en/latest/gseapy_example.html\n\n3.5.1 Steps\n\nSince our the gene names are using “Ensembl Gene ID” and most enrichment analysis packages supports only “Gene Name” or “HGNC ID”, let’s first convert them. We will use the pyBioMart package to help us retrieving the mapping file.\n\n# Starting connections to ensembl website using the \"Dataset\" function from pyBioMart\ndataset = Dataset(name='hsapiens_gene_ensembl', host='http://www.ensembl.org')\n\n# Retrieving name mapping dataframe between \"Esembl ID\" and External Gene Name (HGNC)\nmapping = dataset.query(attributes=['ensembl_gene_id', 'external_gene_name'])\n\n#Look at the mapping structure\nmapping.head()\n# Let's copy the deseq results again, focusing only on differentially expressed genes\nsignificant_deseq = {__}\n\n# Now we are merging the mapping dataframe to the significant_deseq object. read more on Pandas Merging function if needed\nsignificant_deseq = significant_deseq.merge(mapping, left_index = True, right_on = \"Gene stable ID\")\n\n#Lets remove those with no gene names\nsignificant_deseq = {__}\n\n#Look at the new significant_deseq structure\nsignificant_deseq.head()\n\nMake two lists of significantly differentially expressed genes (signficant_deseq object): up and down-regulated genes (use the Gene name columns)\n\n\nup-regulated: Log2FoldChange &gt; 0 (and padj &lt; 0.05) –&gt; 80 genes\ndown-regulated: Log2FoldChange &lt; 0 (and padj &lt; 0.05) –&gt; 66 genes\n\nup = {__}\ndown = {__}\nlen(up)\nlen(down)\n\nPerform enrichment analysis using Enrichr API from GSEAPY. Do one enrichment analysis for each direction (one for up and one for down-regulated genes). For uniformity, please use the object name enr_up and enr_down.\n\nhttps://gseapy.readthedocs.io/en/latest/gseapy_example.html#Enrichr-Web-Serives-(without-a-backgound-input)\nenr_up = {__}\nenr_down = {__}\n\nTo get detailed output of the enrichment analysis results in dataframe format, access the .res2d variable under enr_up and enr_down\n\nenr_up.res2d.head()\nenr_down.res2d.head()\n\nPlot the enrichment analysis results focusing on the top 10 most enriched processes for each up and down-regulated genes. Explore all the plotting options and pretify it with the options. (use the option cutoff=1, since we do not have that many genes to enrich)\n\nhttps://gseapy.readthedocs.io/en/latest/gseapy_example.html#Plotting\nax = {__}\nax = {__}\n\n\n3.5.2 Questions:\n\nQ4.1: How many significantly enriched processes for up- and down-regulated genes? (Adjusted P-value &lt; 0.11, arbitrary cut off)\nQ4.2: What does “Combined Score” mean? Check https://maayanlab.cloud/Enrichr/help#basics\nQ4.3: What are the genes associated with the process with the highest combined score in each direction?\nQ4.4: What are the top 10 enriched processes for the up- and down-regulated genes? Include a figure for each direction."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.html",
+    "href": "practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.html",
+    "title": "Gene Co-Expression Network Analysis",
+    "section": "",
+    "text": "In this practical, you will construct (or load) a gene co-expression network from normalized RNA-seq counts and analyze its topology. You will compute centrality measures, detect modules via Leiden clustering, and perform functional enrichment on selected clusters.\nIf time is limited, you may skip network construction and use the pre-generated coexpression_network.txt produced earlier.\n\n\n\n\n\n\nCreate a working directory and gather inputs\n\n\n\nmkdir -p ~/BIO512/Network_analysis\ncd ~/BIO512/Network_analysis\n\n# Required files can be fetched from the Cluster\nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/Network_analysis/* ~/BIO512/Network_analysis/\n\n# For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.\nmyvariable = {__}\n# should be replaced with actual code.\nmyvariable = \"Hello, World!\"\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nGenerate a gene co-expression network using Spearman correlation\nLoad and visualize networks in iGraph\nQuantify network properties (nodes, edges, diameter, density)\nCompute and interpret centrality measures (degree, betweenness, closeness, eigenvector)\nDetect modules using Leiden clustering and perform GO enrichment"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.html#library",
+    "href": "practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.html#library",
+    "title": "Gene Co-Expression Network Analysis",
+    "section": "2.1 Library",
+    "text": "2.1 Library\n%matplotlib inline\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nimport seaborn as sns\nimport matplotlib\nsns.set(font=\"Arial\")\nsns.set_style(\"white\")\nmatplotlib.rcParams['pdf.fonttype'] = 42\nmatplotlib.rcParams['ps.fonttype'] = 42\n\nfrom pydeseq2.dds import DeseqDataSet\nfrom pydeseq2.default_inference import DefaultInference\nfrom pydeseq2.ds import DeseqStats\nfrom statsmodels.sandbox.stats.multicomp import multipletests\n\nfrom pca import pca\nfrom pybiomart import Dataset\n\nfrom sklearn.decomposition import PCA as sklearnPCA\nimport os, math\nos.environ['KMP_DUPLICATE_LIB_OK']='True'\nimport pickle\n\nfrom scipy.stats import zscore, spearmanr\nimport gseapy as gp\nimport igraph as ig\n\ndef coexpression_generation(norm_count,padj_thr=0.05):\n    print('Calculating Correlation..')\n    temp=spearmanr(norm_count.T)\n    corr=pd.DataFrame(temp[0],columns=list(norm_count.index),index=list(norm_count.index))\n    pval=pd.DataFrame(temp[1],columns=list(norm_count.index),index=list(norm_count.index))\n    print('Filtering the matrix Correlation..')\n    corr=corr.where(np.triu(np.ones(corr.shape)).astype(np.bool))\n    pval=pval.where(np.triu(np.ones(pval.shape)).astype(np.bool))\n    print('Making long table of Correlation..')\n    corr2=corr.unstack().reset_index(name='weight')\n    pval2=pval.unstack().reset_index(name='pval')\n    res=corr2.merge(pval2,on=['level_0','level_1'])\n    res=res[res['level_0'] != res['level_1']]\n    res=res.dropna()\n    print('Adjusting P-val')\n    res['padj']=multipletests(res['pval'],method='fdr_bh')[1]\n    res=res[res.padj &lt; padj_thr].reset_index(drop=True)\n    res=res[['level_0','level_1','weight']]\n    print('Done!!')\n    return res"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html",
+    "title": "Molecular Docking Analysis",
+    "section": "",
+    "text": "The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that “glues” them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.\nIn this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.\n\n\n\n\n\n\nCreate a new working directory\n\n\n\n# Create a new folder for this practical\n# ex.\nmkdir -p ~/BIO512/MD_practicals\n# All input and output files will be placed in this directory\n\n# Also note that you need to download the materials from the Vera \nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/* ~/BIO512/MD_practicals/\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nPrepare protein structures for molecular docking using YASARA\nPerform protein-ligand docking simulations\nAnalyze docking results and binding energies\nCompare predicted poses with crystal structures using RMSD calculations\nEvaluate the success of docking predictions"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#setting-up-yasara-workspace",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#setting-up-yasara-workspace",
+    "title": "Molecular Docking Analysis",
+    "section": "2.1 Setting up YASARA workspace",
+    "text": "2.1 Setting up YASARA workspace\n\nSet the working directory (important):\n\nOpen YASARA\nOptions &gt; Working directory &gt; navigate and find the ‘Docking’ folder &gt; OK\n\nDownload the structure:\n\nFile &gt; Load &gt; PDB file from Internet &gt; 3FAP"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#understanding-the-structure",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#understanding-the-structure",
+    "title": "Molecular Docking Analysis",
+    "section": "2.2 Understanding the structure",
+    "text": "2.2 Understanding the structure\nIn the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:\n\nMol A = chain A of the protein\nMol B = chain B of the protein\n\nMol A = ligand (rapamycin)\nMol A (in red) = water molecules of chain A\nMol B (in red) = water molecules of chain B"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#structure-cleaning-and-preparation",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#structure-cleaning-and-preparation",
+    "title": "Molecular Docking Analysis",
+    "section": "2.3 Structure cleaning and preparation",
+    "text": "2.3 Structure cleaning and preparation\n\nRemove water molecules:\n\nFrom the right-hand panel, right-click on both water entries and click ‘Delete’\n\nAdd missing hydrogen atoms:\n\nEdit &gt; Clean &gt; All\n\nMinimize the energy of the system:\n\nOptions &gt; Choose Experiment &gt; Energy minimization\n\n\n\n\n\n\n\n\nTroubleshooting\n\n\n\nOn Linux, you may need to pause the minimization and continue to make it work: Options &gt; Control experiment &gt; Pause/Continue\n\n\n\nDelete SimCell:\n\nFrom the right-hand panel, right-click on SimCell and Delete\n\nSave the prepared complex:\n\nFile &gt; Save as &gt; PDB file &gt; select 3FAP from both Sequence and Name panels &gt; give a name (3FAP_complex.pdb)"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#splitting-the-complex",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#splitting-the-complex",
+    "title": "Molecular Docking Analysis",
+    "section": "3.1 Splitting the complex",
+    "text": "3.1 Splitting the complex\n\nSplit receptor and ligand:\n\nFrom the right-side panel, right click on 3FAP &gt; split &gt; Split at selected molecules &gt; select the ligand (second A in the sequence panel)\nNow you can see two objects in the right-hand panel: receptor and ligand\n\nRename the objects:\n\nRight click on the receptor object &gt; Name &gt; enter “Receptor”\nRight click on the ligand object &gt; Name &gt; enter “Ligand”"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#saving-individual-components",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#saving-individual-components",
+    "title": "Molecular Docking Analysis",
+    "section": "3.2 Saving individual components",
+    "text": "3.2 Saving individual components\n\nSave the receptor:\n\nFile &gt; Save as &gt; PDB file &gt; select Receptor &gt; OK &gt; give a name (3FAP_receptor.pdb)\n\nSave the ligand:\n\nFile &gt; Save as &gt; Other file format &gt; select Ligand from the Object panel &gt; find sdf-MDL Mol from the Format panel &gt; enter a name (3FAP_ligand) &gt; OK\n\n\nAt this point, you should have three files in your working directory: - 3FAP_complex.pdb - 3FAP_receptor.pdb - 3FAP_ligand.sdf"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#defining-the-simulation-cell",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#defining-the-simulation-cell",
+    "title": "Molecular Docking Analysis",
+    "section": "4.1 Defining the simulation cell",
+    "text": "4.1 Defining the simulation cell\n\nGenerate the simulation cell:\n\nFrom the right-hand panel, right-click on Ligand object &gt; Select &gt; newly\nThen Simulation &gt; Define simulation cell &gt; around selected atoms\n\nRemove the ligand:\n\nRight-click on the Ligand object &gt; Delete\n\nSave the receptor + simulation cell:\n\nFile &gt; Save as &gt; YASARA Scene &gt; give a name (3FAP_receptor.sce)"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#running-the-docking-simulation",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#running-the-docking-simulation",
+    "title": "Molecular Docking Analysis",
+    "section": "4.2 Running the docking simulation",
+    "text": "4.2 Running the docking simulation\n\nSet up docking:\n\nOptions &gt; Macro & Movie &gt; set target &gt; select 3FAP_receptor.sce &gt; select ‘from underscore’ &gt; OK\n\nRun docking:\n\nOptions &gt; Macro & Movie &gt; Play macro &gt; find and click on dock_run.mcr &gt; OK"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#binding-energy-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#binding-energy-analysis",
+    "title": "Molecular Docking Analysis",
+    "section": "5.1 Binding energy analysis",
+    "text": "5.1 Binding energy analysis\n\nAnalyze the results:\n\nCheck for the log file (3FAP.log) in the working directory\nLook at the binding energy values in the first table (Bind.energy)\nThe first entry always has the best binding energy value"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#visual-inspection-of-docking-poses",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#visual-inspection-of-docking-poses",
+    "title": "Molecular Docking Analysis",
+    "section": "5.2 Visual inspection of docking poses",
+    "text": "5.2 Visual inspection of docking poses\n\nOpen predicted and crystal structures:\n\nOpen the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)\nOpen the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)\n\nOptimize visualization:\n\nView &gt; Hide atoms &gt; Aliphatic hydrogens\nView &gt; Style atoms &gt; Stick &gt; ALL\nView &gt; Hide atoms &gt; Molecule &gt; A (first entry in the Sequence panel)\nView &gt; Hide atoms &gt; Molecule &gt; A (second entry in the Sequence panel)\n\nVisual comparison:\n\nVisually inspect how well the crystal pose and the predicted docking pose overlap\nNote any significant differences between the two poses"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#quantitative-assessment",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#quantitative-assessment",
+    "title": "Molecular Docking Analysis",
+    "section": "5.3 Quantitative assessment",
+    "text": "5.3 Quantitative assessment\n\nCalculate RMSD from crystal pose:\n\nAnalyze &gt; RMSD of &gt; Molecules &gt; docked ligand (second A in the Sequence panel) &gt; OK &gt; crystal ligand (third A in the Sequence panel) &gt; OK &gt; select Molecule &gt; OK\nThe RMSD value will be displayed in the panel below the screen\n\n\n\n\n\n\n\n\nSuccess Criteria\n\n\n\nUsually, RMSD &lt; 2.0 Å is considered as a successful docking simulation."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "",
+    "text": "In this practical, we will analyze the results of molecular dynamics (MD) simulations to understand the impact of molecular glue on protein complex stability. Two separate MD simulations have been conducted (~30 ns each): one with the molecular glue (rapamycin) and one without it. MD simulations can reveal how the molecular glue affects the dynamic behavior and stability of the FKBP12/FRB protein complex over time.\nThe key metric we will focus on is the Root Mean Square Deviation (RMSD) of the protein backbone, which indicates conformational changes compared to the initial structure. Lower RMSD values suggest higher structural stability.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nAnalyze MD simulation trajectories using YASARA\nCalculate and interpret RMSD values over time\nCompare protein stability with and without molecular glue\nGenerate and interpret time-series plots of structural parameters\nDraw conclusions about molecular glue effects on protein complex dynamics"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#setting-up-the-analysis-environment",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#setting-up-the-analysis-environment",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "2.1 Setting up the analysis environment",
+    "text": "2.1 Setting up the analysis environment\n\nSet the working directory:\n\nOpen YASARA\nSet the working directory to your/path/MD/with_glue\n\nSet the target:\n\nOptions &gt; Macro & Movies &gt; Set target &gt; 3FAP_complex.sce"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#running-the-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#running-the-analysis",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "2.2 Running the analysis",
+    "text": "2.2 Running the analysis\n\nExecute MD analysis:\n\nOptions &gt; Macro & Movies &gt; play macro &gt; md_analyze.mcr &gt; OK\n\n\n\n\n\n\n\n\nAnalysis time\n\n\n\nThis analysis takes some time to complete. The macro will process the entire trajectory and calculate various structural parameters."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#interpreting-the-results",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#interpreting-the-results",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "2.3 Interpreting the results",
+    "text": "2.3 Interpreting the results\n\nReview the HTML report:\n\nAfter analysis is complete, results will be shown in an HTML file\nThe report contains different analysis metrics with explanations\nFocus on “Solute RMSD from the starting structure” for protein backbone (RMSDBb)\n\nUnderstanding RMSD:\n\nRMSDBb indicates the protein’s conformational deviation compared to the initial structure over time\nRaw data is available in 3FAP_complex_analysis.tab"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extracting-data",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extracting-data",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "3.1 Extracting data",
+    "text": "3.1 Extracting data\n\nDownload the analysis file:\n\nDownload 3FAP_complex_analysis.tab to your local computer (using WinSCP or similar)\n\nOpen in spreadsheet software:\n\nOpen the file using MS Excel or similar software\nLocate the RMSDBb column and time column"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#creating-time-series-plots",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#creating-time-series-plots",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "3.2 Creating time-series plots",
+    "text": "3.2 Creating time-series plots\n\nPlot RMSD vs time:\n\nCreate a scatter plot or line graph with:\n\nX-axis: Time (ns)\nY-axis: RMSDBb (Å)\n\nThis shows how structural stability changes over the simulation\n\nCalculate average RMSD:\n\nCalculate the average RMSD over the second half of the simulation (t &gt; 15ns)\nThis represents the equilibrated state of the system\nRecord this value for comparison"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#repeat-analysis-for-control-system",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#repeat-analysis-for-control-system",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "4.1 Repeat analysis for control system",
+    "text": "4.1 Repeat analysis for control system\n\nSet new working directory:\n\nChange working directory to MD/without_glue\n\nRepeat steps 2-9:\n\nSet target to the complex without glue\nRun md_analyze.mcr\nDownload and process the analysis results\nPlot RMSD vs time\nCalculate average RMSD for t &gt; 15ns"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#generating-comparison-plots",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#generating-comparison-plots",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "5.1 Generating comparison plots",
+    "text": "5.1 Generating comparison plots\n\nCreate comparative visualization:\n\nPlot both RMSD curves on a single graph:\n\nLine 1: With molecular glue (rapamycin)\nLine 2: Without molecular glue\n\nUse different colors/styles to distinguish the lines\nInclude proper labels and legend"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#statistical-comparison",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#statistical-comparison",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "5.2 Statistical comparison",
+    "text": "5.2 Statistical comparison\n\nCompare average RMSD values:\n\nCompare the average RMSD values from step 9 for both systems\nThe lower RMSD indicates higher structural stability\nCalculate the difference between the two conditions"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#quantitative-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#quantitative-analysis",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "6.1 Quantitative Analysis",
+    "text": "6.1 Quantitative Analysis\n\nWhat are the average RMSD values for the second half of each simulation (t &gt; 15ns)?\n\nWith molecular glue: _____ Å\nWithout molecular glue: _____ Å\n\nWhat is the difference in average RMSD between the two conditions? What does this tell you about the effect of rapamycin?\nDescribe the time evolution of RMSD in both simulations. Do you see different patterns of equilibration?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#structural-interpretation",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#structural-interpretation",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "6.2 Structural Interpretation",
+    "text": "6.2 Structural Interpretation\n\nHow does the molecular glue affect the overall stability of the protein complex? Provide quantitative evidence.\nWhat biological significance does this stability difference have for mTOR signaling?\nAre there any periods during the simulation where the differences are most pronounced? What might this indicate?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#methodological-considerations",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#methodological-considerations",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "6.3 Methodological Considerations",
+    "text": "6.3 Methodological Considerations\n\nWhy do we focus on the second half of the simulation for calculating averages?\nWhat other parameters from the MD analysis might be relevant for understanding molecular glue effects?\nWhat are the limitations of this analysis approach? How might you improve it?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#additional-metrics",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#additional-metrics",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "7.1 Additional metrics",
+    "text": "7.1 Additional metrics\n\nHydrogen bond analysis: Count hydrogen bonds between rapamycin and the proteins over time\nContact analysis: Monitor specific residue-residue contacts\nFlexibility analysis: Calculate B-factors or root mean square fluctuation (RMSF)"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extended-comparisons",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extended-comparisons",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "7.2 Extended comparisons",
+    "text": "7.2 Extended comparisons\n\nDifferent time windows: Compare stability at different simulation periods\nPer-residue analysis: Identify which protein regions are most affected by the molecular glue\n\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nMD simulations reveal dynamic effects of molecular glues on protein complexes\nRMSD analysis provides quantitative measures of structural stability\nRapamycin stabilizes the FKBP12/FRB complex by reducing conformational fluctuations\nComparative analysis between conditions is essential for understanding molecular mechanisms\nEquilibration time must be considered when analyzing MD trajectories\nVisual and statistical analysis complement each other in MD interpretation"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#expected-outcomes",
+    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#expected-outcomes",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "7.3 Expected Outcomes",
+    "text": "7.3 Expected Outcomes\nBased on the biological role of rapamycin, you should observe:\n\nLower RMSD values in the presence of rapamycin\nMore stable complex with molecular glue\nReduced conformational fluctuations when rapamycin bridges the proteins\n\nThese results support the mechanism by which rapamycin acts as a molecular glue to stabilize protein-protein interactions and modulate cellular signaling pathways."
+  }
+]
