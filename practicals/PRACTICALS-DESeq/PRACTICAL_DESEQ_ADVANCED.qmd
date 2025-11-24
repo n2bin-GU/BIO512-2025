@@ -1,5 +1,5 @@
 ---
-title: "Advanced DESeq Analysis: Data Grouping and Visualization"
+title: "Data Grouping and Visualization"
 subtitle: "BIO512 Transcriptomics – Advanced PCA and Sample Correlation"
 author: "Muhammad Arif"
 date: November 10, 2025
@@ -9,19 +9,14 @@ format:
     toc-depth: 3
     number-sections: true
     code-fold: false
-    theme: cosmo
+    theme:
+      light: cosmo
+      dark: darkly
 ---
 
 # Introduction
 
-This companion to the DeSeq practical focuses on grouping, advanced PCA using DE-only genes, and sample correlation heatmaps.
-
-::: {.callout-note}
-## Learning Objectives
-- Redo PCA on DE-only features and interpret separation
-- Understand PCA loadings and identify top-loading features
-- Compute and plot sample-to-sample correlation heatmaps
-:::
+This companion to the DeSeq practical focuses on grouping, advanced PCA using DE-only genes, and sample correlation heatmaps. We will continue in the same notebook as last time, so no need to make a new workspace.
 
 ---
 
@@ -29,10 +24,10 @@ This companion to the DeSeq practical focuses on grouping, advanced PCA using DE
 
 Now we will redo PCA using only the differentially expressed (DE) genes identified in the previous DESeq analysis. This approach often enhances the separation between experimental groups by focusing on the most informative features.
 
-### Questions
+## Questions
 
-- **Q5.1: Do you see any improvement in the separation of the Normal and Infected group? What variable(s) that you observe?**
-- **Q5.2: Explain what is "loading" in PCA. Identify top-loading (best performing features) separating Normal and Infected groups. (hint: https://erdogant.github.io/pca/pages/html/Algorithm.html#loadings)**
+- **Q12: Do you see any improvement in the separation of the Normal and Infected group? What variable(s) that you observe?**
+- **Q13: Explain what is "loading" in PCA. Identify top-loading (best performing features) separating Normal and Infected groups. (hint: https://erdogant.github.io/pca/pages/html/Algorithm.html#loadings)**
 
 ---
 
@@ -40,30 +35,43 @@ Now we will redo PCA using only the differentially expressed (DE) genes identifi
 
 A sample-to-sample correlation heatmap was generated to assess the similarity between replicates and experimental conditions. The heatmap provides an overview of how well biological replicates cluster together and whether the infection condition separates clearly from the normal condition. High within-group correlations indicate good data quality and consistent sample preparation.  
 
-We will use Seaborn Clustermap to plot the sample correlations
-
 ## Steps
-1. Calculate the sample correlations using ".corr()" functions from pandas. Remember that we want to calculate the distance between samples rather than among genes. (Suggestion: use the count_PCA variable instead of count)
+1. Calculate the sample correlations using ".corr()" functions from pandas. Remember that we want to calculate the distance between samples rather than among genes.
+
+::: {.callout-tip}
+Suggestion: use the count_PCA variable instead of count
+
+https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html
+:::
 
 ```python
 corr = {__}
 ```
 
-2. Use sns.clustermap() to plot your correlation matrix (Suggestion: use "cmap = 'RdYlBu'" to have better color map)
+2. Use sns.clustermap() to plot your correlation matrix
+
+::: {.callout-tip}
+Suggestion: use "cmap = 'RdYlBu'" to have better color map
+:::
 
 ```python
-sns.{__}
+sns.clustermap({__})
 ```
 
-### Questions:
+## Questions:
 
-- **Q6.1: What do you conclude from the clustering, do the PCA and the heatmap reflect eachother? Are there any sample outliers?**
-- **Q6.2: Can you identify which correlation method that you use?**
+- **Q14: What do you conclude from the clustering, do the PCA and the heatmap reflect eachother? Are there any sample outliers?**
+- **Q15: Can you identify which correlation method that you use?**
+
+::: {.callout-tip}
+(hint: read https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html)
+:::
 
 ---
 
 # Things to append to your submission
 
 - Save your notebook as PRACTICAL_DESEQ_ADVANCED_yourname.ipynb
-- Include answers to Q5.1–Q6.2
-- Include figures: PCA scree plot (DE-only) and correlation heatmap
+- Add answers to the questions in separate markdown cells
+- Add your code blocks from the jupyter notebook with completed code where the placeholders were 
+- Include some output cells with figures (if multiple runs are needed, keep only the last one)

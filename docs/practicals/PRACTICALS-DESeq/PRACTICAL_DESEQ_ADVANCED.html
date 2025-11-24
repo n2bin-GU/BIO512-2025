@@ -9,7 +9,7 @@
 <meta name="author" content="Muhammad Arif">
 <meta name="dcterms.date" content="2025-11-10">
 
-<title>Advanced DESeq Analysis: Data Grouping and Visualization – BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</title>
+<title>Data Grouping and Visualization – BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,10 +73,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-8eb531ae3802ad7925fa8367121b26c6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-8eb531ae3802ad7925fa8367121b26c6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-33b5c228d36e979e7dea748a643e3142.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-8eb531ae3802ad7925fa8367121b26c6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,7 +113,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../pages/styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -136,12 +302,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-transcriptomics">    
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ANALYSIS.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.html">
  <span class="dropdown-text">DESeq2 Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ADVANCED.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.html">
  <span class="dropdown-text">Advanced PCA &amp; Correlation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.html">
+ <span class="dropdown-text">Network Analysis</span></a>
   </li>  
     </ul>
   </li>
@@ -190,6 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -206,14 +377,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
   <li><a href="#advanced-pca" id="toc-advanced-pca" class="nav-link" data-scroll-target="#advanced-pca"><span class="header-section-number">2</span> Advanced PCA</a>
   <ul class="collapse">
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions"><span class="header-section-number">2.0.1</span> Questions</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions"><span class="header-section-number">2.1</span> Questions</a></li>
   </ul></li>
   <li><a href="#exploratory-data-analysis-sample-correlation-heatmap" id="toc-exploratory-data-analysis-sample-correlation-heatmap" class="nav-link" data-scroll-target="#exploratory-data-analysis-sample-correlation-heatmap"><span class="header-section-number">3</span> Exploratory Data Analysis: Sample Correlation Heatmap</a>
   <ul class="collapse">
-  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps"><span class="header-section-number">3.1</span> Steps</a>
-  <ul class="collapse">
-  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1"><span class="header-section-number">3.1.1</span> Questions:</a></li>
-  </ul></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps"><span class="header-section-number">3.1</span> Steps</a></li>
+  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1"><span class="header-section-number">3.2</span> Questions:</a></li>
   </ul></li>
   <li><a href="#things-to-append-to-your-submission" id="toc-things-to-append-to-your-submission" class="nav-link" data-scroll-target="#things-to-append-to-your-submission"><span class="header-section-number">4</span> Things to append to your submission</a></li>
   </ul>
@@ -222,9 +391,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Advanced DESeq Analysis: Data Grouping and Visualization</h1>
+<h1 class="title">Data Grouping and Visualization</h1>
 <p class="subtitle lead">BIO512 Transcriptomics – Advanced PCA and Sample Correlation</p>
 </div>
 
@@ -256,34 +426,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>This companion to the DeSeq practical focuses on grouping, advanced PCA using DE-only genes, and sample correlation heatmaps.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Learning Objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Redo PCA on DE-only features and interpret separation</li>
-<li>Understand PCA loadings and identify top-loading features</li>
-<li>Compute and plot sample-to-sample correlation heatmaps</li>
-</ul>
-</div>
-</div>
+<p>This companion to the DeSeq practical focuses on grouping, advanced PCA using DE-only genes, and sample correlation heatmaps. We will continue in the same notebook as last time, so no need to make a new workspace.</p>
 <hr>
 </section>
 <section id="advanced-pca" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Advanced PCA</h1>
 <p>Now we will redo PCA using only the differentially expressed (DE) genes identified in the previous DESeq analysis. This approach often enhances the separation between experimental groups by focusing on the most informative features.</p>
-<section id="questions" class="level3" data-number="2.0.1">
-<h3 data-number="2.0.1" class="anchored" data-anchor-id="questions"><span class="header-section-number">2.0.1</span> Questions</h3>
+<section id="questions" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="questions"><span class="header-section-number">2.1</span> Questions</h2>
 <ul>
-<li><strong>Q5.1: Do you see any improvement in the separation of the Normal and Infected group? What variable(s) that you observe?</strong></li>
-<li><strong>Q5.2: Explain what is “loading” in PCA. Identify top-loading (best performing features) separating Normal and Infected groups. (hint: https://erdogant.github.io/pca/pages/html/Algorithm.html#loadings)</strong></li>
+<li><strong>Q12: Do you see any improvement in the separation of the Normal and Infected group? What variable(s) that you observe?</strong></li>
+<li><strong>Q13: Explain what is “loading” in PCA. Identify top-loading (best performing features) separating Normal and Infected groups. (hint: https://erdogant.github.io/pca/pages/html/Algorithm.html#loadings)</strong></li>
 </ul>
 <hr>
 </section>
@@ -291,33 +444,73 @@ Learning Objectives
 <section id="exploratory-data-analysis-sample-correlation-heatmap" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Exploratory Data Analysis: Sample Correlation Heatmap</h1>
 <p>A sample-to-sample correlation heatmap was generated to assess the similarity between replicates and experimental conditions. The heatmap provides an overview of how well biological replicates cluster together and whether the infection condition separates clearly from the normal condition. High within-group correlations indicate good data quality and consistent sample preparation.</p>
-<p>We will use Seaborn Clustermap to plot the sample correlations</p>
 <section id="steps" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="steps"><span class="header-section-number">3.1</span> Steps</h2>
 <ol type="1">
-<li>Calculate the sample correlations using “.corr()” functions from pandas. Remember that we want to calculate the distance between samples rather than among genes. (Suggestion: use the count_PCA variable instead of count)</li>
+<li>Calculate the sample correlations using “.corr()” functions from pandas. Remember that we want to calculate the distance between samples rather than among genes.</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suggestion: use the count_PCA variable instead of count</p>
+<p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html</p>
+</div>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Use sns.clustermap() to plot your correlation matrix (Suggestion: use “cmap = ‘RdYlBu’” to have better color map)</li>
+<li>Use sns.clustermap() to plot your correlation matrix</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sns.{__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="questions-1" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="questions-1"><span class="header-section-number">3.1.1</span> Questions:</h3>
-<ul>
-<li><strong>Q6.1: What do you conclude from the clustering, do the PCA and the heatmap reflect eachother? Are there any sample outliers?</strong></li>
-<li><strong>Q6.2: Can you identify which correlation method that you use?</strong></li>
-</ul>
-<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suggestion: use “cmap = ‘RdYlBu’” to have better color map</p>
+</div>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sns.clustermap({__})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="questions-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="questions-1"><span class="header-section-number">3.2</span> Questions:</h2>
+<ul>
+<li><strong>Q14: What do you conclude from the clustering, do the PCA and the heatmap reflect eachother? Are there any sample outliers?</strong></li>
+<li><strong>Q15: Can you identify which correlation method that you use?</strong></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>(hint: read https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html)</p>
+</div>
+</div>
+<hr>
 </section>
 </section>
 <section id="things-to-append-to-your-submission" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Things to append to your submission</h1>
 <ul>
 <li>Save your notebook as PRACTICAL_DESEQ_ADVANCED_yourname.ipynb</li>
-<li>Include answers to Q5.1–Q6.2</li>
-<li>Include figures: PCA scree plot (DE-only) and correlation heatmap</li>
+<li>Add answers to the questions in separate markdown cells</li>
+<li>Add your code blocks from the jupyter notebook with completed code where the placeholders were</li>
+<li>Include some output cells with figures (if multiple runs are needed, keep only the last one)</li>
 </ul>
 
 
@@ -326,6 +519,19 @@ Learning Objectives
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
