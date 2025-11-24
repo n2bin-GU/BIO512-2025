@@ -9,28 +9,30 @@ format:
     toc-depth: 3
     number-sections: true
     code-fold: false
-    theme: cosmo
+    theme: 
+      light: cosmo
+      dark: darkly
     css: pages/styles.css
 ---
 
-## Course Overview
+## 📚 Course Overview
 
 This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.
 
-### Transcriptomics
+### 🧬 Transcriptomics 
 
 - DESeq2 workflow:
-  - [Practical: DESeq2 Analysis 🔒](practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ANALYSIS.qmd)
-  - [Practical: Data Grouping and Visualisation 🔒](practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ADVANCED.qmd)
+  - [Practical: DESeq2 Analysis](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.qmd)
+  - [Practical: Data Grouping and Visualisation](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd)
 - Network analysis:
-  - [Practical: Network visualisation and Centrality analysis 🔒](practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd)
+  - [Practical: Network visualisation and Centrality analysis](practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.qmd)
 
-### Machine Learning
+### 🤖 Machine Learning
 
 - Peptide classification in Scikit-Learn:
   - [Practical: Peptide Classification with ML 🔒](practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd)
 
-### Protein Structure and Modeling
+### 🧫 Protein Structure and Modeling
 
 - Structure analysis (YASARA):
   - [Practical: Protein Complex Structure Analysis 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd)
@@ -40,7 +42,7 @@ This repository contains practical exercises for the BIO512 course at University
   - [Practical: Molecular Docking 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd)
   - [Practical: MD Analysis 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd)
 
-### Computer Setup
+### 🛠️ Computer Setup
 
 - Computer setup:
   - [Pre-course Setup](setup/Pre-course-setup_n2bin.qmd)

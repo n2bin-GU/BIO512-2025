@@ -5,11 +5,13 @@ author: "Gergely Katona"
 date: November 10, 2025
 format:
   html:
+    theme:
+      light: cosmo
+      dark: darkly
     toc: true
     toc-depth: 3
     number-sections: true
     code-fold: false
-    theme: cosmo
 ---
 
 # Introduction

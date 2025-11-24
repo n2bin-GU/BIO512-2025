@@ -14,9 +14,11 @@ website:
       - text: "Transcriptomics"
         menu:
           - text: "DESeq2 Analysis"
-            href: "practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ANALYSIS.qmd"
+            href: "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.qmd"
           - text: "Advanced PCA & Correlation"
-            href: "practicals/PRACTICALS-DESeq/_PRACTICAL_DESEQ_ADVANCED.qmd"
+            href: "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd"
+          - text: "Network Analysis"
+            href: "practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.qmd"
       - text: "Structure & Modeling"
         menu:
           - text: "Protein Complex Structure Analysis"
@@ -38,7 +40,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      light: cosmo
+      dark: darkly
     toc: true
     toc-depth: 3
     number-sections: true
