@@ -30,7 +30,7 @@ This repository contains practical exercises for the BIO512 course at University
 ### 🤖 Machine Learning
 
 - Peptide classification in Scikit-Learn:
-  - [Practical: Peptide Classification with ML 🔒](practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd)
+  - [Practical: Peptide Classification with ML](practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd)
 
 ### 🧫 Protein Structure and Modeling
 
