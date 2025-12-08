@@ -339,7 +339,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"> 
+    <a class="nav-link active" href="../../practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html" aria-current="page"> 
 <span class="menu-text">Machine Learning</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -375,21 +375,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#files-and-setup" id="toc-files-and-setup" class="nav-link" data-scroll-target="#files-and-setup"><span class="header-section-number">2</span> Files and setup</a></li>
-  <li><a href="#basic-run-through" id="toc-basic-run-through" class="nav-link" data-scroll-target="#basic-run-through"><span class="header-section-number">3</span> Basic run-through</a>
+  <li><a href="#task-overview" id="toc-task-overview" class="nav-link" data-scroll-target="#task-overview"><span class="header-section-number">2</span> Task Overview</a>
   <ul class="collapse">
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">3.1</span> 1. Imports</a></li>
-  <li><a href="#load-the-encoding-table" id="toc-load-the-encoding-table" class="nav-link" data-scroll-target="#load-the-encoding-table"><span class="header-section-number">3.2</span> 2. Load the encoding table</a></li>
-  <li><a href="#define-the-encoder" id="toc-define-the-encoder" class="nav-link" data-scroll-target="#define-the-encoder"><span class="header-section-number">3.3</span> 3. Define the encoder</a></li>
-  <li><a href="#load-microarray-data" id="toc-load-microarray-data" class="nav-link" data-scroll-target="#load-microarray-data"><span class="header-section-number">3.4</span> 4. Load microarray data</a></li>
-  <li><a href="#apply-encoding" id="toc-apply-encoding" class="nav-link" data-scroll-target="#apply-encoding"><span class="header-section-number">3.5</span> 5. Apply encoding</a></li>
-  <li><a href="#merge-feature-vectors-with-original-data" id="toc-merge-feature-vectors-with-original-data" class="nav-link" data-scroll-target="#merge-feature-vectors-with-original-data"><span class="header-section-number">3.6</span> 6. Merge feature vectors with original data</a></li>
-  <li><a href="#tidy-metadata-and-target" id="toc-tidy-metadata-and-target" class="nav-link" data-scroll-target="#tidy-metadata-and-target"><span class="header-section-number">3.7</span> 7. Tidy metadata and target</a></li>
-  <li><a href="#baseline-model" id="toc-baseline-model" class="nav-link" data-scroll-target="#baseline-model"><span class="header-section-number">3.8</span> 8. Baseline model</a></li>
-  <li><a href="#diagnostics" id="toc-diagnostics" class="nav-link" data-scroll-target="#diagnostics"><span class="header-section-number">3.9</span> 9. Diagnostics</a></li>
+  <li><a href="#data-inspection-and-preparation" id="toc-data-inspection-and-preparation" class="nav-link" data-scroll-target="#data-inspection-and-preparation"><span class="header-section-number">2.1</span> 1. Data inspection and preparation</a></li>
+  <li><a href="#feature-encoding" id="toc-feature-encoding" class="nav-link" data-scroll-target="#feature-encoding"><span class="header-section-number">2.2</span> 2. Feature encoding</a></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training"><span class="header-section-number">2.3</span> 3. Model training</a></li>
+  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">2.4</span> 4. Model evaluation</a></li>
+  <li><a href="#visualizing-results" id="toc-visualizing-results" class="nav-link" data-scroll-target="#visualizing-results"><span class="header-section-number">2.5</span> 5. Visualizing results</a></li>
+  <li><a href="#interpretation-and-discussion" id="toc-interpretation-and-discussion" class="nav-link" data-scroll-target="#interpretation-and-discussion"><span class="header-section-number">2.6</span> 6. Interpretation and discussion</a></li>
   </ul></li>
-  <li><a href="#tasks-complete-after-the-basic-run-through" id="toc-tasks-complete-after-the-basic-run-through" class="nav-link" data-scroll-target="#tasks-complete-after-the-basic-run-through"><span class="header-section-number">4</span> Tasks (complete after the basic run-through)</a></li>
-  <li><a href="#things-to-append-to-your-submission" id="toc-things-to-append-to-your-submission" class="nav-link" data-scroll-target="#things-to-append-to-your-submission"><span class="header-section-number">5</span> Things to append to your submission</a></li>
+  <li><a href="#things-to-append-to-your-submission" id="toc-things-to-append-to-your-submission" class="nav-link" data-scroll-target="#things-to-append-to-your-submission"><span class="header-section-number">3</span> Things to append to your submission</a></li>
   </ul>
 </nav>
     </div>
@@ -434,7 +429,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Protein–protein interactions (PPIs) are central to almost every biological process, yet their complexity often makes them difficult to describe and predict. Traditional models emphasize short-range atomic contacts or electrostatic complementarity, but these approaches can fail to capture the broader physicochemical principles that govern biomolecular recognition.</p>
 <p>In the paper “Deciphering peptide–protein interactions via composition-based prediction: a case study with survivin/BIRC5” (Anindya et al., 2024), a different approach was introduced. Instead of focusing on the detailed three-dimensional structures of proteins, the study analyzed their composition (the number and types of atoms or functional groups within peptides) and used this as a predictive descriptor of interaction with the human protein survivin (BIRC5)</p>
 <p>The goal of this practical is to build a classifier that predicts peptide binding signal from microarray data using encoded features derived from amino-acid properties. You will first perform a basic run-through of the provided notebook, then complete a set of ML-focused tasks.</p>
-<p>Use the annotated notebook aa_scan2_clean_annotated.ipynb for the exercise.</p>
+<p>Use the annotated notebook aa_scan2_clean_annotated.ipynb for the exercise, it will serve as the hand in for this segment.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -446,11 +441,20 @@ Create a working directory
 </div>
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new folder for this practical</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/BIO512/ML_lab</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/BIO512/Peptide_Classification</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch the required files from Vera</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># do note that &lt;__&gt; is a placeholder for your vera username</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>your_vera_username<span class="op">&gt;</span>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/Peptide_Classification/<span class="pp">*</span> ~/BIO512/Peptide_Classification/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Notebook: aa_scan2_clean_annotated.ipynb</li>
+<li>Property table: aa_properties.xlsx (1,2 and 3 for each encoding)</li>
+<li>Microarray data: Clean_results_2_2019.xlsx</li>
+</ul>
+<ol type="1">
+<li>Open the notebook in VS Code or Jupyter from your working directory</li>
+<li>Ensure packages are available: pandas, numpy, seaborn, scikit-learn, matplotlib.</li>
+</ol>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -465,33 +469,21 @@ Learning Objectives
 <div class="callout-body-container callout-body">
 <p>By the end you should be able to:</p>
 <ul>
-<li>Encode peptide sequences into feature vectors using an AA property table</li>
-<li>Compare classifiers with cross validation using robust metrics</li>
-<li>Interpret influential features in biochemical terms</li>
-<li>Report reproducible results with seeds, versions, and parameters</li>
+<li>Explain how compositional features can represent molecular information.</li>
+<li>Implement a simple neural network for binary classification in Python.</li>
+<li>Interpret model performance using standard metrics.</li>
+<li>Discuss the implications of composition-based models for molecular biology and drug discovery</li>
 </ul>
 </div>
 </div>
 <hr>
 </section>
-<section id="files-and-setup" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Files and setup</h1>
-<ul>
-<li>Notebook: aa_scan2_clean_annotated.ipynb</li>
-<li>Property table: aa_properties.xlsx</li>
-<li>Microarray data: Clean_results_2_2019.xlsx</li>
-</ul>
-<ol type="1">
-<li>Open the notebook in VS Code or Jupyter from your working directory. You can run this locally or on Vera.</li>
-<li>Ensure packages are available: pandas, numpy, seaborn, scikit-learn, matplotlib.</li>
-</ol>
-<hr>
-</section>
-<section id="basic-run-through" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Basic run-through</h1>
+<section id="task-overview" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Task Overview</h1>
 <p>Follow these steps in the notebook. Add short notes under each result.</p>
-<section id="imports" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">3.1</span> 1. Imports</h2>
+<hr>
+<section id="data-inspection-and-preparation" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="data-inspection-and-preparation"><span class="header-section-number">2.1</span> 1. Data inspection and preparation</h2>
 <ul>
 <li>Import core libraries. If an import fails, install and re-run.</li>
 </ul>
@@ -499,198 +491,203 @@ Learning Objectives
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="load-the-encoding-table" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="load-the-encoding-table"><span class="header-section-number">3.2</span> 2. Load the encoding table</h2>
 <ul>
-<li>Load aa_properties.xlsx and confirm it contains the AA letter column (e.g., <code>aa</code>) and feature columns.</li>
+<li>Load aa_properties.xlsx and confirm it contains the AA letter column (e.g., <code>aa</code>) and feature columns. The different numbers (1, 2, 3) correspond to different aa representation schemes.</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Positionwise carbon (C-Pos)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.read_excel(<span class="st">"aa_properties.xlsx"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># H-wise Carbon (C-Coord)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_excel("aa_properties2.xlsx")</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># identity (AA-Letter)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_excel("aa_properties3.xlsx")</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="define-the-encoder" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="define-the-encoder"><span class="header-section-number">3.3</span> 3. Define the encoder</h2>
-<ul>
-<li>Implement a function that sums feature rows for each amino acid</li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> peptrans(peptide):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    rows<span class="op">=</span>[]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> peptide:</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        rows.append(df[df.aa<span class="op">==</span>l])</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat(rows).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="load-microarray-data" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="load-microarray-data"><span class="header-section-number">3.4</span> 4. Load microarray data</h2>
-<ul>
-<li>Load the microarray dataset (Clean_results_2_2019.xlsx).</li>
-</ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pf<span class="op">=</span>pd.read_excel(<span class="st">"Clean_results_2_2019.xlsx"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="apply-encoding" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="apply-encoding"><span class="header-section-number">3.5</span> 5. Apply encoding</h2>
-<ul>
-<li>Map peptrans over the peptide sequence to produce feature vectors.</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transpf<span class="op">=</span>pf[<span class="st">'Peptide'</span>].<span class="bu">apply</span>(peptrans)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>transpf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="merge-feature-vectors-with-original-data" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="merge-feature-vectors-with-original-data"><span class="header-section-number">3.6</span> 6. Merge feature vectors with original data</h2>
-<ul>
-<li>Concatenate features with the original dataframe.</li>
-</ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mergepf <span class="op">=</span> pd.concat([pf, transpf], axis<span class="op">=</span><span class="dv">1</span>, sort<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mergepf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="tidy-metadata-and-target" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="tidy-metadata-and-target"><span class="header-section-number">3.7</span> 7. Tidy metadata and target</h2>
-<ul>
-<li>Create <code>Prot_pep</code> and <code>Prot_res_pep</code> for better metadata</li>
-<li>Set index to <code>Prot_res_pep</code> so that we use the most informative descriptor</li>
-<li>Rename target Survivin label to <code>Fluorescence</code>.</li>
-</ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mergepf[<span class="st">"Prot_pep"</span>] <span class="op">=</span> mergepf[<span class="st">"Protein"</span>].<span class="bu">map</span>(<span class="bu">str</span>) <span class="op">+</span><span class="st">"_"</span><span class="op">+</span> mergepf[<span class="st">"Peptide"</span>]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mergepf[<span class="st">"Prot_res_pep"</span>] <span class="op">=</span> mergepf[<span class="st">"Protein"</span>].<span class="bu">map</span>(<span class="bu">str</span>) <span class="op">+</span><span class="st">"_"</span><span class="op">+</span> mergepf[<span class="st">"Residue number"</span>].<span class="bu">map</span>(<span class="bu">str</span>)<span class="op">+</span><span class="st">"_"</span><span class="op">+</span> mergepf[<span class="st">"Peptide"</span>]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mergepf<span class="op">=</span>mergepf.set_index(<span class="st">'Prot_res_pep'</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>mergepf<span class="op">=</span>mergepf.rename(columns<span class="op">=</span>{<span class="st">u'Survivin, 1 µg/ml'</span>: <span class="st">u'Fluorescence'</span>})</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>mergepf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="baseline-model" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="baseline-model"><span class="header-section-number">3.8</span> 8. Baseline model</h2>
-<p>The main engine block of the notebook has multiple configurations of various classifiers prepared. These classifiers all come as part of the <a href="https://scikit-learn.org/stable/supervised_learning.html">scikit-learn</a> library. To use a different classifier, simply uncomment the relevant line and comment out the rest.</p>
-<ul>
-<li>Use the default MLPClassifier block from the notebook to build a baseline.</li>
-</ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier, AdaBoostClassifier</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessClassifier</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> RBF</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets, svm, metrics</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler, MinMaxScaler</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = svm.SVC(gamma=0.001)</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = RandomForestClassifier(max_depth=None, n_estimators=100, max_features='auto')</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = MLPClassifier(solver='lbfgs',random_state=1, max_iter=10000)</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">2</span>,), random_state<span class="op">=</span><span class="dv">1</span>, max_iter<span class="op">=</span><span class="dv">10000</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = GaussianProcessClassifier(1.0 * RBF(1.0))</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = DecisionTreeClassifier(max_depth=5)</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = KNeighborsClassifier(5)</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = AdaBoostClassifier()</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>feature_names<span class="op">=</span>[<span class="st">u'CA-Gly'</span>, <span class="st">u'Pro-MC'</span>, <span class="st">u'CB'</span>, <span class="st">u'CB-Pro'</span>,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">u'Carboxyl'</span>, <span class="st">u'Amide'</span>,</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">u'His'</span>, <span class="st">u'Trp'</span>, <span class="st">u'Phe-Tyr'</span>, <span class="st">u'OH-Tyr'</span>, <span class="st">u'CG'</span>, <span class="st">u'CD'</span>, <span class="st">u'CE'</span>,</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">u'OH'</span>, <span class="st">u'SH'</span>, <span class="st">u'S'</span>, <span class="st">u'NH3'</span>, <span class="st">u'Arg'</span>,<span class="st">u'MC'</span>]</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(mergepf[feature_names])</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Other array setups #</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span>np.array(mergepf[<span class="st">u'Fluorescence'</span>]<span class="op">&gt;</span><span class="dv">0</span>)</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Other array setups #</span></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>sc<span class="op">=</span>StandardScaler()</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    X, Y, test_size<span class="op">=</span><span class="fl">0.5</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> sc.fit_transform(X_train)</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> sc.transform(X_test)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train)</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>predict<span class="op">=</span>clf.predict(X_test)</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>predict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="diagnostics" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="diagnostics"><span class="header-section-number">3.9</span> 9. Diagnostics</h2>
-<ul>
-<li>Plot the confusion matrix and print the classification report.</li>
-</ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>disp <span class="op">=</span> ConfusionMatrixDisplay.from_estimator(</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    clf, X_test, y_test, cmap<span class="op">=</span><span class="st">'Blues'</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>disp.ax_.set_title(<span class="st">"Confusion Matrix"</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Confusion matrix:</span><span class="ch">\n</span><span class="st">"</span>, disp.confusion_matrix)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Classification report for classifier </span><span class="sc">{</span>clf<span class="sc">}</span><span class="ss">:</span><span class="ch">\n</span><span class="ss">"</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"</span><span class="sc">{</span>metrics<span class="sc">.</span>classification_report(y_test, predict)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Recommended improvements for later tasks
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>The dataset originates from a peptide microarray experiment containing peptides from 36 known or potential survivin interaction partners. Each peptide is 15 amino acids long, with overlapping sequences, and is labeled as binder or non-binder based on fluorescence intensity measurements.</p>
+</div>
+</div>
 <ul>
-<li>Prefer stratified splits and wrap scaling + model in a Pipeline to avoid leakage.</li>
-<li>Use macro F1, balanced accuracy, and PR curves when classes are imbalanced.</li>
+<li>Load the microarray dataset (Clean_results_2_2019.xlsx)</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Look at the distribution of binding and non-binding peptides. How many binders are there? How many non-binders?</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="feature-encoding" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="feature-encoding"><span class="header-section-number">2.2</span> 2. Feature encoding</h2>
+<ul>
+<li>Represent peptides by counting atomic or functional group.
+<ul>
+<li>Make sure to check output data from all the matrix transformations so that they make sense.</li>
+</ul></li>
+<li>Optionally, compare the peptide encodings with the amino acid sequence representations.</li>
+</ul>
+<hr>
+</section>
+<section id="model-training" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="model-training"><span class="header-section-number">2.3</span> 3. Model training</h2>
+<p>The main engine block of the notebook has multiple configurations of various classifiers prepared. These classifiers all come as part of the <a href="https://scikit-learn.org/stable/supervised_learning.html">scikit-learn</a> library. To use a different classifier, simply uncomment the relevant line and comment out the rest.</p>
+<ul>
+<li>Begin by building a multilayer perceptron (MLP) classifier using the MLPClassifier from scikit-learn.</li>
+<li>Split the data into training and test sets for model evaluation. If you’re interested there are also more advanced methods such as <a href="https://scikit-learn.org/stable/modules/cross_validation.html">cross-validation</a></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier, AdaBoostClassifier</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessClassifier</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> RBF</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets, svm, metrics</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler, MinMaxScaler</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = svm.SVC(gamma=0.001)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = RandomForestClassifier(max_depth=None, n_estimators=100, max_features='auto')</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = MLPClassifier(solver='lbfgs',random_state=1, max_iter=10000)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">2</span>,), random_state<span class="op">=</span><span class="dv">1</span>, max_iter<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = GaussianProcessClassifier(1.0 * RBF(1.0))</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = DecisionTreeClassifier(max_depth=5)</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = KNeighborsClassifier(5)</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#clf = AdaBoostClassifier()</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>feature_names<span class="op">=</span>[<span class="st">u'CA-Gly'</span>, <span class="st">u'Pro-MC'</span>, <span class="st">u'CB'</span>, <span class="st">u'CB-Pro'</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">u'Carboxyl'</span>, <span class="st">u'Amide'</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">u'His'</span>, <span class="st">u'Trp'</span>, <span class="st">u'Phe-Tyr'</span>, <span class="st">u'OH-Tyr'</span>, <span class="st">u'CG'</span>, <span class="st">u'CD'</span>, <span class="st">u'CE'</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">u'OH'</span>, <span class="st">u'SH'</span>, <span class="st">u'S'</span>, <span class="st">u'NH3'</span>, <span class="st">u'Arg'</span>,<span class="st">u'MC'</span>]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(mergepf[feature_names])</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Other array setups #</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span>np.array(mergepf[<span class="st">u'Fluorescence'</span>]<span class="op">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Other array setups #</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>sc<span class="op">=</span>StandardScaler()</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    X, Y, test_size<span class="op">=</span><span class="fl">0.5</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> sc.fit_transform(X_train)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> sc.transform(X_test)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>predict<span class="op">=</span>clf.predict(X_test)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>predict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="model-evaluation" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">2.4</span> 4. Model evaluation</h2>
+<ul>
+<li>Compute accuracy, precision, recall, and F1 scores.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What are the accuracy, precision, recall, and F1 scores of your MLP? How do these metrics reflect the model’s performance?</p>
+</div>
+</div>
+<ul>
+<li>Rerun the above section using different encodings.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How do the different encodings affect the model’s performance? Which encoding yields the best results?</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="visualizing-results" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="visualizing-results"><span class="header-section-number">2.5</span> 5. Visualizing results</h2>
+<ul>
+<li>Inspect the trained weights on the neural network</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Discuss briefly (1-2 sentences) which peptide compositions are most likely to be classified as survivin binders, and explain how the prediction is determined from the input features, hidden layers, and connection weights of the neural network.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="interpretation-and-discussion" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="interpretation-and-discussion"><span class="header-section-number">2.6</span> 6. Interpretation and discussion</h2>
+<ul>
+<li>Examine feature importance and identify which functional groups most influence binding prediction.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Discuss the implications of your findings. How do the identified features align with known biological principles of peptide binding? What could be the significance to survivin binding in a biological context?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Discussion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Answer the following questions with short reflections (2-3 sentences each):</p>
+<ul>
+<li><p>Why might compositional information alone provide predictive power for peptide binding?</p></li>
+<li><p>How do simple models sometimes outperform complex sequence-based neural networks?</p></li>
+<li><p>What are the potential advantages and limitations of composition-based approaches in structural biology and drug design?</p></li>
 </ul>
 </div>
 </div>
-<hr>
 </section>
 </section>
-<section id="tasks-complete-after-the-basic-run-through" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Tasks (complete after the basic run-through)</h1>
-<p>Complete these in new cells in the same notebook. Keep answers concise.</p>
-<ol type="1">
-<li>Baseline reproduction
+<section id="things-to-append-to-your-submission" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Things to append to your submission</h1>
 <ul>
-<li>Report: train accuracy, test accuracy, macro F1, confusion matrix. Comment on class balance.</li>
-</ul></li>
-<li>Stratified split + pipeline
-<ul>
-<li>Replace the split with a stratified split. Wrap StandardScaler + MLP in a Pipeline. Report metrics as in Task 1.</li>
-</ul></li>
-<li>Model comparison
-<ul>
-<li>Compare DecisionTreeClassifier and RandomForestClassifier with stratified 5-fold CV. Report mean ± std macro F1.</li>
-</ul></li>
-<li>Compact hyperparameter search
-<ul>
-<li>For MLP, scan hidden_layer_sizes (1–8 neurons) with CV. Report best params and CV macro F1.</li>
-</ul></li>
-<li>Threshold and PR analysis
-<ul>
-<li>For one probabilistic model, plot Precision-Recall and ROC. Discuss an operating threshold if imbalance exists.</li>
-</ul></li>
-<li>Robustness across seeds
-<ul>
-<li>Repeat the train/test split with three seeds. Refit the chosen model and report variance of macro F1.</li>
-</ul></li>
-<li>Feature interpretation
-<ul>
-<li>Identify top five influential features (permutation importance, RF importances, or MLP weights). Interpret biochemically.</li>
-</ul></li>
-<li>Reproducibility bundle
-<ul>
-<li>Save random seeds, package versions, selected hyperparameters, and final metrics in a summary cell.</li>
-</ul></li>
-</ol>
-<hr>
-</section>
-<section id="things-to-append-to-your-submission" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Things to append to your submission</h1>
-<ul>
-<li>Notebook runs top-to-bottom without errors</li>
-<li>Your reproducibility bundle</li>
-<li>Plots: an example confusion matrix and network weights</li>
-<li>A one-paragraph reflection on the challenges for using ML in peptide binding prediction</li>
+<li>Save your notebook as PRACTICAL_PEPTIDE_CLASSIFICATION_y/n.ipynb</li>
+<li>Add answers to the questions in separate markdown cells</li>
+<li>Add your code blocks from the jupyter notebook with completed code where the placeholders were</li>
+<li>Include some output cells with figures (if multiple runs are needed, keep only the last one)</li>
+<li>Keep all discussion questions and answers at the end of the notebook in a single markdown cell with</li>
 </ul>
 
 

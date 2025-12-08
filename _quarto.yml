@@ -30,7 +30,7 @@ website:
           - text: "MD Analysis"
             href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd"
       - text: "Machine Learning"
-        href: "practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"
+        href: "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"
       - text: "Computer Setup"
         menu:
           - text: "Personal Computer Setup"

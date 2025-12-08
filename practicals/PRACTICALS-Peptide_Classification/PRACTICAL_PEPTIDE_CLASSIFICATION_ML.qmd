@@ -22,48 +22,48 @@ In the paper “Deciphering peptide–protein interactions via composition-based
 
 The goal of this practical is to build a classifier that predicts peptide binding signal from microarray data using encoded features derived from amino-acid properties. You will first perform a basic run-through of the provided notebook, then complete a set of ML-focused tasks.
 
-Use the annotated notebook aa_scan2_clean_annotated.ipynb for the exercise.
+Use the annotated notebook aa_scan2_clean_annotated.ipynb for the exercise, it will serve as the hand in for this segment.
 
 ::: {.callout-important}
 ## Create a working directory
 ```bash
 # Create a new folder for this practical
-mkdir -p ~/BIO512/ML_lab
+mkdir -p ~/BIO512/Peptide_Classification
 
 # Fetch the required files from Vera
 # do note that <__> is a placeholder for your vera username
 scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/Peptide_Classification/* ~/BIO512/Peptide_Classification/
 ```
+
+- Notebook: aa_scan2_clean_annotated.ipynb
+- Property table: aa_properties.xlsx (1,2 and 3 for each encoding)
+- Microarray data: Clean_results_2_2019.xlsx
+
+1. Open the notebook in VS Code or Jupyter from your working directory
+2. Ensure packages are available: pandas, numpy, seaborn, scikit-learn, matplotlib.
+
 :::
 
 ::: {.callout-note}
 ## Learning Objectives
 By the end you should be able to:
 
-- Encode peptide sequences into feature vectors using an AA property table
-- Compare classifiers with cross validation using robust metrics
-- Interpret influential features in biochemical terms
-- Report reproducible results with seeds, versions, and parameters
+- Explain how compositional features can represent molecular information.
+- Implement a simple neural network for binary classification in Python.
+- Interpret model performance using standard metrics.
+- Discuss the implications of composition-based models for molecular biology and drug discovery
+
 :::
 
 ---
 
-# Files and setup
-
-- Notebook: aa_scan2_clean_annotated.ipynb
-- Property table: aa_properties.xlsx
-- Microarray data: Clean_results_2_2019.xlsx
-
-1. Open the notebook in VS Code or Jupyter from your working directory. You can run this locally or on Vera.
-2. Ensure packages are available: pandas, numpy, seaborn, scikit-learn, matplotlib.
-
----
-
-# Basic run-through
+# Task Overview 
 
 Follow these steps in the notebook. Add short notes under each result.
 
-## 1. Imports
+---
+
+## 1. Data inspection and preparation
 
 - Import core libraries. If an import fails, install and re-run.
 
@@ -74,77 +74,34 @@ import matplotlib.pylab as plt
 import numpy as np
 ```
 
-## 2. Load the encoding table
+- Load aa_properties.xlsx and confirm it contains the AA letter column (e.g., `aa`) and feature columns. The different numbers (1, 2, 3) correspond to different aa representation schemes.
 
-- Load aa_properties.xlsx and confirm it contains the AA letter column (e.g., `aa`) and feature columns.
+:::{.callout-note}
+The dataset originates from a peptide microarray experiment containing peptides from 36 known or potential survivin interaction partners. Each peptide is 15 amino acids long, with overlapping sequences, and is labeled as binder or non-binder based on fluorescence intensity measurements.
+:::
 
-```python
-#Positionwise carbon (C-Pos)
-df=pd.read_excel("aa_properties.xlsx")
-# H-wise Carbon (C-Coord)
-#df=pd.read_excel("aa_properties2.xlsx")
-# identity (AA-Letter)
-#df=pd.read_excel("aa_properties3.xlsx")
-df
-```
+- Load the microarray dataset (Clean_results_2_2019.xlsx)
 
-## 3. Define the encoder
+:::{.callout-important}
+### Q1
+Look at the distribution of binding and non-binding peptides. How many binders are there? How many non-binders?
+:::
 
-- Implement a function that sums feature rows for each amino acid
+---
 
-```python
-def peptrans(peptide):
-    rows=[]
-    for l in peptide:
-        rows.append(df[df.aa==l])
-    return pd.concat(rows).sum()
-```
+## 2. Feature encoding
 
-## 4. Load microarray data
+- Represent peptides by counting atomic or functional group.
+  - Make sure to check output data from all the matrix transformations so that they make sense.
+- Optionally, compare the peptide encodings with the amino acid sequence representations.
 
-- Load the microarray dataset (Clean_results_2_2019.xlsx).
+---
 
-```python
-pf=pd.read_excel("Clean_results_2_2019.xlsx")
-pf
-```
-
-## 5. Apply encoding
-
-- Map peptrans over the peptide sequence to produce feature vectors.
-
-```python
-transpf=pf['Peptide'].apply(peptrans)
-transpf
-```
-
-## 6. Merge feature vectors with original data
-
-- Concatenate features with the original dataframe.
-
-```python
-mergepf = pd.concat([pf, transpf], axis=1, sort=False)
-mergepf
-```
-
-## 7. Tidy metadata and target
-
-- Create `Prot_pep` and `Prot_res_pep` for better metadata
-- Set index to `Prot_res_pep` so that we use the most informative descriptor
-- Rename target Survivin label to `Fluorescence`.
-
-```python
-mergepf["Prot_pep"] = mergepf["Protein"].map(str) +"_"+ mergepf["Peptide"]
-mergepf["Prot_res_pep"] = mergepf["Protein"].map(str) +"_"+ mergepf["Residue number"].map(str)+"_"+ mergepf["Peptide"]
-mergepf=mergepf.set_index('Prot_res_pep')
-mergepf=mergepf.rename(columns={u'Survivin, 1 µg/ml': u'Fluorescence'})
-mergepf
-```
-
-## 8. Baseline model
+## 3. Model training
 The main engine block of the notebook has multiple configurations of various classifiers prepared. These classifiers all come as part of the [scikit-learn](https://scikit-learn.org/stable/supervised_learning.html) library. To use a different classifier, simply uncomment the relevant line and comment out the rest.
 
-- Use the default MLPClassifier block from the notebook to build a baseline.
+- Begin by building a multilayer perceptron (MLP) classifier using the MLPClassifier from scikit-learn.
+- Split the data into training and test sets for model evaluation. If you're interested there are also more advanced methods such as [cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html)
 
 ```python
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
@@ -190,70 +147,62 @@ predict=clf.predict(X_test)
 predict
 ```
 
-## 9. Diagnostics
+---
 
-- Plot the confusion matrix and print the classification report.
+## 4. Model evaluation
 
-```python
-from sklearn.metrics import ConfusionMatrixDisplay
-import matplotlib.pyplot as plt
+- Compute accuracy, precision, recall, and F1 scores.
 
-disp = ConfusionMatrixDisplay.from_estimator(
-    clf, X_test, y_test, cmap='Blues'
-)
-disp.ax_.set_title("Confusion Matrix")
+:::{.callout-important}
+### Q2
+What are the accuracy, precision, recall, and F1 scores of your MLP? How do these metrics reflect the model's performance?
+:::
 
-print("Confusion matrix:\n", disp.confusion_matrix)
-plt.show()
-```
+- Rerun the above section using different encodings.
 
-```python
-print(f"Classification report for classifier {clf}:\n"
-      f"{metrics.classification_report(y_test, predict)}\n")
-```
-
-::: {.callout-tip}
-## Recommended improvements for later tasks
-- Prefer stratified splits and wrap scaling + model in a Pipeline to avoid leakage.
-- Use macro F1, balanced accuracy, and PR curves when classes are imbalanced.
+:::{.callout-important}
+### Q3
+How do the different encodings affect the model's performance? Which encoding yields the best results?
 :::
 
 ---
 
-# Tasks (complete after the basic run-through)
+## 5. Visualizing results
 
-Complete these in new cells in the same notebook. Keep answers concise.
+- Inspect the trained weights on the neural network
 
-1. Baseline reproduction
-   - Report: train accuracy, test accuracy, macro F1, confusion matrix. Comment on class balance.
-
-2. Stratified split + pipeline
-   - Replace the split with a stratified split. Wrap StandardScaler + MLP in a Pipeline. Report metrics as in Task 1.
-
-3. Model comparison
-   - Compare DecisionTreeClassifier and RandomForestClassifier with stratified 5-fold CV. Report mean ± std macro F1.
-
-4. Compact hyperparameter search
-   - For MLP, scan hidden_layer_sizes (1–8 neurons) with CV. Report best params and CV macro F1.
-
-5. Threshold and PR analysis
-   - For one probabilistic model, plot Precision-Recall and ROC. Discuss an operating threshold if imbalance exists.
-
-6. Robustness across seeds
-   - Repeat the train/test split with three seeds. Refit the chosen model and report variance of macro F1.
-
-7. Feature interpretation
-   - Identify top five influential features (permutation importance, RF importances, or MLP weights). Interpret biochemically.
-
-8. Reproducibility bundle
-   - Save random seeds, package versions, selected hyperparameters, and final metrics in a summary cell.
+:::{.callout-important}
+### Q4
+Discuss briefly (1-2 sentences) which peptide compositions are most likely to be classified as survivin binders, and explain how the prediction is determined from the input features, hidden layers, and connection weights of the neural network.
+:::
 
 ---
 
+## 6. Interpretation and discussion
+
+- Examine feature importance and identify which functional groups most influence binding prediction.
+
+:::{.callout-important}
+### Q5
+Discuss the implications of your findings. How do the identified features align with known biological principles of peptide binding? What could be the significance to survivin binding in a biological context?
+:::
+
+:::{.callout-note}
+## Discussion
+Answer the following questions with short reflections (2-3 sentences each):
+
+- Why might compositional information alone provide predictive power for peptide binding?
+
+- How do simple models sometimes outperform complex sequence-based neural networks?
+
+- What are the potential advantages and limitations of composition-based approaches in structural biology and drug design?
+:::
+
 # Things to append to your submission
 
-- Notebook runs top-to-bottom without errors
-- Your reproducibility bundle
-- Plots: an example confusion matrix and network weights
-- A one-paragraph reflection on the challenges for using ML in peptide binding prediction
+- Save your notebook as PRACTICAL_PEPTIDE_CLASSIFICATION_y/n.ipynb
+- Add answers to the questions in separate markdown cells
+- Add your code blocks from the jupyter notebook with completed code where the placeholders were 
+- Include some output cells with figures (if multiple runs are needed, keep only the last one)
+- Keep all discussion questions and answers at the end of the notebook in a single markdown cell with 
 
