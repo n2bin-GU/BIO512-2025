@@ -9,7 +9,7 @@
 <meta name="author" content="Sayyed Jalil Mahdizadeh">
 <meta name="dcterms.date" content="2025-11-10">
 
-<title>Molecular Dynamics Simulation Analysis – BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</title>
+<title>Molecular Docking Analysis – BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -286,11 +321,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-structure--modeling">    
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html">
  <span class="dropdown-text">Protein Complex Structure Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html">
  <span class="dropdown-text">AlphaFold3 Prediction</span></a>
   </li>  
         <li>
@@ -340,38 +375,29 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#md-analysis-with-molecular-glue" id="toc-md-analysis-with-molecular-glue" class="nav-link" data-scroll-target="#md-analysis-with-molecular-glue"><span class="header-section-number">2</span> MD Analysis with Molecular Glue</a>
+  <li><a href="#structure-preparation" id="toc-structure-preparation" class="nav-link" data-scroll-target="#structure-preparation"><span class="header-section-number">2</span> Structure Preparation</a>
   <ul class="collapse">
-  <li><a href="#setting-up-the-analysis-environment" id="toc-setting-up-the-analysis-environment" class="nav-link" data-scroll-target="#setting-up-the-analysis-environment"><span class="header-section-number">2.1</span> Setting up the analysis environment</a></li>
-  <li><a href="#running-the-analysis" id="toc-running-the-analysis" class="nav-link" data-scroll-target="#running-the-analysis"><span class="header-section-number">2.2</span> Running the analysis</a></li>
-  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results"><span class="header-section-number">2.3</span> Interpreting the results</a></li>
+  <li><a href="#setting-up-yasara-workspace" id="toc-setting-up-yasara-workspace" class="nav-link" data-scroll-target="#setting-up-yasara-workspace"><span class="header-section-number">2.1</span> Setting up YASARA workspace</a></li>
+  <li><a href="#understanding-the-structure" id="toc-understanding-the-structure" class="nav-link" data-scroll-target="#understanding-the-structure"><span class="header-section-number">2.2</span> Understanding the structure</a></li>
+  <li><a href="#structure-cleaning-and-preparation" id="toc-structure-cleaning-and-preparation" class="nav-link" data-scroll-target="#structure-cleaning-and-preparation"><span class="header-section-number">2.3</span> Structure cleaning and preparation</a></li>
   </ul></li>
-  <li><a href="#data-processing-and-visualization" id="toc-data-processing-and-visualization" class="nav-link" data-scroll-target="#data-processing-and-visualization"><span class="header-section-number">3</span> Data Processing and Visualization</a>
+  <li><a href="#receptor-and-ligand-separation" id="toc-receptor-and-ligand-separation" class="nav-link" data-scroll-target="#receptor-and-ligand-separation"><span class="header-section-number">3</span> Receptor and Ligand Separation</a>
   <ul class="collapse">
-  <li><a href="#extracting-data" id="toc-extracting-data" class="nav-link" data-scroll-target="#extracting-data"><span class="header-section-number">3.1</span> Extracting data</a></li>
-  <li><a href="#creating-time-series-plots" id="toc-creating-time-series-plots" class="nav-link" data-scroll-target="#creating-time-series-plots"><span class="header-section-number">3.2</span> Creating time-series plots</a></li>
+  <li><a href="#splitting-the-complex" id="toc-splitting-the-complex" class="nav-link" data-scroll-target="#splitting-the-complex"><span class="header-section-number">3.1</span> Splitting the complex</a></li>
+  <li><a href="#saving-individual-components" id="toc-saving-individual-components" class="nav-link" data-scroll-target="#saving-individual-components"><span class="header-section-number">3.2</span> Saving individual components</a></li>
   </ul></li>
-  <li><a href="#md-analysis-without-molecular-glue" id="toc-md-analysis-without-molecular-glue" class="nav-link" data-scroll-target="#md-analysis-without-molecular-glue"><span class="header-section-number">4</span> MD Analysis without Molecular Glue</a>
+  <li><a href="#docking-simulation-setup" id="toc-docking-simulation-setup" class="nav-link" data-scroll-target="#docking-simulation-setup"><span class="header-section-number">4</span> Docking Simulation Setup</a>
   <ul class="collapse">
-  <li><a href="#repeat-analysis-for-control-system" id="toc-repeat-analysis-for-control-system" class="nav-link" data-scroll-target="#repeat-analysis-for-control-system"><span class="header-section-number">4.1</span> Repeat analysis for control system</a></li>
+  <li><a href="#defining-the-simulation-cell" id="toc-defining-the-simulation-cell" class="nav-link" data-scroll-target="#defining-the-simulation-cell"><span class="header-section-number">4.1</span> Defining the simulation cell</a></li>
+  <li><a href="#running-the-docking-simulation" id="toc-running-the-docking-simulation" class="nav-link" data-scroll-target="#running-the-docking-simulation"><span class="header-section-number">4.2</span> Running the docking simulation</a></li>
   </ul></li>
-  <li><a href="#comparative-analysis" id="toc-comparative-analysis" class="nav-link" data-scroll-target="#comparative-analysis"><span class="header-section-number">5</span> Comparative Analysis</a>
+  <li><a href="#results-analysis" id="toc-results-analysis" class="nav-link" data-scroll-target="#results-analysis"><span class="header-section-number">5</span> Results Analysis</a>
   <ul class="collapse">
-  <li><a href="#generating-comparison-plots" id="toc-generating-comparison-plots" class="nav-link" data-scroll-target="#generating-comparison-plots"><span class="header-section-number">5.1</span> Generating comparison plots</a></li>
-  <li><a href="#statistical-comparison" id="toc-statistical-comparison" class="nav-link" data-scroll-target="#statistical-comparison"><span class="header-section-number">5.2</span> Statistical comparison</a></li>
+  <li><a href="#binding-energy-analysis" id="toc-binding-energy-analysis" class="nav-link" data-scroll-target="#binding-energy-analysis"><span class="header-section-number">5.1</span> Binding energy analysis</a></li>
+  <li><a href="#visual-inspection-of-docking-poses" id="toc-visual-inspection-of-docking-poses" class="nav-link" data-scroll-target="#visual-inspection-of-docking-poses"><span class="header-section-number">5.2</span> Visual inspection of docking poses</a></li>
+  <li><a href="#quantitative-assessment" id="toc-quantitative-assessment" class="nav-link" data-scroll-target="#quantitative-assessment"><span class="header-section-number">5.3</span> Quantitative assessment</a></li>
   </ul></li>
-  <li><a href="#data-analysis-questions" id="toc-data-analysis-questions" class="nav-link" data-scroll-target="#data-analysis-questions"><span class="header-section-number">6</span> Data Analysis Questions</a>
-  <ul class="collapse">
-  <li><a href="#quantitative-analysis" id="toc-quantitative-analysis" class="nav-link" data-scroll-target="#quantitative-analysis"><span class="header-section-number">6.1</span> Quantitative Analysis</a></li>
-  <li><a href="#structural-interpretation" id="toc-structural-interpretation" class="nav-link" data-scroll-target="#structural-interpretation"><span class="header-section-number">6.2</span> Structural Interpretation</a></li>
-  <li><a href="#methodological-considerations" id="toc-methodological-considerations" class="nav-link" data-scroll-target="#methodological-considerations"><span class="header-section-number">6.3</span> Methodological Considerations</a></li>
-  </ul></li>
-  <li><a href="#advanced-analysis-optional" id="toc-advanced-analysis-optional" class="nav-link" data-scroll-target="#advanced-analysis-optional"><span class="header-section-number">7</span> Advanced Analysis (Optional)</a>
-  <ul class="collapse">
-  <li><a href="#additional-metrics" id="toc-additional-metrics" class="nav-link" data-scroll-target="#additional-metrics"><span class="header-section-number">7.1</span> Additional metrics</a></li>
-  <li><a href="#extended-comparisons" id="toc-extended-comparisons" class="nav-link" data-scroll-target="#extended-comparisons"><span class="header-section-number">7.2</span> Extended comparisons</a></li>
-  <li><a href="#expected-outcomes" id="toc-expected-outcomes" class="nav-link" data-scroll-target="#expected-outcomes"><span class="header-section-number">7.3</span> Expected Outcomes</a></li>
-  </ul></li>
+  <li><a href="#review-questions" id="toc-review-questions" class="nav-link" data-scroll-target="#review-questions"><span class="header-section-number">6</span> Review Questions</a></li>
   </ul>
 </nav>
     </div>
@@ -381,8 +407,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Molecular Dynamics Simulation Analysis</h1>
-<p class="subtitle lead">BIO512 Structural Biology - MD Analysis of Protein Complex Stability</p>
+<h1 class="title">Molecular Docking Analysis</h1>
+<p class="subtitle lead">BIO512 Structural Biology - Protein-Ligand Docking with YASARA</p>
 </div>
 
 
@@ -413,8 +439,27 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>In this practical, we will analyze the results of molecular dynamics (MD) simulations to understand the impact of molecular glue on protein complex stability. Two separate MD simulations have been conducted (~30 ns each): one with the molecular glue (rapamycin) and one without it. MD simulations can reveal how the molecular glue affects the dynamic behavior and stability of the FKBP12/FRB protein complex over time.</p>
-<p>The key metric we will focus on is the Root Mean Square Deviation (RMSD) of the protein backbone, which indicates conformational changes compared to the initial structure. Lower RMSD values suggest higher structural stability.</p>
+<p>The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that “glues” them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.</p>
+<p>In this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Create a new working directory
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new folder for this practical</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ex.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/BIO512/MD_practicals</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># All input and output files will be placed in this directory</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Also note that you need to download the materials from the Vera </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>your_vera_username<span class="op">&gt;</span>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/<span class="pp">*</span> ~/BIO512/MD_practicals/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -427,38 +472,196 @@ Learning Objectives
 <div class="callout-body-container callout-body">
 <p>By the end you should be able to:</p>
 <ul>
-<li>Analyze MD simulation trajectories using YASARA</li>
-<li>Calculate and interpret RMSD values over time</li>
-<li>Compare protein stability with and without molecular glue</li>
-<li>Generate and interpret time-series plots of structural parameters</li>
-<li>Draw conclusions about molecular glue effects on protein complex dynamics</li>
+<li>Prepare protein structures for molecular docking using YASARA</li>
+<li>Perform protein-ligand docking simulations</li>
+<li>Analyze docking results and binding energies</li>
+<li>Compare predicted poses with crystal structures using RMSD calculations</li>
+<li>Evaluate the success of docking predictions</li>
 </ul>
 </div>
 </div>
 <hr>
 </section>
-<section id="md-analysis-with-molecular-glue" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> MD Analysis with Molecular Glue</h1>
-<section id="setting-up-the-analysis-environment" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="setting-up-the-analysis-environment"><span class="header-section-number">2.1</span> Setting up the analysis environment</h2>
+<section id="structure-preparation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Structure Preparation</h1>
+<section id="setting-up-yasara-workspace" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="setting-up-yasara-workspace"><span class="header-section-number">2.1</span> Setting up YASARA workspace</h2>
 <ol type="1">
-<li><strong>Set the working directory</strong>:
+<li><strong>Set the working directory</strong> (important):
 <ul>
 <li>Open YASARA</li>
-<li>Set the working directory to <code>your/path/MD/with_glue</code></li>
+<li>Options &gt; Working directory &gt; navigate and find the ‘Docking’ folder &gt; OK</li>
 </ul></li>
-<li><strong>Set the target</strong>:
+<li><strong>Download the structure</strong>:
 <ul>
-<li>Options &gt; Macro &amp; Movies &gt; Set target &gt; 3FAP_complex.sce</li>
+<li>File &gt; Load &gt; PDB file from Internet &gt; 3FAP</li>
 </ul></li>
 </ol>
 </section>
-<section id="running-the-analysis" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="running-the-analysis"><span class="header-section-number">2.2</span> Running the analysis</h2>
-<ol start="3" type="1">
-<li><strong>Execute MD analysis</strong>:
+<section id="understanding-the-structure" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="understanding-the-structure"><span class="header-section-number">2.2</span> Understanding the structure</h2>
+<p>In the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:</p>
 <ul>
-<li>Options &gt; Macro &amp; Movies &gt; play macro &gt; md_analyze.mcr &gt; OK</li>
+<li><strong>Mol A</strong> = chain A of the protein</li>
+<li><strong>Mol B</strong> = chain B of the protein<br>
+</li>
+<li><strong>Mol A</strong> = ligand (rapamycin)</li>
+<li><strong>Mol A (in red)</strong> = water molecules of chain A</li>
+<li><strong>Mol B (in red)</strong> = water molecules of chain B</li>
+</ul>
+</section>
+<section id="structure-cleaning-and-preparation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="structure-cleaning-and-preparation"><span class="header-section-number">2.3</span> Structure cleaning and preparation</h2>
+<ol start="3" type="1">
+<li><strong>Remove water molecules</strong>:
+<ul>
+<li>From the right-hand panel, right-click on both water entries and click ‘Delete’</li>
+</ul></li>
+<li><strong>Add missing hydrogen atoms</strong>:
+<ul>
+<li>Edit &gt; Clean &gt; All</li>
+</ul></li>
+<li><strong>Minimize the energy of the system</strong>:
+<ul>
+<li>Options &gt; Choose Experiment &gt; Energy minimization</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Troubleshooting
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On Linux, you may need to pause the minimization and continue to make it work: Options &gt; Control experiment &gt; Pause/Continue</p>
+</div>
+</div>
+<ol start="6" type="1">
+<li><strong>Delete SimCell</strong>:
+<ul>
+<li>From the right-hand panel, right-click on SimCell and Delete</li>
+</ul></li>
+<li><strong>Save the prepared complex</strong>:
+<ul>
+<li>File &gt; Save as &gt; PDB file &gt; select 3FAP from both Sequence and Name panels &gt; give a name (3FAP_complex.pdb)</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="receptor-and-ligand-separation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Receptor and Ligand Separation</h1>
+<section id="splitting-the-complex" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="splitting-the-complex"><span class="header-section-number">3.1</span> Splitting the complex</h2>
+<ol start="8" type="1">
+<li><strong>Split receptor and ligand</strong>:
+<ul>
+<li>From the right-side panel, right click on 3FAP &gt; split &gt; Split at selected molecules &gt; select the ligand (second A in the sequence panel)</li>
+<li>Now you can see two objects in the right-hand panel: receptor and ligand</li>
+</ul></li>
+<li><strong>Rename the objects</strong>:
+<ul>
+<li>Right click on the receptor object &gt; Name &gt; enter “Receptor”</li>
+<li>Right click on the ligand object &gt; Name &gt; enter “Ligand”</li>
+</ul></li>
+</ol>
+</section>
+<section id="saving-individual-components" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="saving-individual-components"><span class="header-section-number">3.2</span> Saving individual components</h2>
+<ol start="10" type="1">
+<li><strong>Save the receptor</strong>:
+<ul>
+<li>File &gt; Save as &gt; PDB file &gt; select Receptor &gt; OK &gt; give a name (3FAP_receptor.pdb)</li>
+</ul></li>
+<li><strong>Save the ligand</strong>:
+<ul>
+<li>File &gt; Save as &gt; Other file format &gt; select Ligand from the Object panel &gt; find sdf-MDL Mol from the Format panel &gt; enter a name (3FAP_ligand) &gt; OK</li>
+</ul></li>
+</ol>
+<p>At this point, you should have three files in your working directory: - 3FAP_complex.pdb - 3FAP_receptor.pdb - 3FAP_ligand.sdf</p>
+<hr>
+</section>
+</section>
+<section id="docking-simulation-setup" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Docking Simulation Setup</h1>
+<section id="defining-the-simulation-cell" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="defining-the-simulation-cell"><span class="header-section-number">4.1</span> Defining the simulation cell</h2>
+<ol start="12" type="1">
+<li><strong>Generate the simulation cell</strong>:
+<ul>
+<li>From the right-hand panel, right-click on Ligand object &gt; Select &gt; newly</li>
+<li>Then Simulation &gt; Define simulation cell &gt; around selected atoms</li>
+</ul></li>
+<li><strong>Remove the ligand</strong>:
+<ul>
+<li>Right-click on the Ligand object &gt; Delete</li>
+</ul></li>
+<li><strong>Save the receptor + simulation cell</strong>:
+<ul>
+<li>File &gt; Save as &gt; YASARA Scene &gt; give a name (3FAP_receptor.sce)</li>
+</ul></li>
+</ol>
+</section>
+<section id="running-the-docking-simulation" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="running-the-docking-simulation"><span class="header-section-number">4.2</span> Running the docking simulation</h2>
+<ol start="15" type="1">
+<li><strong>Set up docking</strong>:
+<ul>
+<li>Options &gt; Macro &amp; Movie &gt; set target &gt; select 3FAP_receptor.sce &gt; select ‘from underscore’ &gt; OK</li>
+</ul></li>
+<li><strong>Run docking</strong>:
+<ul>
+<li>Options &gt; Macro &amp; Movie &gt; Play macro &gt; find and click on dock_run.mcr &gt; OK</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="results-analysis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Results Analysis</h1>
+<section id="binding-energy-analysis" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="binding-energy-analysis"><span class="header-section-number">5.1</span> Binding energy analysis</h2>
+<ol start="17" type="1">
+<li><strong>Analyze the results</strong>:
+<ul>
+<li>Check for the log file (3FAP.log) in the working directory</li>
+<li>Look at the binding energy values in the first table (Bind.energy)</li>
+<li>The first entry always has the best binding energy value</li>
+</ul></li>
+</ol>
+</section>
+<section id="visual-inspection-of-docking-poses" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="visual-inspection-of-docking-poses"><span class="header-section-number">5.2</span> Visual inspection of docking poses</h2>
+<ol start="18" type="1">
+<li><strong>Open predicted and crystal structures</strong>:
+<ul>
+<li>Open the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)</li>
+<li>Open the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)</li>
+</ul></li>
+<li><strong>Optimize visualization</strong>:
+<ul>
+<li>View &gt; Hide atoms &gt; Aliphatic hydrogens</li>
+<li>View &gt; Style atoms &gt; Stick &gt; ALL</li>
+<li>View &gt; Hide atoms &gt; Molecule &gt; A (first entry in the Sequence panel)</li>
+<li>View &gt; Hide atoms &gt; Molecule &gt; A (second entry in the Sequence panel)</li>
+</ul></li>
+<li><strong>Visual comparison</strong>:
+<ul>
+<li>Visually inspect how well the crystal pose and the predicted docking pose overlap</li>
+<li>Note any significant differences between the two poses</li>
+</ul></li>
+</ol>
+</section>
+<section id="quantitative-assessment" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="quantitative-assessment"><span class="header-section-number">5.3</span> Quantitative assessment</h2>
+<ol start="21" type="1">
+<li><strong>Calculate RMSD from crystal pose</strong>:
+<ul>
+<li>Analyze &gt; RMSD of &gt; Molecules &gt; docked ligand (second A in the Sequence panel) &gt; OK &gt; crystal ligand (third A in the Sequence panel) &gt; OK &gt; select Molecule &gt; OK</li>
+<li>The RMSD value will be displayed in the panel below the screen</li>
 </ul></li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -467,171 +670,25 @@ Learning Objectives
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Analysis time
+Success Criteria
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This analysis takes some time to complete. The macro will process the entire trajectory and calculate various structural parameters.</p>
+<p>Usually, RMSD &lt; 2.0 Å is considered as a successful docking simulation.</p>
 </div>
 </div>
-</section>
-<section id="interpreting-the-results" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="interpreting-the-results"><span class="header-section-number">2.3</span> Interpreting the results</h2>
-<ol start="4" type="1">
-<li><strong>Review the HTML report</strong>:
-<ul>
-<li>After analysis is complete, results will be shown in an HTML file</li>
-<li>The report contains different analysis metrics with explanations</li>
-<li>Focus on <strong>“Solute RMSD from the starting structure”</strong> for protein backbone (RMSDBb)</li>
-</ul></li>
-<li><strong>Understanding RMSD</strong>:
-<ul>
-<li>RMSDBb indicates the protein’s conformational deviation compared to the initial structure over time</li>
-<li>Raw data is available in <code>3FAP_complex_analysis.tab</code></li>
-</ul></li>
-</ol>
 <hr>
 </section>
 </section>
-<section id="data-processing-and-visualization" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Data Processing and Visualization</h1>
-<section id="extracting-data" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="extracting-data"><span class="header-section-number">3.1</span> Extracting data</h2>
-<ol start="6" type="1">
-<li><strong>Download the analysis file</strong>:
-<ul>
-<li>Download <code>3FAP_complex_analysis.tab</code> to your local computer (using WinSCP or similar)</li>
-</ul></li>
-<li><strong>Open in spreadsheet software</strong>:
-<ul>
-<li>Open the file using MS Excel or similar software</li>
-<li>Locate the RMSDBb column and time column</li>
-</ul></li>
-</ol>
-</section>
-<section id="creating-time-series-plots" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="creating-time-series-plots"><span class="header-section-number">3.2</span> Creating time-series plots</h2>
-<ol start="8" type="1">
-<li><strong>Plot RMSD vs time</strong>:
-<ul>
-<li>Create a scatter plot or line graph with:
-<ul>
-<li>X-axis: Time (ns)</li>
-<li>Y-axis: RMSDBb (Å)</li>
-</ul></li>
-<li>This shows how structural stability changes over the simulation</li>
-</ul></li>
-<li><strong>Calculate average RMSD</strong>:
-<ul>
-<li>Calculate the average RMSD over the second half of the simulation (t &gt; 15ns)</li>
-<li>This represents the equilibrated state of the system</li>
-<li>Record this value for comparison</li>
-</ul></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="md-analysis-without-molecular-glue" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> MD Analysis without Molecular Glue</h1>
-<section id="repeat-analysis-for-control-system" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="repeat-analysis-for-control-system"><span class="header-section-number">4.1</span> Repeat analysis for control system</h2>
-<ol start="10" type="1">
-<li><strong>Set new working directory</strong>:
-<ul>
-<li>Change working directory to <code>MD/without_glue</code></li>
-</ul></li>
-<li><strong>Repeat steps 2-9</strong>:
-<ul>
-<li>Set target to the complex without glue</li>
-<li>Run md_analyze.mcr</li>
-<li>Download and process the analysis results</li>
-<li>Plot RMSD vs time</li>
-<li>Calculate average RMSD for t &gt; 15ns</li>
-</ul></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="comparative-analysis" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Comparative Analysis</h1>
-<section id="generating-comparison-plots" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="generating-comparison-plots"><span class="header-section-number">5.1</span> Generating comparison plots</h2>
-<ol start="12" type="1">
-<li><strong>Create comparative visualization</strong>:
-<ul>
-<li>Plot both RMSD curves on a single graph:
-<ul>
-<li>Line 1: With molecular glue (rapamycin)</li>
-<li>Line 2: Without molecular glue</li>
-</ul></li>
-<li>Use different colors/styles to distinguish the lines</li>
-<li>Include proper labels and legend</li>
-</ul></li>
-</ol>
-</section>
-<section id="statistical-comparison" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="statistical-comparison"><span class="header-section-number">5.2</span> Statistical comparison</h2>
-<ol start="13" type="1">
-<li><strong>Compare average RMSD values</strong>:
-<ul>
-<li>Compare the average RMSD values from step 9 for both systems</li>
-<li>The lower RMSD indicates higher structural stability</li>
-<li>Calculate the difference between the two conditions</li>
-</ul></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="data-analysis-questions" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Data Analysis Questions</h1>
-<p>Answer the following questions based on your analysis:</p>
-<section id="quantitative-analysis" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="quantitative-analysis"><span class="header-section-number">6.1</span> Quantitative Analysis</h2>
+<section id="review-questions" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Review Questions</h1>
 <ol type="1">
-<li><p><strong>What are the average RMSD values</strong> for the second half of each simulation (t &gt; 15ns)?</p>
-<ul>
-<li>With molecular glue: _____ Å</li>
-<li>Without molecular glue: _____ Å</li>
-</ul></li>
-<li><p><strong>What is the difference</strong> in average RMSD between the two conditions? What does this tell you about the effect of rapamycin?</p></li>
-<li><p><strong>Describe the time evolution</strong> of RMSD in both simulations. Do you see different patterns of equilibration?</p></li>
+<li><p><strong>What was the binding energy of your best docking pose?</strong> How does this compare to typical protein-ligand interactions?</p></li>
+<li><p><strong>What is the RMSD between your predicted pose and the crystal structure?</strong> Is this considered a successful prediction?</p></li>
+<li><p><strong>Describe the key interactions</strong> you observe between rapamycin and the protein complex. What makes this compound effective as a molecular glue?</p></li>
+<li><p><strong>What are the limitations</strong> of molecular docking that you should be aware of when interpreting these results?</p></li>
+<li><p><strong>How might you improve</strong> the docking results if the RMSD was too high?</p></li>
 </ol>
-</section>
-<section id="structural-interpretation" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="structural-interpretation"><span class="header-section-number">6.2</span> Structural Interpretation</h2>
-<ol start="4" type="1">
-<li><p><strong>How does the molecular glue affect</strong> the overall stability of the protein complex? Provide quantitative evidence.</p></li>
-<li><p><strong>What biological significance</strong> does this stability difference have for mTOR signaling?</p></li>
-<li><p><strong>Are there any periods</strong> during the simulation where the differences are most pronounced? What might this indicate?</p></li>
-</ol>
-</section>
-<section id="methodological-considerations" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="methodological-considerations"><span class="header-section-number">6.3</span> Methodological Considerations</h2>
-<ol start="7" type="1">
-<li><p><strong>Why do we focus on the second half</strong> of the simulation for calculating averages?</p></li>
-<li><p><strong>What other parameters</strong> from the MD analysis might be relevant for understanding molecular glue effects?</p></li>
-<li><p><strong>What are the limitations</strong> of this analysis approach? How might you improve it?</p></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="advanced-analysis-optional" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Advanced Analysis (Optional)</h1>
-<p>For students interested in deeper analysis:</p>
-<section id="additional-metrics" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="additional-metrics"><span class="header-section-number">7.1</span> Additional metrics</h2>
-<ul>
-<li><strong>Hydrogen bond analysis</strong>: Count hydrogen bonds between rapamycin and the proteins over time</li>
-<li><strong>Contact analysis</strong>: Monitor specific residue-residue contacts</li>
-<li><strong>Flexibility analysis</strong>: Calculate B-factors or root mean square fluctuation (RMSF)</li>
-</ul>
-</section>
-<section id="extended-comparisons" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="extended-comparisons"><span class="header-section-number">7.2</span> Extended comparisons</h2>
-<ul>
-<li><strong>Different time windows</strong>: Compare stability at different simulation periods</li>
-<li><strong>Per-residue analysis</strong>: Identify which protein regions are most affected by the molecular glue</li>
-</ul>
 <hr>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -644,29 +701,16 @@ Key Takeaways
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>MD simulations reveal dynamic effects of molecular glues on protein complexes</li>
-<li>RMSD analysis provides quantitative measures of structural stability</li>
-<li>Rapamycin stabilizes the FKBP12/FRB complex by reducing conformational fluctuations</li>
-<li>Comparative analysis between conditions is essential for understanding molecular mechanisms</li>
-<li>Equilibration time must be considered when analyzing MD trajectories</li>
-<li>Visual and statistical analysis complement each other in MD interpretation</li>
+<li>Proper structure preparation is crucial for successful molecular docking</li>
+<li>YASARA provides an integrated workflow for structure preparation, docking, and analysis</li>
+<li>RMSD comparison with crystal structures validates docking accuracy</li>
+<li>Molecular glues like rapamycin stabilize protein complexes through specific binding interactions</li>
+<li>Visual inspection complements quantitative metrics in evaluating docking success</li>
 </ul>
 </div>
 </div>
-<hr>
-</section>
-<section id="expected-outcomes" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="expected-outcomes"><span class="header-section-number">7.3</span> Expected Outcomes</h2>
-<p>Based on the biological role of rapamycin, you should observe:</p>
-<ul>
-<li><strong>Lower RMSD values</strong> in the presence of rapamycin</li>
-<li><strong>More stable complex</strong> with molecular glue</li>
-<li><strong>Reduced conformational fluctuations</strong> when rapamycin bridges the proteins</li>
-</ul>
-<p>These results support the mechanism by which rapamycin acts as a molecular glue to stabilize protein-protein interactions and modulate cellular signaling pathways.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

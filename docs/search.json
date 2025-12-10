@@ -1,194 +1,5 @@
 [
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "",
-    "text": "The goal of this practical is to analyze protein-protein interactions using the classic model system of Barnase-Barstar from Bacillus amyloliquefaciens (PDB ID: 1BRS). This system represents an excellent example of protein-protein recognition and binding specificity.\nBarnase is a small extracellular ribonuclease that degrades RNA. On its own, it’s toxic to the producing cell. Barstar is an intracellular protein inhibitor of Barnase that binds extremely tightly and blocks the RNase active site, protecting the bacterium until Barnase is secreted.\nIn this practical, we will prepare the crystal structure, analyze the protein-protein interface, and identify key interacting residues that are critical for complex formation.\n\n\n\n\n\n\nREMEMBER: Create a working directory\n\n\n\n# Create a new folder for this practical\nmkdir -p ~/BIO512/AF\n# All input and output files will be placed in this directory\n\n# Also note that you need to download the materials from the Vera \nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/AF/* ~/BIO512/AF/\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nPrepare protein complex structures for analysis using YASARA\nVisualize and analyze protein-protein interactions\nIdentify hydrogen bonds at protein interfaces\nDetermine key residues involved in protein-protein recognition\nUnderstand the structural basis of protein binding specificity"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#setting-up-yasara-workspace",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#setting-up-yasara-workspace",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "2.1 Setting up YASARA workspace",
-    "text": "2.1 Setting up YASARA workspace\n\nSet the working directory (important):\n\nOpen YASARA\nOptions &gt; Working directory &gt; navigate and find the ‘AF’ folder &gt; OK\n\nDownload the crystal structure:\n\nFile &gt; Load &gt; PDB file from Internet &gt; 1BRS\nYou can see three identical Barnase-Barstar complexes where we need only one"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#understanding-the-structure-contents",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#understanding-the-structure-contents",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "2.2 Understanding the structure contents",
-    "text": "2.2 Understanding the structure contents\n\nAnalyze the scene contents: In the right-hand panel, you can see a single object named 1BRS. Click on it to expand. There are 12 molecules under 1BRS:\n\nMol A, B, C = Barnase (ribonuclease)\nMol D, E, F = Barstar (inhibitor)\nMol A, B, C, D, E, F (in red) = water molecules"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structure-cleaning",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structure-cleaning",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "2.3 Structure cleaning",
-    "text": "2.3 Structure cleaning\n\nRemove redundant molecules:\n\nRemove water molecules (highlighted in red) by right-clicking and choosing “Delete”\nRemove Mol B, C, E, F (right-click and choose “Delete”)\nNow you have only one Barnase (Mol A)-Barstar (Mol D) complex\n\nCenter the structure:\n\nRight-click on the object (1brs) from the right-hand panel and choose ‘Center’\n\nAdd missing hydrogen atoms:\n\nEdit &gt; Clean &gt; All"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#force-field-and-energy-minimization",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#force-field-and-energy-minimization",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "2.4 Force field and energy minimization",
-    "text": "2.4 Force field and energy minimization\n\nSelect the force field:\n\nSimulation &gt; Force field &gt; AMBER 14 &gt; check the box next to ‘use PME…’ &gt; OK\n\nMinimize the energy:\n\nOptions &gt; Energy minimization\n\nClean up simulation cell:\n\nFrom the right-hand panel, right-click on SimCell and Delete\n\nSave the prepared complex:\n\nFile &gt; Save as &gt; PDB file &gt; select 1BRS from both Sequence and Name panels &gt; OK &gt; give a name (1BRS_complex.pdb)"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#visualization-setup",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#visualization-setup",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "3.1 Visualization setup",
-    "text": "3.1 Visualization setup\n\nOptimize visualization:\n\nView &gt; Hide atoms &gt; Aliphatic hydrogens"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#hydrogen-bond-analysis",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#hydrogen-bond-analysis",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "3.2 Hydrogen bond analysis",
-    "text": "3.2 Hydrogen bond analysis\n\nVisualize protein-protein interactions:\n\nOpen the command window (press space bar on your keyboard)\nEnter the command: ShowHBoAtom Mol A with distance&lt;2.6 from Mol D\nAlternative command: ShowHBoAtom Mol D with distance&lt;2.6 from Mol A\nYou can now see hydrogen bonds between the two proteins shown as yellow dashed lines\n\n\n\n\n\n\n\n\nUnderstanding the commands\n\n\n\n\nShowHBoAtom displays hydrogen bond atoms\ndistance&lt;2.6 sets the maximum distance for hydrogen bond detection (2.6 Å)\nMol A refers to Barnase, Mol D refers to Barstar"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#identifying-key-interactions",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#identifying-key-interactions",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "3.3 Identifying key interactions",
-    "text": "3.3 Identifying key interactions\n\nAnalyze the binding interface:\n\nTake a closer look at the interface between the two proteins\nFocus on regions with multiple hydrogen bonds\nNote the types of residues involved in the interactions\n\nIdentify critical residues: Examine which residues of Barstar (Mol D) form the most hydrogen bonds with Barnase (Mol A):\n\nASP39 of Barstar: Forms 4 strong hydrogen bonds with LYS27, ARG83, and ARG87 of Barnase\nASP35 of Barstar: Forms 2 hydrogen bonds with ARG59 and GLU60 of Barnase\n\n\n\n\n\n\n\n\nExperimental validation\n\n\n\nExperimental mutagenesis analysis shows that ASP39 and ASP35 are the key residues in the interaction. Mutations of these residues significantly disrupt complex formation."
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#sequence-preparation-for-further-analysis",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#sequence-preparation-for-further-analysis",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "3.4 Sequence preparation for further analysis",
-    "text": "3.4 Sequence preparation for further analysis\n\nObtain sequences for downstream analysis:\n\nOpen your internet browser and go to www.rcsb.org\nSearch for 1BRS\nClick on ‘Download Files’ and choose ‘FASTA Sequence’\nOpen the downloaded FASTA file using a text editor (notepad on Windows)\nYou can see the sequences of both proteins that will be used in the next practical"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structural-analysis",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structural-analysis",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "4.1 Structural Analysis",
-    "text": "4.1 Structural Analysis\n\nHow many hydrogen bonds do you observe at the Barnase-Barstar interface? Which regions show the highest density of interactions?\nWhat types of amino acids are predominantly involved in the protein-protein interface? Are they mostly charged, polar, or hydrophobic?\nWhy do you think ASP39 and ASP35 are particularly important for binding? Consider their chemical properties and interaction partners."
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#interface-characterization",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#interface-characterization",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "4.2 Interface Characterization",
-    "text": "4.2 Interface Characterization\n\nDescribe the shape complementarity between Barnase and Barstar. Is the interface flat or does it involve deep binding pockets?\nWhat would you predict would happen if ASP39 was mutated to:\n\nAlanine (A) - a small, nonpolar residue?\nArginine (R) - a positively charged residue?\n\nFrom a biological perspective, why is tight binding between Barnase and Barstar essential for the bacterium?"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#experimental-design",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#experimental-design",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "4.3 Experimental Design",
-    "text": "4.3 Experimental Design\n\nIf you were to design experiments to test the importance of the identified residues, what mutations would you make and what assays would you perform?\nBesides hydrogen bonds, what other types of interactions might be important at this interface? How could you analyze them?"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#binding-specificity",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#binding-specificity",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "5.1 Binding Specificity",
-    "text": "5.1 Binding Specificity\n\nElectrostatic complementarity: Negatively charged Asp residues in Barstar interact with positively charged Lys/Arg residues in Barnase\nShape complementarity: The proteins fit together like puzzle pieces\nMultiple contact points: Several residues contribute to the overall binding affinity"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#functional-implications",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#functional-implications",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "5.2 Functional Implications",
-    "text": "5.2 Functional Implications\n\nActive site blocking: Barstar binding prevents RNA access to Barnase active site\nRegulatory mechanism: Tight binding allows controlled release of Barnase activity\nEvolutionary optimization: The interface has evolved for maximum binding strength\n\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nProtein-protein interfaces involve multiple types of interactions working together\nHydrogen bonds can be visualized and analyzed using computational tools\nKey residues often involve complementary charges and multiple contact points\nStructural analysis provides insights into binding mechanisms and specificity\nCrystal structures serve as valuable starting points for understanding protein function"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#preparation-for-next-practical",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#preparation-for-next-practical",
-    "title": "Protein Complex Structure Analysis with YASARA",
-    "section": "5.3 Preparation for Next Practical",
-    "text": "5.3 Preparation for Next Practical\nIn the next practical, you will use AI-based structure prediction (AlphaFold3) to: - Predict the structure of the wild-type Barnase-Barstar complex - Model the effects of mutations on complex formation - Compare predicted structures with the crystal structure you analyzed today\nThe sequences you obtained in step 15 will be used as input for AlphaFold3 predictions."
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "",
-    "text": "In this practical, we will apply AI-based protein complex structure prediction using AlphaFold3 (AF3). You will learn about the capabilities of AF3 in predicting protein complexes from wild-type sequences and the effects of mutations on complex formation.\nBuilding on the previous practical where you analyzed the crystal structure of the Barnase-Barstar complex and identified key interacting residues (ASP39 and ASP35), you will now use AF3 to predict how mutations to these critical residues affect complex stability and formation.\n\n\n\n\n\n\nPrerequisites\n\n\n\n\nCompleted analysis of 1BRS crystal structure from previous practical\nFASTA sequences of Barnase and Barstar from PDB\nGmail account for AlphaFold server access\n\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nUse AlphaFold3 server for protein complex prediction\nInterpret AF3 confidence metrics (pTM and ipTM)\nDesign and analyze mutational studies computationally\nCompare predicted structures with experimental crystal structures\nUnderstand limitations of AI-based structure prediction for mutations"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#preparing-sequences",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#preparing-sequences",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "2.1 Preparing sequences",
-    "text": "2.1 Preparing sequences\nYou should have obtained the FASTA sequences from the previous practical. If not:\n\nGet the sequences:\n\nOpen www.rcsb.org and search for 1BRS\nClick on ‘Download Files’ and choose ‘FASTA Sequence’\nOpen the downloaded FASTA file with a text editor\nYou’ll see sequences for both Barnase and Barstar"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#wild-type-complex-prediction",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#wild-type-complex-prediction",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "2.2 Wild-type complex prediction",
-    "text": "2.2 Wild-type complex prediction\n\nAccess AlphaFold3 server:\n\nNavigate to https://alphafoldserver.com\nLog in with your Gmail account\n\nSubmit wild-type prediction:\n\nEnter the WT sequence of Barstar (first protein)\nAdd entity as “protein”\nEnter the WT sequence of Barnase (second protein)\nAdd entity as “protein”\nClick “Continue and preview job”\nGive a name to the job: wtBarnase-wtBarstar\nSubmit the job\n\n\n\n\n\n\n\n\nProcessing time\n\n\n\nAF3 jobs can take several hours to complete. You may need to check back later or use pre-computed results if available.\n\n\n\nDownload results:\n\nOnce completed, click on the job\nNote the confidence metrics:\n\npTM (global metric): Confidence in individual protein structures\nipTM (interface metric): Confidence in protein-protein interface\n\nDownload results by clicking “Download”\nRename the file to wtBarnase_wtBarstar.zip\nExtract: unzip wtBarnase_wtBarstar.zip -d wtBarnase_wtBarstar"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-alanine-conservative",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-alanine-conservative",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "3.1 Mutation to Alanine (conservative)",
-    "text": "3.1 Mutation to Alanine (conservative)\n\nPrepare D39A-D35A mutant sequences:\n\nTake the Barstar sequence from the FASTA file\nFind position 39 (ASP/D) and replace with Alanine (A)\nFind position 35 (ASP/D) and replace with Alanine (A)\nKeep Barnase sequence unchanged\n\nSubmit D39A-D35A prediction:\n\nEnter the mutated Barstar sequence\nEnter the WT Barnase sequence\nJob name: wtBarnase_D39A-D35ABarstar\nSubmit and download results when complete"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-arginine-charge-reversal",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-arginine-charge-reversal",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "3.2 Mutation to Arginine (charge reversal)",
-    "text": "3.2 Mutation to Arginine (charge reversal)\n\nPrepare D39R-D35R mutant sequences:\n\nTake the Barstar sequence from the FASTA file\nFind position 39 (ASP/D) and replace with Arginine (R)\nFind position 35 (ASP/D) and replace with Arginine (R)\nKeep Barnase sequence unchanged\n\nSubmit D39R-D35R prediction:\n\nEnter the mutated Barstar sequence\nEnter the WT Barnase sequence\nJob name: wtBarnase_D39R-D35RBarstar\nSubmit and download results when complete"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#confidence-metrics-comparison",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#confidence-metrics-comparison",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "4.1 Confidence metrics comparison",
-    "text": "4.1 Confidence metrics comparison\n\nCompare AF3 confidence scores:\n\n\n\n\nComplex\nipTM\npTM\n\n\n\n\nWT\n0.93\n0.94\n\n\nD39A-D35A\n0.89\n0.92\n\n\nD39R-D35R\n0.25\n0.62\n\n\n\n\n\n\n\n\n\nInterpreting metrics\n\n\n\n\npTM: Confidence in overall fold (0-1 scale, &gt;0.8 is high confidence)\nipTM: Confidence in interface prediction (0-1 scale, &gt;0.8 is high confidence)\nLower scores indicate less confidence in the predicted structure"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#structural-comparison-with-crystal-structure",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#structural-comparison-with-crystal-structure",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "4.2 Structural comparison with crystal structure",
-    "text": "4.2 Structural comparison with crystal structure\n\nPrepare YASARA for comparison:\n\nClean up YASARA screen: File &gt; New &gt; Yes\nOpen the prepared crystal structure: 1BRS_complex.pdb\nOpen the AF3 predicted WT structure: model_0.cif (from wtBarnase_wtBarstar folder)\n\n\n\n\n\n\n\n\nAF3 output format\n\n\n\nAF3 predicts 5 models (model_0 to model_4) where model_0 always has the highest-ranking confidence value.\n\n\n\nSuperpose predicted on crystal structure:\n\nAnalyze &gt; Superpose &gt; Objects\nSelect “fold_wtbaranase…” (predicted structure) from Sequence panel &gt; OK\nSelect “1BRS_complex…” (crystal structure) from Sequence panel &gt; OK\nIn “Set parameters” window: Uncheck all boxes except “Residue name” and “Residue number” &gt; OK\n\nCalculate RMSD for Barstar:\n\nAnalyze &gt; RMSD of &gt; Molecules\nChoose “D” (Barstar of crystal structure) from Sequence panel &gt; OK\nChoose “A” (predicted Barstar) &gt; OK &gt; OK\nRMSD value will be shown in the command window\n\nRepeat for mutant structures:\n\nClean up YASARA screen and repeat steps 10-12 for both mutant predictions\nComplete the RMSD comparison table:\n\n\n\n\n\nComparison Pair\nRMSD (Å)\n\n\n\n\nCrystal vs WT\n2.76\n\n\nCrystal vs D39A-D35A\n2.90\n\n\nCrystal vs D39R-D35R\n9.42"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#understanding-the-results",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#understanding-the-results",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "5.1 Understanding the results",
-    "text": "5.1 Understanding the results\n\nAnalysis of AF3 performance:\n\nThe results reveal important insights about AF3’s capabilities and limitations:\n\n5.1.1 Alanine mutations (D39A-D35A):\n\nSmall decrease in confidence metrics (ipTM: 0.93→0.89)\nMinimal structural change (RMSD: 2.76→2.90 Å)\nAF3 prediction: Minor effect on complex formation\nExperimental reality: These mutations drastically reduce binding affinity\n\n\n\n5.1.2 Arginine mutations (D39R-D35R):\n\nDramatic decrease in confidence metrics (ipTM: 0.93→0.25)\nLarge structural deviation (RMSD: 2.76→9.42 Å)\nAF3 prediction: Major disruption of complex formation\nExperimental expectation: Strong electrostatic repulsion would indeed disrupt binding"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#critical-analysis-questions",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#critical-analysis-questions",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "5.2 Critical analysis questions",
-    "text": "5.2 Critical analysis questions\nAnswer the following questions based on your results:\n\n5.2.1 AF3 Performance Assessment\n\nHow well does AF3 predict the wild-type complex? Compare the confidence metrics and RMSD with the crystal structure.\nWhat do the confidence metrics tell us about AF3’s certainty in its predictions for each variant?\nWhy might AF3 fail to capture the effect of alanine mutations but successfully predict the impact of arginine mutations?\n\n\n\n5.2.2 Structural Biology Insights\n\nFrom a chemical perspective, explain why:\n\nD39A and D35A mutations might be more disruptive experimentally than AF3 predicts\nD39R and D35R mutations show large effects in both experiments and AF3 predictions\n\nWhat does this tell us about the different types of interactions that stabilize protein complexes?\n\n\n\n5.2.3 Methodological Considerations\n\nWhat are the limitations of using AF3 for mutational studies? When might it be reliable vs unreliable?\nHow could you validate these computational predictions experimentally?\nWhat other computational approaches could complement AF3 for studying mutation effects?"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#detailed-structural-comparison",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#detailed-structural-comparison",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "6.1 Detailed structural comparison",
-    "text": "6.1 Detailed structural comparison\n\nAnalyze specific interface regions in detail\nCompare hydrogen bonding patterns between structures\nExamine conformational changes upon mutation"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#additional-mutations",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#additional-mutations",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "6.2 Additional mutations",
-    "text": "6.2 Additional mutations\n\nPredict effects of single mutations (D39A only, D35A only)\nTest conservative mutations (D39E, D35E)\nExplore mutations in Barnase instead of Barstar\n\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nAF3 excels at predicting wild-type protein complex structures with high confidence\nMutation effects are not always accurately captured, especially for subtle changes\nCharge-reversal mutations (D→R) are better predicted than loss-of-function mutations (D→A)\nConfidence metrics (pTM, ipTM) provide valuable information about prediction reliability\nExperimental validation remains essential for understanding mutation effects\nAI predictions should be interpreted alongside structural and chemical principles"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#biological-significance",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_ALPHAFOLD3_PREDICTION.html#biological-significance",
-    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
-    "section": "6.3 Biological Significance",
-    "text": "6.3 Biological Significance\nThis analysis demonstrates that:\n\nProtein-protein interfaces rely on multiple, subtle interactions that may not be fully captured by current AI models\nElectrostatic interactions are crucial for the Barnase-Barstar interface and are better predicted than hydrophobic or entropic effects\nAF3 represents a powerful tool for structural biology but has limitations that must be understood\nComputational and experimental approaches are complementary for understanding protein function\n\nThe Barnase-Barstar system serves as an excellent model for understanding both the capabilities and limitations of AI-based structure prediction in the context of protein evolution and design."
-  },
-  {
     "objectID": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html",
     "href": "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.html",
     "title": "Peptide Classification with Machine Learning",
@@ -238,6 +49,188 @@
     "text": "2.6 6. Interpretation and discussion\n\nExamine feature importance and identify which functional groups most influence binding prediction.\n\n\n\n\n\n\n\nQ5\n\n\n\nDiscuss the implications of your findings. How do the identified features align with known biological principles of peptide binding? What could be the significance to survivin binding in a biological context?\n\n\n\n\n\n\n\n\nDiscussion\n\n\n\nAnswer the following questions with short reflections (2-3 sentences each):\n\nWhy might compositional information alone provide predictive power for peptide binding?\nHow do simple models sometimes outperform complex sequence-based neural networks?\nWhat are the potential advantages and limitations of composition-based approaches in structural biology and drug design?"
   },
   {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "",
+    "text": "In this practical, we will analyze the results of molecular dynamics (MD) simulations to understand the impact of molecular glue on protein complex stability. Two separate MD simulations have been conducted (~30 ns each): one with the molecular glue (rapamycin) and one without it. MD simulations can reveal how the molecular glue affects the dynamic behavior and stability of the FKBP12/FRB protein complex over time.\nThe key metric we will focus on is the Root Mean Square Deviation (RMSD) of the protein backbone, which indicates conformational changes compared to the initial structure. Lower RMSD values suggest higher structural stability.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nAnalyze MD simulation trajectories using YASARA\nCalculate and interpret RMSD values over time\nCompare protein stability with and without molecular glue\nGenerate and interpret time-series plots of structural parameters\nDraw conclusions about molecular glue effects on protein complex dynamics"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#setting-up-the-analysis-environment",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#setting-up-the-analysis-environment",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "2.1 Setting up the analysis environment",
+    "text": "2.1 Setting up the analysis environment\n\nSet the working directory:\n\nOpen YASARA\nSet the working directory to your/path/MD/with_glue\n\nSet the target:\n\nOptions &gt; Macro & Movies &gt; Set target &gt; 3FAP_complex.sce"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#running-the-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#running-the-analysis",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "2.2 Running the analysis",
+    "text": "2.2 Running the analysis\n\nExecute MD analysis:\n\nOptions &gt; Macro & Movies &gt; play macro &gt; md_analyze.mcr &gt; OK\n\n\n\n\n\n\n\n\nAnalysis time\n\n\n\nThis analysis takes some time to complete. The macro will process the entire trajectory and calculate various structural parameters."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#interpreting-the-results",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#interpreting-the-results",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "2.3 Interpreting the results",
+    "text": "2.3 Interpreting the results\n\nReview the HTML report:\n\nAfter analysis is complete, results will be shown in an HTML file\nThe report contains different analysis metrics with explanations\nFocus on “Solute RMSD from the starting structure” for protein backbone (RMSDBb)\n\nUnderstanding RMSD:\n\nRMSDBb indicates the protein’s conformational deviation compared to the initial structure over time\nRaw data is available in 3FAP_complex_analysis.tab"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#extracting-data",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#extracting-data",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "3.1 Extracting data",
+    "text": "3.1 Extracting data\n\nDownload the analysis file:\n\nDownload 3FAP_complex_analysis.tab to your local computer (using WinSCP or similar)\n\nOpen in spreadsheet software:\n\nOpen the file using MS Excel or similar software\nLocate the RMSDBb column and time column"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#creating-time-series-plots",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#creating-time-series-plots",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "3.2 Creating time-series plots",
+    "text": "3.2 Creating time-series plots\n\nPlot RMSD vs time:\n\nCreate a scatter plot or line graph with:\n\nX-axis: Time (ns)\nY-axis: RMSDBb (Å)\n\nThis shows how structural stability changes over the simulation\n\nCalculate average RMSD:\n\nCalculate the average RMSD over the second half of the simulation (t &gt; 15ns)\nThis represents the equilibrated state of the system\nRecord this value for comparison"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#repeat-analysis-for-control-system",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#repeat-analysis-for-control-system",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "4.1 Repeat analysis for control system",
+    "text": "4.1 Repeat analysis for control system\n\nSet new working directory:\n\nChange working directory to MD/without_glue\n\nRepeat steps 2-9:\n\nSet target to the complex without glue\nRun md_analyze.mcr\nDownload and process the analysis results\nPlot RMSD vs time\nCalculate average RMSD for t &gt; 15ns"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#generating-comparison-plots",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#generating-comparison-plots",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "5.1 Generating comparison plots",
+    "text": "5.1 Generating comparison plots\n\nCreate comparative visualization:\n\nPlot both RMSD curves on a single graph:\n\nLine 1: With molecular glue (rapamycin)\nLine 2: Without molecular glue\n\nUse different colors/styles to distinguish the lines\nInclude proper labels and legend"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#statistical-comparison",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#statistical-comparison",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "5.2 Statistical comparison",
+    "text": "5.2 Statistical comparison\n\nCompare average RMSD values:\n\nCompare the average RMSD values from step 9 for both systems\nThe lower RMSD indicates higher structural stability\nCalculate the difference between the two conditions"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#quantitative-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#quantitative-analysis",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "6.1 Quantitative Analysis",
+    "text": "6.1 Quantitative Analysis\n\nWhat are the average RMSD values for the second half of each simulation (t &gt; 15ns)?\n\nWith molecular glue: _____ Å\nWithout molecular glue: _____ Å\n\nWhat is the difference in average RMSD between the two conditions? What does this tell you about the effect of rapamycin?\nDescribe the time evolution of RMSD in both simulations. Do you see different patterns of equilibration?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#structural-interpretation",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#structural-interpretation",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "6.2 Structural Interpretation",
+    "text": "6.2 Structural Interpretation\n\nHow does the molecular glue affect the overall stability of the protein complex? Provide quantitative evidence.\nWhat biological significance does this stability difference have for mTOR signaling?\nAre there any periods during the simulation where the differences are most pronounced? What might this indicate?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#methodological-considerations",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#methodological-considerations",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "6.3 Methodological Considerations",
+    "text": "6.3 Methodological Considerations\n\nWhy do we focus on the second half of the simulation for calculating averages?\nWhat other parameters from the MD analysis might be relevant for understanding molecular glue effects?\nWhat are the limitations of this analysis approach? How might you improve it?"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#additional-metrics",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#additional-metrics",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "7.1 Additional metrics",
+    "text": "7.1 Additional metrics\n\nHydrogen bond analysis: Count hydrogen bonds between rapamycin and the proteins over time\nContact analysis: Monitor specific residue-residue contacts\nFlexibility analysis: Calculate B-factors or root mean square fluctuation (RMSF)"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#extended-comparisons",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#extended-comparisons",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "7.2 Extended comparisons",
+    "text": "7.2 Extended comparisons\n\nDifferent time windows: Compare stability at different simulation periods\nPer-residue analysis: Identify which protein regions are most affected by the molecular glue\n\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nMD simulations reveal dynamic effects of molecular glues on protein complexes\nRMSD analysis provides quantitative measures of structural stability\nRapamycin stabilizes the FKBP12/FRB complex by reducing conformational fluctuations\nComparative analysis between conditions is essential for understanding molecular mechanisms\nEquilibration time must be considered when analyzing MD trajectories\nVisual and statistical analysis complement each other in MD interpretation"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#expected-outcomes",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#expected-outcomes",
+    "title": "Molecular Dynamics Simulation Analysis",
+    "section": "7.3 Expected Outcomes",
+    "text": "7.3 Expected Outcomes\nBased on the biological role of rapamycin, you should observe:\n\nLower RMSD values in the presence of rapamycin\nMore stable complex with molecular glue\nReduced conformational fluctuations when rapamycin bridges the proteins\n\nThese results support the mechanism by which rapamycin acts as a molecular glue to stabilize protein-protein interactions and modulate cellular signaling pathways."
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html",
+    "title": "Molecular Docking Analysis",
+    "section": "",
+    "text": "The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that “glues” them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.\nIn this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.\n\n\n\n\n\n\nCreate a new working directory\n\n\n\n# Create a new folder for this practical\n# ex.\nmkdir -p ~/BIO512/MD_practicals\n# All input and output files will be placed in this directory\n\n# Also note that you need to download the materials from the Vera \nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/* ~/BIO512/MD_practicals/\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nPrepare protein structures for molecular docking using YASARA\nPerform protein-ligand docking simulations\nAnalyze docking results and binding energies\nCompare predicted poses with crystal structures using RMSD calculations\nEvaluate the success of docking predictions"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#setting-up-yasara-workspace",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#setting-up-yasara-workspace",
+    "title": "Molecular Docking Analysis",
+    "section": "2.1 Setting up YASARA workspace",
+    "text": "2.1 Setting up YASARA workspace\n\nSet the working directory (important):\n\nOpen YASARA\nOptions &gt; Working directory &gt; navigate and find the ‘Docking’ folder &gt; OK\n\nDownload the structure:\n\nFile &gt; Load &gt; PDB file from Internet &gt; 3FAP"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#understanding-the-structure",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#understanding-the-structure",
+    "title": "Molecular Docking Analysis",
+    "section": "2.2 Understanding the structure",
+    "text": "2.2 Understanding the structure\nIn the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:\n\nMol A = chain A of the protein\nMol B = chain B of the protein\n\nMol A = ligand (rapamycin)\nMol A (in red) = water molecules of chain A\nMol B (in red) = water molecules of chain B"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#structure-cleaning-and-preparation",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#structure-cleaning-and-preparation",
+    "title": "Molecular Docking Analysis",
+    "section": "2.3 Structure cleaning and preparation",
+    "text": "2.3 Structure cleaning and preparation\n\nRemove water molecules:\n\nFrom the right-hand panel, right-click on both water entries and click ‘Delete’\n\nAdd missing hydrogen atoms:\n\nEdit &gt; Clean &gt; All\n\nMinimize the energy of the system:\n\nOptions &gt; Choose Experiment &gt; Energy minimization\n\n\n\n\n\n\n\n\nTroubleshooting\n\n\n\nOn Linux, you may need to pause the minimization and continue to make it work: Options &gt; Control experiment &gt; Pause/Continue\n\n\n\nDelete SimCell:\n\nFrom the right-hand panel, right-click on SimCell and Delete\n\nSave the prepared complex:\n\nFile &gt; Save as &gt; PDB file &gt; select 3FAP from both Sequence and Name panels &gt; give a name (3FAP_complex.pdb)"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#splitting-the-complex",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#splitting-the-complex",
+    "title": "Molecular Docking Analysis",
+    "section": "3.1 Splitting the complex",
+    "text": "3.1 Splitting the complex\n\nSplit receptor and ligand:\n\nFrom the right-side panel, right click on 3FAP &gt; split &gt; Split at selected molecules &gt; select the ligand (second A in the sequence panel)\nNow you can see two objects in the right-hand panel: receptor and ligand\n\nRename the objects:\n\nRight click on the receptor object &gt; Name &gt; enter “Receptor”\nRight click on the ligand object &gt; Name &gt; enter “Ligand”"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#saving-individual-components",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#saving-individual-components",
+    "title": "Molecular Docking Analysis",
+    "section": "3.2 Saving individual components",
+    "text": "3.2 Saving individual components\n\nSave the receptor:\n\nFile &gt; Save as &gt; PDB file &gt; select Receptor &gt; OK &gt; give a name (3FAP_receptor.pdb)\n\nSave the ligand:\n\nFile &gt; Save as &gt; Other file format &gt; select Ligand from the Object panel &gt; find sdf-MDL Mol from the Format panel &gt; enter a name (3FAP_ligand) &gt; OK\n\n\nAt this point, you should have three files in your working directory: - 3FAP_complex.pdb - 3FAP_receptor.pdb - 3FAP_ligand.sdf"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#defining-the-simulation-cell",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#defining-the-simulation-cell",
+    "title": "Molecular Docking Analysis",
+    "section": "4.1 Defining the simulation cell",
+    "text": "4.1 Defining the simulation cell\n\nGenerate the simulation cell:\n\nFrom the right-hand panel, right-click on Ligand object &gt; Select &gt; newly\nThen Simulation &gt; Define simulation cell &gt; around selected atoms\n\nRemove the ligand:\n\nRight-click on the Ligand object &gt; Delete\n\nSave the receptor + simulation cell:\n\nFile &gt; Save as &gt; YASARA Scene &gt; give a name (3FAP_receptor.sce)"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#running-the-docking-simulation",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#running-the-docking-simulation",
+    "title": "Molecular Docking Analysis",
+    "section": "4.2 Running the docking simulation",
+    "text": "4.2 Running the docking simulation\n\nSet up docking:\n\nOptions &gt; Macro & Movie &gt; set target &gt; select 3FAP_receptor.sce &gt; select ‘from underscore’ &gt; OK\n\nRun docking:\n\nOptions &gt; Macro & Movie &gt; Play macro &gt; find and click on dock_run.mcr &gt; OK"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#binding-energy-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#binding-energy-analysis",
+    "title": "Molecular Docking Analysis",
+    "section": "5.1 Binding energy analysis",
+    "text": "5.1 Binding energy analysis\n\nAnalyze the results:\n\nCheck for the log file (3FAP.log) in the working directory\nLook at the binding energy values in the first table (Bind.energy)\nThe first entry always has the best binding energy value"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#visual-inspection-of-docking-poses",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#visual-inspection-of-docking-poses",
+    "title": "Molecular Docking Analysis",
+    "section": "5.2 Visual inspection of docking poses",
+    "text": "5.2 Visual inspection of docking poses\n\nOpen predicted and crystal structures:\n\nOpen the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)\nOpen the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)\n\nOptimize visualization:\n\nView &gt; Hide atoms &gt; Aliphatic hydrogens\nView &gt; Style atoms &gt; Stick &gt; ALL\nView &gt; Hide atoms &gt; Molecule &gt; A (first entry in the Sequence panel)\nView &gt; Hide atoms &gt; Molecule &gt; A (second entry in the Sequence panel)\n\nVisual comparison:\n\nVisually inspect how well the crystal pose and the predicted docking pose overlap\nNote any significant differences between the two poses"
+  },
+  {
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#quantitative-assessment",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html#quantitative-assessment",
+    "title": "Molecular Docking Analysis",
+    "section": "5.3 Quantitative assessment",
+    "text": "5.3 Quantitative assessment\n\nCalculate RMSD from crystal pose:\n\nAnalyze &gt; RMSD of &gt; Molecules &gt; docked ligand (second A in the Sequence panel) &gt; OK &gt; crystal ligand (third A in the Sequence panel) &gt; OK &gt; select Molecule &gt; OK\nThe RMSD value will be displayed in the panel below the screen\n\n\n\n\n\n\n\n\nSuccess Criteria\n\n\n\nUsually, RMSD &lt; 2.0 Å is considered as a successful docking simulation."
+  },
+  {
     "objectID": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.html",
     "href": "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.html",
     "title": "Data Grouping and Visualization",
@@ -270,14 +263,14 @@
     "href": "index.html",
     "title": "BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository",
     "section": "",
-    "text": "This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.\n\n\n\nDESeq2 workflow:\n\nPractical: DESeq2 Analysis\nPractical: Data Grouping and Visualisation\n\nNetwork analysis:\n\nPractical: Network visualisation and Centrality analysis\n\n\n\n\n\n\nPeptide classification in Scikit-Learn:\n\nPractical: Peptide Classification with ML\n\n\n\n\n\n\nStructure analysis (YASARA):\n\nPractical: Protein Complex Structure Analysis 🔒\n\nStructure prediction:\n\nPractical: AlphaFold3 Prediction 🔒\n\nDocking and MD:\n\nPractical: Molecular Docking 🔒\nPractical: MD Analysis 🔒\n\n\n\n\n\n\nComputer setup:\n\nPre-course Setup\n\nHPC Cluster access:\n\nSetting up the HPC\n\n\n\nFor questions or issues, please contact the course instructors."
+    "text": "This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.\n\n\n\nDESeq2 workflow:\n\nPractical: DESeq2 Analysis\nPractical: Data Grouping and Visualisation\n\nNetwork analysis:\n\nPractical: Network visualisation and Centrality analysis\n\n\n\n\n\n\nPeptide classification in Scikit-Learn:\n\nPractical: Peptide Classification with ML\n\n\n\n\n\n\nStructure analysis (YASARA):\n\nPractical: Protein Complex Structure Analysis\n\nStructure prediction:\n\nPractical: AlphaFold3 Prediction\n\nDocking and MD:\n\nPractical: Molecular Docking 🔒\nPractical: MD Analysis 🔒\n\n\n\n\n\n\nComputer setup:\n\nPre-course Setup\n\nHPC Cluster access:\n\nSetting up the HPC\n\n\n\nFor questions or issues, please contact the course instructors."
   },
   {
     "objectID": "index.html#course-overview",
     "href": "index.html#course-overview",
     "title": "BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository",
     "section": "",
-    "text": "This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.\n\n\n\nDESeq2 workflow:\n\nPractical: DESeq2 Analysis\nPractical: Data Grouping and Visualisation\n\nNetwork analysis:\n\nPractical: Network visualisation and Centrality analysis\n\n\n\n\n\n\nPeptide classification in Scikit-Learn:\n\nPractical: Peptide Classification with ML\n\n\n\n\n\n\nStructure analysis (YASARA):\n\nPractical: Protein Complex Structure Analysis 🔒\n\nStructure prediction:\n\nPractical: AlphaFold3 Prediction 🔒\n\nDocking and MD:\n\nPractical: Molecular Docking 🔒\nPractical: MD Analysis 🔒\n\n\n\n\n\n\nComputer setup:\n\nPre-course Setup\n\nHPC Cluster access:\n\nSetting up the HPC\n\n\n\nFor questions or issues, please contact the course instructors."
+    "text": "This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.\n\n\n\nDESeq2 workflow:\n\nPractical: DESeq2 Analysis\nPractical: Data Grouping and Visualisation\n\nNetwork analysis:\n\nPractical: Network visualisation and Centrality analysis\n\n\n\n\n\n\nPeptide classification in Scikit-Learn:\n\nPractical: Peptide Classification with ML\n\n\n\n\n\n\nStructure analysis (YASARA):\n\nPractical: Protein Complex Structure Analysis\n\nStructure prediction:\n\nPractical: AlphaFold3 Prediction\n\nDocking and MD:\n\nPractical: Molecular Docking 🔒\nPractical: MD Analysis 🔒\n\n\n\n\n\n\nComputer setup:\n\nPre-course Setup\n\nHPC Cluster access:\n\nSetting up the HPC\n\n\n\nFor questions or issues, please contact the course instructors."
   },
   {
     "objectID": "setup/Set_up_the_HPC.html",
@@ -427,185 +420,94 @@
     "text": "7.2 Generating Gene Co-Expression Network\ndef coexpression_generation(norm_count,padj_thr=0.05):\n    print('Calculating Correlation..')\n    temp=spearmanr(norm_count.T)\n    corr=pd.DataFrame(temp[0],columns=list(norm_count.index),index=list(norm_count.index))\n    pval=pd.DataFrame(temp[1],columns=list(norm_count.index),index=list(norm_count.index))\n    print('Filtering the matrix Correlation..')\n    corr=corr.where(np.triu(np.ones(corr.shape)).astype(np.bool))\n    pval=pval.where(np.triu(np.ones(pval.shape)).astype(np.bool))\n    print('Making long table of Correlation..')\n    corr2=corr.unstack().reset_index(name='weight')\n    pval2=pval.unstack().reset_index(name='pval')\n    res=corr2.merge(pval2,on=['level_0','level_1'])\n    res=res[res['level_0'] != res['level_1']]\n    res=res.dropna()\n    print('Adjusting P-val')\n    res['padj']=multipletests(res['pval'],method='fdr_bh')[1]\n    res=res[res.padj &lt; padj_thr].reset_index(drop=True)\n    res=res[['level_0','level_1','weight']]\n    print('Done!!')\n    return res\n\ncoexp_network = coexpression_generation(norm_count)\ncoexp_network = coexp_network[coexp_network[\"weight\"] &gt; 0]\ncoexp_network.to_csv(\"coexpression_network.txt\", sep = \"\\t\", index = False)\nMap to gene names (optional):\n# Starting connections to ensembl website using the \"Dataset\" function from pyBioMart\ndataset = Dataset(name='hsapiens_gene_ensembl', host='http://www.ensembl.org')\n\n# Retrieving name mapping dataframe between \"Esembl ID\" and External Gene Name (HGNC) and focusing only on \"protein coding\" genes\nmapping = dataset.query(attributes=['ensembl_gene_id', 'external_gene_name'])\ncoexp_network.replace(mapping.set_index(\"Gene stable ID\")[\"Gene name\"]).dropna().to_csv(\"coexpression_network.txt\", sep = \"\\t\", index = False)\n\n\n\n\n\n\nNote\n\n\n\nThe output is a dataframe with 3 columns:\n\nlevel_1: gene node 1\nlevel_2: gene node 2\nweight: correlation score"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html",
-    "title": "Molecular Docking Analysis",
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
     "section": "",
-    "text": "The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that “glues” them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.\nIn this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.\n\n\n\n\n\n\nCreate a new working directory\n\n\n\n# Create a new folder for this practical\n# ex.\nmkdir -p ~/BIO512/MD_practicals\n# All input and output files will be placed in this directory\n\n# Also note that you need to download the materials from the Vera \nscp -r &lt;your_vera_username&gt;@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/* ~/BIO512/MD_practicals/\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nPrepare protein structures for molecular docking using YASARA\nPerform protein-ligand docking simulations\nAnalyze docking results and binding energies\nCompare predicted poses with crystal structures using RMSD calculations\nEvaluate the success of docking predictions"
+    "text": "In this practical we continue working on the Barnase-Barstar protein complex (PDBid: 1BRS) from Bacillus amyloliquefaciens. This time, we will use AlphaFold3 (AF3) to predict the structure of the complex from sequence alone, and assess how well AF3 can predict the effects of specific mutations on the complex structure.\n\n\n\n\n\n\nPrerequisites\n\n\n\n\nCompleted analysis of 1BRS crystal structure from previous practical\nFASTA sequences of Barnase and Barstar from PDB\nGmail account for AlphaFold server access\n\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nUse AlphaFold3 server for protein complex prediction\nInterpret AF3 confidence metrics (pTM and ipTM)\nDesign and analyze mutational studies computationally\nCompare predicted structures with experimental crystal structures\nUnderstand limitations of AI-based structure prediction for mutations"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#setting-up-yasara-workspace",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#setting-up-yasara-workspace",
-    "title": "Molecular Docking Analysis",
-    "section": "2.1 Setting up YASARA workspace",
-    "text": "2.1 Setting up YASARA workspace\n\nSet the working directory (important):\n\nOpen YASARA\nOptions &gt; Working directory &gt; navigate and find the ‘Docking’ folder &gt; OK\n\nDownload the structure:\n\nFile &gt; Load &gt; PDB file from Internet &gt; 3FAP"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#preparing-sequences",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#preparing-sequences",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "2.1 Preparing sequences",
+    "text": "2.1 Preparing sequences\nYou should have obtained the FASTA sequences from the previous practical. If not, go back and do so now."
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#understanding-the-structure",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#understanding-the-structure",
-    "title": "Molecular Docking Analysis",
-    "section": "2.2 Understanding the structure",
-    "text": "2.2 Understanding the structure\nIn the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:\n\nMol A = chain A of the protein\nMol B = chain B of the protein\n\nMol A = ligand (rapamycin)\nMol A (in red) = water molecules of chain A\nMol B (in red) = water molecules of chain B"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#wild-type-complex-prediction",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#wild-type-complex-prediction",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "2.2 Wild-type complex prediction",
+    "text": "2.2 Wild-type complex prediction\nAccess AlphaFold3 server:\n\nNavigate to https://alphafoldserver.com\nLog in with your Gmail account\n\nSubmit wild-type prediction:\n\nEnter the WT sequence of Barstar (first protein)\nAdd entity as “protein”\nEnter the WT sequence of Barnase (second protein)\nAdd entity as “protein”\nClick “Continue and preview job”\nGive a name to the job: wtBarnase-wtBarstar\nSubmit the job\n\n\n\n\n\n\n\nProcessing time\n\n\n\nAF3 jobs can take several hours to complete. If the server is busy, it may take a very long, use the precomputed results available on Vera then instead.\n\n\nDownload results: - Once completed, click on the job\n\n\n\n\n\n\nTip\n\n\n\nNote the confidence metrics:\n\npTM (global metric): Confidence in individual protein structures\nipTM (interface metric): Confidence in protein-protein interface\n\n\n\n\nDownload results by clicking “Download”\nRename the file to wtBarnase_wtBarstar.zip\n\nExtract on the cluster:\n# Unzip the results\nunzip wtBarnase_wtBarstar.zip -d wtBarnase_wtBarstar"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#structure-cleaning-and-preparation",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#structure-cleaning-and-preparation",
-    "title": "Molecular Docking Analysis",
-    "section": "2.3 Structure cleaning and preparation",
-    "text": "2.3 Structure cleaning and preparation\n\nRemove water molecules:\n\nFrom the right-hand panel, right-click on both water entries and click ‘Delete’\n\nAdd missing hydrogen atoms:\n\nEdit &gt; Clean &gt; All\n\nMinimize the energy of the system:\n\nOptions &gt; Choose Experiment &gt; Energy minimization\n\n\n\n\n\n\n\n\nTroubleshooting\n\n\n\nOn Linux, you may need to pause the minimization and continue to make it work: Options &gt; Control experiment &gt; Pause/Continue\n\n\n\nDelete SimCell:\n\nFrom the right-hand panel, right-click on SimCell and Delete\n\nSave the prepared complex:\n\nFile &gt; Save as &gt; PDB file &gt; select 3FAP from both Sequence and Name panels &gt; give a name (3FAP_complex.pdb)"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-alanine-conservative",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-alanine-conservative",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "3.1 Mutation to Alanine (conservative)",
+    "text": "3.1 Mutation to Alanine (conservative)\nPrepare D39A-D35A mutant sequences:\n\nTake the Barstar sequence from the FASTA file\nFind position 39 (ASP/D) and replace with Alanine (A)\nFind position 35 (ASP/D) and replace with Alanine (A)\nKeep Barnase sequence unchanged\n\nSubmit D39A-D35A prediction:\n\nEnter the mutated Barstar sequence\nEnter the WT Barnase sequence\nJob name: wtBarnase_D39A-D35ABarstar\nSubmit and download results when complete"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#splitting-the-complex",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#splitting-the-complex",
-    "title": "Molecular Docking Analysis",
-    "section": "3.1 Splitting the complex",
-    "text": "3.1 Splitting the complex\n\nSplit receptor and ligand:\n\nFrom the right-side panel, right click on 3FAP &gt; split &gt; Split at selected molecules &gt; select the ligand (second A in the sequence panel)\nNow you can see two objects in the right-hand panel: receptor and ligand\n\nRename the objects:\n\nRight click on the receptor object &gt; Name &gt; enter “Receptor”\nRight click on the ligand object &gt; Name &gt; enter “Ligand”"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-arginine-charge-reversal",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#mutation-to-arginine-charge-reversal",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "3.2 Mutation to Arginine (charge reversal)",
+    "text": "3.2 Mutation to Arginine (charge reversal)\nPrepare D39R-D35R mutant sequences:\n\nTake the Barstar sequence from the FASTA file\nFind position 39 (ASP/D) and replace with Arginine (R)\nFind position 35 (ASP/D) and replace with Arginine (R)\nKeep Barnase sequence unchanged\n\nSubmit D39R-D35R prediction:\n\nEnter the mutated Barstar sequence\nEnter the WT Barnase sequence\nJob name: wtBarnase_D39R-D35RBarstar\nSubmit and download results when complete\n\n\n\n\n\n\n\nQ2 Compare the predicted complexes for WT vs. mutated sequences, how do the pTM and ipTM values change for each mutation?"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#saving-individual-components",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#saving-individual-components",
-    "title": "Molecular Docking Analysis",
-    "section": "3.2 Saving individual components",
-    "text": "3.2 Saving individual components\n\nSave the receptor:\n\nFile &gt; Save as &gt; PDB file &gt; select Receptor &gt; OK &gt; give a name (3FAP_receptor.pdb)\n\nSave the ligand:\n\nFile &gt; Save as &gt; Other file format &gt; select Ligand from the Object panel &gt; find sdf-MDL Mol from the Format panel &gt; enter a name (3FAP_ligand) &gt; OK\n\n\nAt this point, you should have three files in your working directory: - 3FAP_complex.pdb - 3FAP_receptor.pdb - 3FAP_ligand.sdf"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#structural-comparison-with-crystal-structure",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html#structural-comparison-with-crystal-structure",
+    "title": "AI-Based Protein Complex Prediction with AlphaFold3",
+    "section": "3.3 Structural comparison with crystal structure",
+    "text": "3.3 Structural comparison with crystal structure\nPrepare YASARA for comparison: Clean up the YASARA’s screen (File &gt; New &gt; Yes) and open the prepared crystal structure from step 9 (1BRS_complex.pdb). Also open the “…model_0.cif” structure predicted by AF3 for the WT sequences (drag and drop). You can find it within the folder “wtBarnase_wtBarstar” from step18\n\n\n\n\n\n\nAF3 output format\n\n\n\nAF3 predicts 5 models (model_0 to model_4) where model_0 always has the highest-ranking confidence value.\nFor better visualization, it’s better to color each molecule in each complex differently.\n\n\nSuperpose predicted on crystal structure: Now you have two protein complexes on YASARA, crystal structure and AF3 predicted for WT sequence. Now we superpose the predicted structure on crystal structure.\n\nAnalyze &gt; Superpose &gt; Objects\nSelect “fold_wtbaranase…” (predicted structure) from Sequence panel &gt; OK\nSelect “1BRS_complex…” (crystal structure) from Sequence panel &gt; OK\nIn “Set parameters” window: Uncheck all boxes except “Residue name” and “Residue number” &gt; OK\n\nCalculate RMSD for Barstar: Then we calculate the RMSD value between Barstar proteins by\n\nAnalyze &gt; RMSD of &gt; Molecules\nChoose “D” (Barstar of crystal structure) from Sequence panel &gt; OK\nChoose “A” (predicted Barstar) &gt; OK &gt; OK\nRMSD value will be shown in the command window\n\nRepeat for mutant structures:\n\nClean up YASARA screen and repeat the superposition and RMSD calculation for both mutant predictions\n\n\n\n\n\n\n\nQ3 Complete the RMSD comparison table and place it in your report:\n\n\n\n\n\n\nComparison Pair\nRMSD (Å)\n\n\n\n\nCrystal vs WT\n\n\n\nCrystal vs D39A-D35A\n\n\n\nCrystal vs D39R-D35R\n\n\n\n\n\n\n\n\n\n\n\n\nQ4 What do the AF3 metrics and RMSD values show?\n\n\n\n\n\n\n\n\n\n\n\n\nQ5 How do you interpret this finding? Why does the mutation to Arginine have that significant effect on the predicted structure but mutation to Alanine does not?"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#defining-the-simulation-cell",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#defining-the-simulation-cell",
-    "title": "Molecular Docking Analysis",
-    "section": "4.1 Defining the simulation cell",
-    "text": "4.1 Defining the simulation cell\n\nGenerate the simulation cell:\n\nFrom the right-hand panel, right-click on Ligand object &gt; Select &gt; newly\nThen Simulation &gt; Define simulation cell &gt; around selected atoms\n\nRemove the ligand:\n\nRight-click on the Ligand object &gt; Delete\n\nSave the receptor + simulation cell:\n\nFile &gt; Save as &gt; YASARA Scene &gt; give a name (3FAP_receptor.sce)"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#running-the-docking-simulation",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#running-the-docking-simulation",
-    "title": "Molecular Docking Analysis",
-    "section": "4.2 Running the docking simulation",
-    "text": "4.2 Running the docking simulation\n\nSet up docking:\n\nOptions &gt; Macro & Movie &gt; set target &gt; select 3FAP_receptor.sce &gt; select ‘from underscore’ &gt; OK\n\nRun docking:\n\nOptions &gt; Macro & Movie &gt; Play macro &gt; find and click on dock_run.mcr &gt; OK"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#binding-energy-analysis",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#binding-energy-analysis",
-    "title": "Molecular Docking Analysis",
-    "section": "5.1 Binding energy analysis",
-    "text": "5.1 Binding energy analysis\n\nAnalyze the results:\n\nCheck for the log file (3FAP.log) in the working directory\nLook at the binding energy values in the first table (Bind.energy)\nThe first entry always has the best binding energy value"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#visual-inspection-of-docking-poses",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#visual-inspection-of-docking-poses",
-    "title": "Molecular Docking Analysis",
-    "section": "5.2 Visual inspection of docking poses",
-    "text": "5.2 Visual inspection of docking poses\n\nOpen predicted and crystal structures:\n\nOpen the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)\nOpen the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)\n\nOptimize visualization:\n\nView &gt; Hide atoms &gt; Aliphatic hydrogens\nView &gt; Style atoms &gt; Stick &gt; ALL\nView &gt; Hide atoms &gt; Molecule &gt; A (first entry in the Sequence panel)\nView &gt; Hide atoms &gt; Molecule &gt; A (second entry in the Sequence panel)\n\nVisual comparison:\n\nVisually inspect how well the crystal pose and the predicted docking pose overlap\nNote any significant differences between the two poses"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#quantitative-assessment",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MOLECULAR_DOCKING.html#quantitative-assessment",
-    "title": "Molecular Docking Analysis",
-    "section": "5.3 Quantitative assessment",
-    "text": "5.3 Quantitative assessment\n\nCalculate RMSD from crystal pose:\n\nAnalyze &gt; RMSD of &gt; Molecules &gt; docked ligand (second A in the Sequence panel) &gt; OK &gt; crystal ligand (third A in the Sequence panel) &gt; OK &gt; select Molecule &gt; OK\nThe RMSD value will be displayed in the panel below the screen\n\n\n\n\n\n\n\n\nSuccess Criteria\n\n\n\nUsually, RMSD &lt; 2.0 Å is considered as a successful docking simulation."
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html",
-    "title": "Molecular Dynamics Simulation Analysis",
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html",
+    "title": "Protein Complex Structure Analysis with YASARA",
     "section": "",
-    "text": "In this practical, we will analyze the results of molecular dynamics (MD) simulations to understand the impact of molecular glue on protein complex stability. Two separate MD simulations have been conducted (~30 ns each): one with the molecular glue (rapamycin) and one without it. MD simulations can reveal how the molecular glue affects the dynamic behavior and stability of the FKBP12/FRB protein complex over time.\nThe key metric we will focus on is the Root Mean Square Deviation (RMSD) of the protein backbone, which indicates conformational changes compared to the initial structure. Lower RMSD values suggest higher structural stability.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nAnalyze MD simulation trajectories using YASARA\nCalculate and interpret RMSD values over time\nCompare protein stability with and without molecular glue\nGenerate and interpret time-series plots of structural parameters\nDraw conclusions about molecular glue effects on protein complex dynamics"
+    "text": "The goal of this practical is to apply AI-based protein complex structure prediction using AF3. You will learn the capability of AF3 in correctly predicting the protein complexes from either WT sequence or upon mutations.\nThe protein complex structure used is a classic model of protein–protein recognition “Barnase-Barstar” from Bacillus amyloliquefaciens organism (PDBid: 1BRS). Barnase is a small extracellular ribonuclease from that degrades RNA. On its own it’s toxic to the producing cell. Barstar is an intracellular protein inhibitor of Barnase. It binds Barnase extremely tightly and blocks the RNase active site, protecting the bacterium until Barnase is secreted.\n\n\n\n\n\n\nSetup Instructions\n\n\n\n# Create a new folder for this practical\nmkdir -p /cephyr/NOBACKUP/groups/n2bin-gu/students/&lt;y/n&gt;/BIO512/AF\nOpen a new desktop session on Vera via OnDemand, then do the following:\n\nOpen your symlinked folder to the BIO512 group directory (i.e. /cephyr/NOBACKUP/groups/n2bin-gu/) using the file manager\nFind the install_yasara executable (in ./BIO512/jalil) and execute it (you might need to wait a moment)\nOnce YASARA is open, go Options &gt; Working directory &gt; navigate and find your ‘AF’ folder &gt; OK to set your working directory\n\nWe also recommend using jupyter lab for the notebook submission, since base64 encoding of images is a simple drag and drop operation in jupyter lab. To launch jupyter lab, please do the following (locally ofc):\n# Launch the BIO512_v1 env \nconda activate BIO512_v1\n\n# Launch jupyter lab\njupyter lab \n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end you should be able to:\n\nPrepare protein complex structures for analysis using YASARA\nVisualize and analyze protein-protein interactions\nIdentify hydrogen bonds at protein interfaces\nDetermine key residues involved in protein-protein recognition\nUnderstand the structural basis of protein binding specificity"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#setting-up-the-analysis-environment",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#setting-up-the-analysis-environment",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "2.1 Setting up the analysis environment",
-    "text": "2.1 Setting up the analysis environment\n\nSet the working directory:\n\nOpen YASARA\nSet the working directory to your/path/MD/with_glue\n\nSet the target:\n\nOptions &gt; Macro & Movies &gt; Set target &gt; 3FAP_complex.sce"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#setting-up-the-structure",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#setting-up-the-structure",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "2.1 Setting up the structure",
+    "text": "2.1 Setting up the structure\nDownload the crystal structure:\n\nFile &gt; Load &gt; PDB file from Internet &gt; 1BRS\nYou can see three identical Barnase-Barstar complexes where we need only one\n\n\n\n\n\n\n\nTip\n\n\n\nIf you want to have less disruptive backround, you can go to View &gt; Color &gt; Background color and change it to white or black for better visualization.\n\n\nAnalyze the scene contents:\nIn the right-hand panel, you can see a single object named 1BRS. Click on it to expand. There are 12 molecules under 1BRS:\n\nMol A, B, C = Barnase (ribonuclease)\nMol D, E, F = Barstar (inhibitor)\nMol A, B, C, D, E, F (in red) = water molecules\n\n\n\n\n\n\n\nTip\n\n\n\nWorking with structure (with apple mouse)\n\nZoom in/Zoom out: Hold right click\nTurning the Structure: Hold left click"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#running-the-analysis",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#running-the-analysis",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "2.2 Running the analysis",
-    "text": "2.2 Running the analysis\n\nExecute MD analysis:\n\nOptions &gt; Macro & Movies &gt; play macro &gt; md_analyze.mcr &gt; OK\n\n\n\n\n\n\n\n\nAnalysis time\n\n\n\nThis analysis takes some time to complete. The macro will process the entire trajectory and calculate various structural parameters."
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structure-cleaning",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#structure-cleaning",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "2.2 Structure cleaning",
+    "text": "2.2 Structure cleaning\nRemove redundant molecules:\n\nRemove water molecules (highlighted in red) by right-clicking and choosing “Delete”\nRemove Mol B, C, E, F (right-click and choose “Delete”)\nNow you have only one Barnase (Mol A)-Barstar (Mol D) complex\n\n\n\n\n\n\n\nTip\n\n\n\nYou can change visualization by clicking on yes/no in the Vis column in right-hand panel on the screen. You can change the color of Mol A and Mol D by right click on them in right-hand panel.\nNavigate the mouse to the bottom of the screen and you can see a tab with residues for the structures, and you can select each residue. Also by right-click on the residue you can change the residue color.\n\n\nCenter the structure:\n\nRight-click on the object (1brs) from the right-hand panel and choose ‘Center’\n\nAdd missing hydrogen atoms:\n\nEdit &gt; Clean &gt; All"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#interpreting-the-results",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#interpreting-the-results",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "2.3 Interpreting the results",
-    "text": "2.3 Interpreting the results\n\nReview the HTML report:\n\nAfter analysis is complete, results will be shown in an HTML file\nThe report contains different analysis metrics with explanations\nFocus on “Solute RMSD from the starting structure” for protein backbone (RMSDBb)\n\nUnderstanding RMSD:\n\nRMSDBb indicates the protein’s conformational deviation compared to the initial structure over time\nRaw data is available in 3FAP_complex_analysis.tab"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#force-field-and-energy-minimization",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#force-field-and-energy-minimization",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "2.3 Force field and energy minimization",
+    "text": "2.3 Force field and energy minimization\nSelect the force field:\n\nSimulation &gt; Force field &gt; AMBER 14 &gt; check the box next to ‘use PME…’ &gt; OK\n\nMinimize the energy:\n\nOptions &gt; Energy minimization\nAfter minimization, from the right-hand panel, right-click on SimCell and Delete it\n\nSave the prepared complex:\n\nFile &gt; Save as &gt; PDB file &gt; select 1BRS from both Sequence and Name panels &gt; OK &gt; give a name (1BRS_complex.pdb)\n\n\n\n\n\n\n\nTip\n\n\n\nFor better visualization, color Mol A (grey) and Mol D (magenta) by right-click in right-hand panel on the screen."
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extracting-data",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extracting-data",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "3.1 Extracting data",
-    "text": "3.1 Extracting data\n\nDownload the analysis file:\n\nDownload 3FAP_complex_analysis.tab to your local computer (using WinSCP or similar)\n\nOpen in spreadsheet software:\n\nOpen the file using MS Excel or similar software\nLocate the RMSDBb column and time column"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#visualization-setup",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#visualization-setup",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "3.1 Visualization setup",
+    "text": "3.1 Visualization setup\nOptimize visualization:\n\nView &gt; Hide atoms &gt; Aliphatic hydrogens"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#creating-time-series-plots",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#creating-time-series-plots",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "3.2 Creating time-series plots",
-    "text": "3.2 Creating time-series plots\n\nPlot RMSD vs time:\n\nCreate a scatter plot or line graph with:\n\nX-axis: Time (ns)\nY-axis: RMSDBb (Å)\n\nThis shows how structural stability changes over the simulation\n\nCalculate average RMSD:\n\nCalculate the average RMSD over the second half of the simulation (t &gt; 15ns)\nThis represents the equilibrated state of the system\nRecord this value for comparison"
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#hydrogen-bond-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#hydrogen-bond-analysis",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "3.2 Hydrogen bond analysis",
+    "text": "3.2 Hydrogen bond analysis\n\nVisualize protein-protein interactions:\n\nFor this step there are two options to visualize hydrogen bonds between Barnase (Mol A) and Barstar (Mol D):\nView&gt;Show interactions&gt;Hydrogen Bonds of&gt;Molecules\nOr\nOpen the Window&gt;Console&gt;Open Now (or press space bar on your keyboard) &gt; enter the command “ShowHBoAtom Mol A with distance&lt;2.6 from Mol D” Or “ShowHBoAtom Mol D with distance&lt;2.6 from Mol A”\nNow you can see the hydrogen bond between two proteins shown in yellow dashed lines.\n\n\n\n\n\n\nQ1 Examine which residues of Barstar (Mol D) form the most hydrogen bonds with Barnase (Mol A)?\n\n\n\n\nTake a closer look at the interface between the two proteins\nFocus on regions with multiple hydrogen bonds\nNote the types of residues involved in the interactions"
   },
   {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#repeat-analysis-for-control-system",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#repeat-analysis-for-control-system",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "4.1 Repeat analysis for control system",
-    "text": "4.1 Repeat analysis for control system\n\nSet new working directory:\n\nChange working directory to MD/without_glue\n\nRepeat steps 2-9:\n\nSet target to the complex without glue\nRun md_analyze.mcr\nDownload and process the analysis results\nPlot RMSD vs time\nCalculate average RMSD for t &gt; 15ns"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#generating-comparison-plots",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#generating-comparison-plots",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "5.1 Generating comparison plots",
-    "text": "5.1 Generating comparison plots\n\nCreate comparative visualization:\n\nPlot both RMSD curves on a single graph:\n\nLine 1: With molecular glue (rapamycin)\nLine 2: Without molecular glue\n\nUse different colors/styles to distinguish the lines\nInclude proper labels and legend"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#statistical-comparison",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#statistical-comparison",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "5.2 Statistical comparison",
-    "text": "5.2 Statistical comparison\n\nCompare average RMSD values:\n\nCompare the average RMSD values from step 9 for both systems\nThe lower RMSD indicates higher structural stability\nCalculate the difference between the two conditions"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#quantitative-analysis",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#quantitative-analysis",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "6.1 Quantitative Analysis",
-    "text": "6.1 Quantitative Analysis\n\nWhat are the average RMSD values for the second half of each simulation (t &gt; 15ns)?\n\nWith molecular glue: _____ Å\nWithout molecular glue: _____ Å\n\nWhat is the difference in average RMSD between the two conditions? What does this tell you about the effect of rapamycin?\nDescribe the time evolution of RMSD in both simulations. Do you see different patterns of equilibration?"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#structural-interpretation",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#structural-interpretation",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "6.2 Structural Interpretation",
-    "text": "6.2 Structural Interpretation\n\nHow does the molecular glue affect the overall stability of the protein complex? Provide quantitative evidence.\nWhat biological significance does this stability difference have for mTOR signaling?\nAre there any periods during the simulation where the differences are most pronounced? What might this indicate?"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#methodological-considerations",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#methodological-considerations",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "6.3 Methodological Considerations",
-    "text": "6.3 Methodological Considerations\n\nWhy do we focus on the second half of the simulation for calculating averages?\nWhat other parameters from the MD analysis might be relevant for understanding molecular glue effects?\nWhat are the limitations of this analysis approach? How might you improve it?"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#additional-metrics",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#additional-metrics",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "7.1 Additional metrics",
-    "text": "7.1 Additional metrics\n\nHydrogen bond analysis: Count hydrogen bonds between rapamycin and the proteins over time\nContact analysis: Monitor specific residue-residue contacts\nFlexibility analysis: Calculate B-factors or root mean square fluctuation (RMSF)"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extended-comparisons",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#extended-comparisons",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "7.2 Extended comparisons",
-    "text": "7.2 Extended comparisons\n\nDifferent time windows: Compare stability at different simulation periods\nPer-residue analysis: Identify which protein regions are most affected by the molecular glue\n\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nMD simulations reveal dynamic effects of molecular glues on protein complexes\nRMSD analysis provides quantitative measures of structural stability\nRapamycin stabilizes the FKBP12/FRB complex by reducing conformational fluctuations\nComparative analysis between conditions is essential for understanding molecular mechanisms\nEquilibration time must be considered when analyzing MD trajectories\nVisual and statistical analysis complement each other in MD interpretation"
-  },
-  {
-    "objectID": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#expected-outcomes",
-    "href": "practicals/PRACTICALS-Structure_Prediction /PRACTICAL_MD_ANALYSIS.html#expected-outcomes",
-    "title": "Molecular Dynamics Simulation Analysis",
-    "section": "7.3 Expected Outcomes",
-    "text": "7.3 Expected Outcomes\nBased on the biological role of rapamycin, you should observe:\n\nLower RMSD values in the presence of rapamycin\nMore stable complex with molecular glue\nReduced conformational fluctuations when rapamycin bridges the proteins\n\nThese results support the mechanism by which rapamycin acts as a molecular glue to stabilize protein-protein interactions and modulate cellular signaling pathways."
+    "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#sequence-preparation-for-further-analysis",
+    "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html#sequence-preparation-for-further-analysis",
+    "title": "Protein Complex Structure Analysis with YASARA",
+    "section": "3.3 Sequence preparation for further analysis",
+    "text": "3.3 Sequence preparation for further analysis\nObtain sequences for downstream analysis:\n\nOpen your internet browser and go to www.rcsb.org\nSearch for 1BRS\nClick on ‘Download Files’ and choose ‘FASTA Sequence’\nOpen the downloaded FASTA file using a text editor (notepad on Windows)\nYou can see the sequences of both proteins that will be used in the next practical\nscp the FASTA file to the AF folder on Vera for the next practical"
   }
 ]

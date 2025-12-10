@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -286,11 +321,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-structure--modeling">    
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.html">
  <span class="dropdown-text">Protein Complex Structure Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.html">
  <span class="dropdown-text">AlphaFold3 Prediction</span></a>
   </li>  
         <li>
@@ -349,32 +384,9 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#mutation-to-alanine-conservative" id="toc-mutation-to-alanine-conservative" class="nav-link" data-scroll-target="#mutation-to-alanine-conservative"><span class="header-section-number">3.1</span> Mutation to Alanine (conservative)</a></li>
   <li><a href="#mutation-to-arginine-charge-reversal" id="toc-mutation-to-arginine-charge-reversal" class="nav-link" data-scroll-target="#mutation-to-arginine-charge-reversal"><span class="header-section-number">3.2</span> Mutation to Arginine (charge reversal)</a></li>
+  <li><a href="#structural-comparison-with-crystal-structure" id="toc-structural-comparison-with-crystal-structure" class="nav-link" data-scroll-target="#structural-comparison-with-crystal-structure"><span class="header-section-number">3.3</span> Structural comparison with crystal structure</a></li>
   </ul></li>
-  <li><a href="#results-analysis" id="toc-results-analysis" class="nav-link" data-scroll-target="#results-analysis"><span class="header-section-number">4</span> Results Analysis</a>
-  <ul class="collapse">
-  <li><a href="#confidence-metrics-comparison" id="toc-confidence-metrics-comparison" class="nav-link" data-scroll-target="#confidence-metrics-comparison"><span class="header-section-number">4.1</span> Confidence metrics comparison</a></li>
-  <li><a href="#structural-comparison-with-crystal-structure" id="toc-structural-comparison-with-crystal-structure" class="nav-link" data-scroll-target="#structural-comparison-with-crystal-structure"><span class="header-section-number">4.2</span> Structural comparison with crystal structure</a></li>
-  </ul></li>
-  <li><a href="#interpretation-and-discussion" id="toc-interpretation-and-discussion" class="nav-link" data-scroll-target="#interpretation-and-discussion"><span class="header-section-number">5</span> Interpretation and Discussion</a>
-  <ul class="collapse">
-  <li><a href="#understanding-the-results" id="toc-understanding-the-results" class="nav-link" data-scroll-target="#understanding-the-results"><span class="header-section-number">5.1</span> Understanding the results</a>
-  <ul class="collapse">
-  <li><a href="#alanine-mutations-d39a-d35a" id="toc-alanine-mutations-d39a-d35a" class="nav-link" data-scroll-target="#alanine-mutations-d39a-d35a"><span class="header-section-number">5.1.1</span> Alanine mutations (D39A-D35A):</a></li>
-  <li><a href="#arginine-mutations-d39r-d35r" id="toc-arginine-mutations-d39r-d35r" class="nav-link" data-scroll-target="#arginine-mutations-d39r-d35r"><span class="header-section-number">5.1.2</span> Arginine mutations (D39R-D35R):</a></li>
-  </ul></li>
-  <li><a href="#critical-analysis-questions" id="toc-critical-analysis-questions" class="nav-link" data-scroll-target="#critical-analysis-questions"><span class="header-section-number">5.2</span> Critical analysis questions</a>
-  <ul class="collapse">
-  <li><a href="#af3-performance-assessment" id="toc-af3-performance-assessment" class="nav-link" data-scroll-target="#af3-performance-assessment"><span class="header-section-number">5.2.1</span> AF3 Performance Assessment</a></li>
-  <li><a href="#structural-biology-insights" id="toc-structural-biology-insights" class="nav-link" data-scroll-target="#structural-biology-insights"><span class="header-section-number">5.2.2</span> Structural Biology Insights</a></li>
-  <li><a href="#methodological-considerations" id="toc-methodological-considerations" class="nav-link" data-scroll-target="#methodological-considerations"><span class="header-section-number">5.2.3</span> Methodological Considerations</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#advanced-analysis-optional" id="toc-advanced-analysis-optional" class="nav-link" data-scroll-target="#advanced-analysis-optional"><span class="header-section-number">6</span> Advanced Analysis (Optional)</a>
-  <ul class="collapse">
-  <li><a href="#detailed-structural-comparison" id="toc-detailed-structural-comparison" class="nav-link" data-scroll-target="#detailed-structural-comparison"><span class="header-section-number">6.1</span> Detailed structural comparison</a></li>
-  <li><a href="#additional-mutations" id="toc-additional-mutations" class="nav-link" data-scroll-target="#additional-mutations"><span class="header-section-number">6.2</span> Additional mutations</a></li>
-  <li><a href="#biological-significance" id="toc-biological-significance" class="nav-link" data-scroll-target="#biological-significance"><span class="header-section-number">6.3</span> Biological Significance</a></li>
-  </ul></li>
+  <li><a href="#what-to-submit" id="toc-what-to-submit" class="nav-link" data-scroll-target="#what-to-submit"><span class="header-section-number">4</span> What to submit</a></li>
   </ul>
 </nav>
     </div>
@@ -416,8 +428,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>In this practical, we will apply AI-based protein complex structure prediction using AlphaFold3 (AF3). You will learn about the capabilities of AF3 in predicting protein complexes from wild-type sequences and the effects of mutations on complex formation.</p>
-<p>Building on the previous practical where you analyzed the crystal structure of the Barnase-Barstar complex and identified key interacting residues (ASP39 and ASP35), you will now use AF3 to predict how mutations to these critical residues affect complex stability and formation.</p>
+<p>In this practical we continue working on the Barnase-Barstar protein complex (PDBid: 1BRS) from <em>Bacillus amyloliquefaciens</em>. This time, we will use AlphaFold3 (AF3) to predict the structure of the complex from sequence alone, and assess how well AF3 can predict the effects of specific mutations on the complex structure.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -461,26 +472,16 @@ Learning Objectives
 <h1 data-number="2"><span class="header-section-number">2</span> AlphaFold3 Prediction Setup</h1>
 <section id="preparing-sequences" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="preparing-sequences"><span class="header-section-number">2.1</span> Preparing sequences</h2>
-<p>You should have obtained the FASTA sequences from the previous practical. If not:</p>
-<ol type="1">
-<li><strong>Get the sequences</strong>:
-<ul>
-<li>Open www.rcsb.org and search for 1BRS</li>
-<li>Click on ‘Download Files’ and choose ‘FASTA Sequence’</li>
-<li>Open the downloaded FASTA file with a text editor</li>
-<li>You’ll see sequences for both Barnase and Barstar</li>
-</ul></li>
-</ol>
+<p>You should have obtained the FASTA sequences from the previous practical. If not, go back and do so now.</p>
 </section>
 <section id="wild-type-complex-prediction" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="wild-type-complex-prediction"><span class="header-section-number">2.2</span> Wild-type complex prediction</h2>
-<ol start="2" type="1">
-<li><strong>Access AlphaFold3 server</strong>:
+<p><strong>Access AlphaFold3 server</strong>:</p>
 <ul>
 <li>Navigate to https://alphafoldserver.com</li>
 <li>Log in with your Gmail account</li>
-</ul></li>
-<li><strong>Submit wild-type prediction</strong>:
+</ul>
+<p><strong>Submit wild-type prediction</strong>:</p>
 <ul>
 <li>Enter the WT sequence of <strong>Barstar</strong> (first protein)</li>
 <li>Add entity as “protein”</li>
@@ -489,8 +490,7 @@ Learning Objectives
 <li>Click “Continue and preview job”</li>
 <li>Give a name to the job: <code>wtBarnase-wtBarstar</code></li>
 <li>Submit the job</li>
-</ul></li>
-</ol>
+</ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -501,23 +501,34 @@ Processing time
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>AF3 jobs can take several hours to complete. You may need to check back later or use pre-computed results if available.</p>
+<p>AF3 jobs can take several hours to complete. If the server is busy, it may take a very long, use the precomputed results available on Vera then instead.</p>
 </div>
 </div>
-<ol start="4" type="1">
-<li><strong>Download results</strong>:
-<ul>
-<li>Once completed, click on the job</li>
-<li>Note the confidence metrics:
+<p><strong>Download results</strong>: - Once completed, click on the job</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note the confidence metrics:</p>
 <ul>
 <li><strong>pTM (global metric)</strong>: Confidence in individual protein structures</li>
 <li><strong>ipTM (interface metric)</strong>: Confidence in protein-protein interface</li>
-</ul></li>
+</ul>
+</div>
+</div>
+<ul>
 <li>Download results by clicking “Download”</li>
 <li>Rename the file to <code>wtBarnase_wtBarstar.zip</code></li>
-<li>Extract: <code>unzip wtBarnase_wtBarstar.zip -d wtBarnase_wtBarstar</code></li>
-</ul></li>
-</ol>
+</ul>
+<p>Extract on the cluster:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unzip the results</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> wtBarnase_wtBarstar.zip <span class="at">-d</span> wtBarnase_wtBarstar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 </section>
@@ -526,105 +537,54 @@ Processing time
 <p>Based on the previous structural analysis, we identified that ASP39 and ASP35 of Barstar are critical for binding. We’ll test two different mutation scenarios:</p>
 <section id="mutation-to-alanine-conservative" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="mutation-to-alanine-conservative"><span class="header-section-number">3.1</span> Mutation to Alanine (conservative)</h2>
-<ol start="5" type="1">
-<li><strong>Prepare D39A-D35A mutant sequences</strong>:
+<p><strong>Prepare D39A-D35A mutant sequences</strong>:</p>
 <ul>
 <li>Take the Barstar sequence from the FASTA file</li>
 <li>Find position 39 (ASP/D) and replace with Alanine (A)</li>
 <li>Find position 35 (ASP/D) and replace with Alanine (A)</li>
 <li>Keep Barnase sequence unchanged</li>
-</ul></li>
-<li><strong>Submit D39A-D35A prediction</strong>:
+</ul>
+<p><strong>Submit D39A-D35A prediction</strong>:</p>
 <ul>
 <li>Enter the mutated Barstar sequence</li>
 <li>Enter the WT Barnase sequence</li>
 <li>Job name: <code>wtBarnase_D39A-D35ABarstar</code></li>
 <li>Submit and download results when complete</li>
-</ul></li>
-</ol>
+</ul>
 </section>
 <section id="mutation-to-arginine-charge-reversal" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="mutation-to-arginine-charge-reversal"><span class="header-section-number">3.2</span> Mutation to Arginine (charge reversal)</h2>
-<ol start="7" type="1">
-<li><strong>Prepare D39R-D35R mutant sequences</strong>:
+<p><strong>Prepare D39R-D35R mutant sequences</strong>:</p>
 <ul>
 <li>Take the Barstar sequence from the FASTA file</li>
 <li>Find position 39 (ASP/D) and replace with Arginine (R)</li>
 <li>Find position 35 (ASP/D) and replace with Arginine (R)</li>
 <li>Keep Barnase sequence unchanged</li>
-</ul></li>
-<li><strong>Submit D39R-D35R prediction</strong>:
+</ul>
+<p><strong>Submit D39R-D35R prediction</strong>:</p>
 <ul>
 <li>Enter the mutated Barstar sequence</li>
 <li>Enter the WT Barnase sequence</li>
 <li>Job name: <code>wtBarnase_D39R-D35RBarstar</code></li>
 <li>Submit and download results when complete</li>
-</ul></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="results-analysis" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Results Analysis</h1>
-<section id="confidence-metrics-comparison" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="confidence-metrics-comparison"><span class="header-section-number">4.1</span> Confidence metrics comparison</h2>
-<ol start="9" type="1">
-<li><strong>Compare AF3 confidence scores</strong>:</li>
-</ol>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Complex</th>
-<th>ipTM</th>
-<th>pTM</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>WT</td>
-<td>0.93</td>
-<td>0.94</td>
-</tr>
-<tr class="even">
-<td>D39A-D35A</td>
-<td>0.89</td>
-<td>0.92</td>
-</tr>
-<tr class="odd">
-<td>D39R-D35R</td>
-<td>0.25</td>
-<td>0.62</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-note callout-titled">
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpreting metrics
+Q2 Compare the predicted complexes for WT vs.&nbsp;mutated sequences, how do the pTM and ipTM values change for each mutation?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li><strong>pTM</strong>: Confidence in overall fold (0-1 scale, &gt;0.8 is high confidence)</li>
-<li><strong>ipTM</strong>: Confidence in interface prediction (0-1 scale, &gt;0.8 is high confidence)</li>
-<li>Lower scores indicate less confidence in the predicted structure</li>
-</ul>
+
 </div>
 </div>
 </section>
-<section id="structural-comparison-with-crystal-structure" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="structural-comparison-with-crystal-structure"><span class="header-section-number">4.2</span> Structural comparison with crystal structure</h2>
-<ol start="10" type="1">
-<li><strong>Prepare YASARA for comparison</strong>:
-<ul>
-<li>Clean up YASARA screen: File &gt; New &gt; Yes</li>
-<li>Open the prepared crystal structure: <code>1BRS_complex.pdb</code></li>
-<li>Open the AF3 predicted WT structure: <code>model_0.cif</code> (from wtBarnase_wtBarstar folder)</li>
-</ul></li>
-</ol>
+<section id="structural-comparison-with-crystal-structure" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="structural-comparison-with-crystal-structure"><span class="header-section-number">3.3</span> Structural comparison with crystal structure</h2>
+<p><strong>Prepare YASARA for comparison</strong>: Clean up the YASARA’s screen (File &gt; New &gt; Yes) and open the prepared crystal structure from step 9 (1BRS_complex.pdb). Also open the “…model_0.cif” structure predicted by AF3 for the WT sequences (drag and drop). You can find it within the folder “wtBarnase_wtBarstar” from step18</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -636,29 +596,37 @@ AF3 output format
 </div>
 <div class="callout-body-container callout-body">
 <p>AF3 predicts 5 models (model_0 to model_4) where model_0 always has the highest-ranking confidence value.</p>
+<p>For better visualization, it’s better to color each molecule in each complex differently.</p>
 </div>
 </div>
-<ol start="11" type="1">
-<li><strong>Superpose predicted on crystal structure</strong>:
+<p><strong>Superpose predicted on crystal structure</strong>: Now you have two protein complexes on YASARA, crystal structure and AF3 predicted for WT sequence. Now we superpose the predicted structure on crystal structure.</p>
 <ul>
 <li>Analyze &gt; Superpose &gt; Objects</li>
 <li>Select “fold_wtbaranase…” (predicted structure) from Sequence panel &gt; OK</li>
 <li>Select “1BRS_complex…” (crystal structure) from Sequence panel &gt; OK</li>
 <li>In “Set parameters” window: Uncheck all boxes except “Residue name” and “Residue number” &gt; OK</li>
-</ul></li>
-<li><strong>Calculate RMSD for Barstar</strong>:
+</ul>
+<p><strong>Calculate RMSD for Barstar</strong>: Then we calculate the RMSD value between Barstar proteins by</p>
 <ul>
 <li>Analyze &gt; RMSD of &gt; Molecules</li>
 <li>Choose “D” (Barstar of crystal structure) from Sequence panel &gt; OK</li>
 <li>Choose “A” (predicted Barstar) &gt; OK &gt; OK</li>
 <li>RMSD value will be shown in the command window</li>
-</ul></li>
-<li><strong>Repeat for mutant structures</strong>:
+</ul>
+<p><strong>Repeat for mutant structures</strong>:</p>
 <ul>
-<li>Clean up YASARA screen and repeat steps 10-12 for both mutant predictions</li>
-<li>Complete the RMSD comparison table:</li>
-</ul></li>
-</ol>
+<li>Clean up YASARA screen and repeat the superposition and RMSD calculation for both mutant predictions</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q3 Complete the RMSD comparison table and place it in your report:
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -669,135 +637,58 @@ AF3 output format
 <tbody>
 <tr class="odd">
 <td>Crystal vs WT</td>
-<td>2.76</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>Crystal vs D39A-D35A</td>
-<td>2.90</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>Crystal vs D39R-D35R</td>
-<td>9.42</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<hr>
-</section>
-</section>
-<section id="interpretation-and-discussion" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Interpretation and Discussion</h1>
-<section id="understanding-the-results" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="understanding-the-results"><span class="header-section-number">5.1</span> Understanding the results</h2>
-<ol start="14" type="1">
-<li><strong>Analysis of AF3 performance</strong>:</li>
-</ol>
-<p>The results reveal important insights about AF3’s capabilities and limitations:</p>
-<section id="alanine-mutations-d39a-d35a" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="alanine-mutations-d39a-d35a"><span class="header-section-number">5.1.1</span> Alanine mutations (D39A-D35A):</h3>
-<ul>
-<li><strong>Small decrease</strong> in confidence metrics (ipTM: 0.93→0.89)</li>
-<li><strong>Minimal structural change</strong> (RMSD: 2.76→2.90 Å)</li>
-<li><strong>AF3 prediction</strong>: Minor effect on complex formation</li>
-<li><strong>Experimental reality</strong>: These mutations drastically reduce binding affinity</li>
-</ul>
-</section>
-<section id="arginine-mutations-d39r-d35r" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="arginine-mutations-d39r-d35r"><span class="header-section-number">5.1.2</span> Arginine mutations (D39R-D35R):</h3>
-<ul>
-<li><strong>Dramatic decrease</strong> in confidence metrics (ipTM: 0.93→0.25)</li>
-<li><strong>Large structural deviation</strong> (RMSD: 2.76→9.42 Å)</li>
-<li><strong>AF3 prediction</strong>: Major disruption of complex formation</li>
-<li><strong>Experimental expectation</strong>: Strong electrostatic repulsion would indeed disrupt binding</li>
-</ul>
-</section>
-</section>
-<section id="critical-analysis-questions" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="critical-analysis-questions"><span class="header-section-number">5.2</span> Critical analysis questions</h2>
-<p>Answer the following questions based on your results:</p>
-<section id="af3-performance-assessment" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="af3-performance-assessment"><span class="header-section-number">5.2.1</span> AF3 Performance Assessment</h3>
-<ol type="1">
-<li><p><strong>How well does AF3 predict the wild-type complex?</strong> Compare the confidence metrics and RMSD with the crystal structure.</p></li>
-<li><p><strong>What do the confidence metrics tell us</strong> about AF3’s certainty in its predictions for each variant?</p></li>
-<li><p><strong>Why might AF3 fail to capture the effect</strong> of alanine mutations but successfully predict the impact of arginine mutations?</p></li>
-</ol>
-</section>
-<section id="structural-biology-insights" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="structural-biology-insights"><span class="header-section-number">5.2.2</span> Structural Biology Insights</h3>
-<ol start="4" type="1">
-<li><strong>From a chemical perspective</strong>, explain why:
-<ul>
-<li>D39A and D35A mutations might be more disruptive experimentally than AF3 predicts</li>
-<li>D39R and D35R mutations show large effects in both experiments and AF3 predictions</li>
-</ul></li>
-<li><strong>What does this tell us about</strong> the different types of interactions that stabilize protein complexes?</li>
-</ol>
-</section>
-<section id="methodological-considerations" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="methodological-considerations"><span class="header-section-number">5.2.3</span> Methodological Considerations</h3>
-<ol start="6" type="1">
-<li><p><strong>What are the limitations</strong> of using AF3 for mutational studies? When might it be reliable vs unreliable?</p></li>
-<li><p><strong>How could you validate</strong> these computational predictions experimentally?</p></li>
-<li><p><strong>What other computational approaches</strong> could complement AF3 for studying mutation effects?</p></li>
-</ol>
-<hr>
-</section>
-</section>
-</section>
-<section id="advanced-analysis-optional" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Advanced Analysis (Optional)</h1>
-<p>For students interested in deeper analysis:</p>
-<section id="detailed-structural-comparison" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="detailed-structural-comparison"><span class="header-section-number">6.1</span> Detailed structural comparison</h2>
-<ul>
-<li>Analyze specific interface regions in detail</li>
-<li>Compare hydrogen bonding patterns between structures</li>
-<li>Examine conformational changes upon mutation</li>
-</ul>
-</section>
-<section id="additional-mutations" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="additional-mutations"><span class="header-section-number">6.2</span> Additional mutations</h2>
-<ul>
-<li>Predict effects of single mutations (D39A only, D35A only)</li>
-<li>Test conservative mutations (D39E, D35E)</li>
-<li>Explore mutations in Barnase instead of Barstar</li>
-</ul>
-<hr>
-<div class="callout callout-style-default callout-note callout-titled">
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Key Takeaways
+Q4 What do the AF3 metrics and RMSD values show?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li><strong>AF3 excels</strong> at predicting wild-type protein complex structures with high confidence</li>
-<li><strong>Mutation effects</strong> are not always accurately captured, especially for subtle changes</li>
-<li><strong>Charge-reversal mutations</strong> (D→R) are better predicted than loss-of-function mutations (D→A)</li>
-<li><strong>Confidence metrics</strong> (pTM, ipTM) provide valuable information about prediction reliability</li>
-<li><strong>Experimental validation</strong> remains essential for understanding mutation effects</li>
-<li><strong>AI predictions</strong> should be interpreted alongside structural and chemical principles</li>
-</ul>
+
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q5 How do you interpret this finding? Why does the mutation to Arginine have that significant effect on the predicted structure but mutation to Alanine does not?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
 </div>
 </div>
 <hr>
 </section>
-<section id="biological-significance" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="biological-significance"><span class="header-section-number">6.3</span> Biological Significance</h2>
-<p>This analysis demonstrates that:</p>
-<ol type="1">
-<li><p><strong>Protein-protein interfaces</strong> rely on multiple, subtle interactions that may not be fully captured by current AI models</p></li>
-<li><p><strong>Electrostatic interactions</strong> are crucial for the Barnase-Barstar interface and are better predicted than hydrophobic or entropic effects</p></li>
-<li><p><strong>AF3 represents a powerful tool</strong> for structural biology but has limitations that must be understood</p></li>
-<li><p><strong>Computational and experimental approaches</strong> are complementary for understanding protein function</p></li>
-</ol>
-<p>The Barnase-Barstar system serves as an excellent model for understanding both the capabilities and limitations of AI-based structure prediction in the context of protein evolution and design.</p>
-
-
 </section>
+<section id="what-to-submit" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> What to submit</h1>
+<p>Continue on the report from the previous practical and add the following sections:</p>
+<ul>
+<li>Answers to Q2, Q3, Q4, and Q5 (count continues from previous practical)</li>
+<li>Tables and images as needed to support your answers</li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->

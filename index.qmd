@@ -35,9 +35,9 @@ This repository contains practical exercises for the BIO512 course at University
 ### 🧫 Protein Structure and Modeling
 
 - Structure analysis (YASARA):
-  - [Practical: Protein Complex Structure Analysis 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd)
+  - [Practical: Protein Complex Structure Analysis](practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd)
 - Structure prediction:
-  - [Practical: AlphaFold3 Prediction 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd)
+  - [Practical: AlphaFold3 Prediction](practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.qmd)
 - Docking and MD:
   - [Practical: Molecular Docking 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd)
   - [Practical: MD Analysis 🔒](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd)
