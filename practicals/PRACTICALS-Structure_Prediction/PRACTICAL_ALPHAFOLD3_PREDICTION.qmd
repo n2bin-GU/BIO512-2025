@@ -153,9 +153,9 @@ Now you have two protein complexes on YASARA, crystal structure and AF3 predicte
 **Calculate RMSD for Barstar**:
 Then we calculate the RMSD value between Barstar proteins by
 
+- Color the molecules differently to find which ones overlap
 - Analyze > RMSD of > Molecules
-- Choose "D" (Barstar of crystal structure) from Sequence panel > OK
-- Choose "A" (predicted Barstar) > OK > OK
+- Choose the molecules in Sequences that are superposed (for the crystal and predicted structures) > OK > OK
 - RMSD value will be shown in the command window
 
 **Repeat for mutant structures**:
