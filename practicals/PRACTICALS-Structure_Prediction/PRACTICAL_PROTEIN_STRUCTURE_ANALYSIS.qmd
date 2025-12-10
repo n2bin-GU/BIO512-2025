@@ -1,0 +1,180 @@
+---
+title: "Protein Complex Structure Analysis with YASARA"
+subtitle: "BIO512 Structural Biology - Analyzing Barnase-Barstar Interactions"
+author: "Sayyed Jalil Mahdizadeh, Aysan Salemi"
+date: November 10, 2025
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+---
+
+# Introduction
+
+The goal of this practical is to apply AI-based protein complex structure prediction using AF3. You will learn the capability of AF3 in correctly predicting the protein complexes from either WT sequence or upon mutations. 
+
+The protein complex structure used is a classic model of protein–protein recognition “Barnase-Barstar” from Bacillus amyloliquefaciens organism (PDBid: 1BRS). Barnase is a small extracellular ribonuclease from that degrades RNA. On its own it’s toxic to the producing cell. Barstar is an intracellular protein inhibitor of Barnase. It binds Barnase extremely tightly and blocks the RNase active site, protecting the bacterium until Barnase is secreted.
+
+::: {.callout-important}
+## Setup Instructions
+```bash
+# Create a new folder for this practical
+mkdir -p /cephyr/NOBACKUP/groups/n2bin-gu/students/<y/n>/BIO512/AF
+
+```
+
+Open a new desktop session on Vera via OnDemand, then do the following:
+
+1. Open your symlinked folder to the BIO512 group directory (i.e. /cephyr/NOBACKUP/groups/n2bin-gu/) using the file manager
+2. Find the install_yasara executable (in ./BIO512/jalil) and execute it (you might need to wait a moment)
+3. Once YASARA is open, go Options > Working directory > navigate and find your ‘AF’ folder > OK to set your working directory
+
+We also recommend using jupyter lab for the notebook submission, since base64 encoding of images is a simple drag and drop operation in jupyter lab. To launch jupyter lab, please do the following (locally ofc):
+
+```bash
+# Launch the BIO512_v1 env 
+conda activate BIO512_v1
+
+# Launch jupyter lab
+jupyter lab 
+```
+
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Prepare protein complex structures for analysis using YASARA
+- Visualize and analyze protein-protein interactions
+- Identify hydrogen bonds at protein interfaces
+- Determine key residues involved in protein-protein recognition
+- Understand the structural basis of protein binding specificity
+
+:::
+
+---
+
+# Structure Preparation and Setup
+
+## Setting up the structure
+
+**Download the crystal structure**:
+
+- File > Load > PDB file from Internet > 1BRS
+- You can see three identical Barnase-Barstar complexes where we need only one
+
+:::{.callout-tip}
+If you want to have less disruptive backround, you can go to View > Color > Background color and change it to white or black for better visualization.
+:::
+
+**Analyze the scene contents**:
+
+In the right-hand panel, you can see a single object named 1BRS. Click on it to expand. There are 12 molecules under 1BRS:
+   
+- **Mol A, B, C** = Barnase (ribonuclease)
+- **Mol D, E, F** = Barstar (inhibitor)
+- **Mol A, B, C, D, E, F (in red)** = water molecules
+
+:::{.callout-tip}
+Working with structure (with apple mouse)
+
+- Zoom in/Zoom out: Hold right click
+- Turning the Structure: Hold left click
+:::
+
+## Structure cleaning
+
+**Remove redundant molecules**:
+
+   - Remove water molecules (highlighted in red) by right-clicking and choosing "Delete"
+   - Remove Mol B, C, E, F (right-click and choose "Delete")
+   - Now you have only one Barnase (Mol A)-Barstar (Mol D) complex
+
+:::{.callout-tip}
+You can change visualization by clicking on yes/no in the Vis column in right-hand panel on the screen. You can change the color of Mol A and Mol D by right click on them in right-hand panel.
+
+Navigate the mouse to the bottom of the screen and you can see a tab with residues for the structures, and you can select each residue. Also by right-click on the residue you can change the residue color.
+:::
+
+**Center the structure**:
+
+- Right-click on the object (1brs) from the right-hand panel and choose 'Center'
+
+**Add missing hydrogen atoms**:
+
+- Edit > Clean > All
+
+## Force field and energy minimization
+
+**Select the force field**:
+
+- Simulation > Force field > AMBER 14 > check the box next to 'use PME…' > OK
+
+**Minimize the energy**:
+
+- Options > Energy minimization
+- After minimization, from the right-hand panel, right-click on SimCell and Delete it
+
+**Save the prepared complex**:
+
+- File > Save as > PDB file > select 1BRS from both Sequence and Name panels > OK > give a name (1BRS_complex.pdb)
+
+:::{.callout-tip}
+For better visualization, color Mol A (grey) and Mol D (magenta) by right-click in right-hand panel on the screen.
+:::
+
+---
+
+# Protein-Protein Interface Analysis
+
+## Visualization setup
+
+**Optimize visualization**:
+
+- View > Hide atoms > Aliphatic hydrogens
+
+## Hydrogen bond analysis
+
+12. **Visualize protein-protein interactions**:
+
+For this step there are two options to visualize hydrogen bonds between Barnase (Mol A) and Barstar (Mol D):
+
+View>Show interactions>Hydrogen Bonds of>Molecules
+
+Or
+
+Open the Window>Console>Open Now (or press space bar on your keyboard) > enter the command “ShowHBoAtom Mol A with distance<2.6 from Mol D” Or “ShowHBoAtom Mol D with distance<2.6 from Mol A”
+
+Now you can see the hydrogen bond between two proteins shown in yellow dashed lines.
+
+:::{.callout-important}
+## Q1 Examine which residues of Barstar (Mol D) form the most hydrogen bonds with Barnase (Mol A)?
+
+- Take a closer look at the interface between the two proteins
+- Focus on regions with multiple hydrogen bonds
+- Note the types of residues involved in the interactions
+:::
+    
+## Sequence preparation for further analysis
+
+**Obtain sequences for downstream analysis**:
+
+- Open your internet browser and go to www.rcsb.org
+- Search for 1BRS
+- Click on 'Download Files' and choose 'FASTA Sequence'
+- Open the downloaded FASTA file using a text editor (notepad on Windows)
+- You can see the sequences of both proteins that will be used in the next practical
+- scp the FASTA file to the AF folder on Vera for the next practical
+
+---
+
+# How to Submit Your Work
+
+- Submit answers to the questions in a jupyter notebook (question and answer in the same cell)
+- Include screenshots of relevant structures and analyses (you can use the snipping tool or any screenshot tool, then drag and drop the image into the jupyter notebook cell) 

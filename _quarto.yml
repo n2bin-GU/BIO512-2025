@@ -22,9 +22,9 @@ website:
       - text: "Structure & Modeling"
         menu:
           - text: "Protein Complex Structure Analysis"
-            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd"
+            href: "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd"
           - text: "AlphaFold3 Prediction"
-            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd"
+            href: "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.qmd"
           - text: "Molecular Docking"
             href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd"
           - text: "MD Analysis"

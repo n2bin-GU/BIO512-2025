@@ -1,0 +1,189 @@
+---
+title: "AI-Based Protein Complex Prediction with AlphaFold3"
+subtitle: "BIO512 Structural Biology - Predicting Mutation Effects on Protein Complexes"
+author: "Sayyed Jalil Mahdizadeh"
+date: November 10, 2025
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+---
+
+# Introduction
+
+In this practical we continue working on the Barnase-Barstar protein complex (PDBid: 1BRS) from *Bacillus amyloliquefaciens*. This time, we will use AlphaFold3 (AF3) to predict the structure of the complex from sequence alone, and assess how well AF3 can predict the effects of specific mutations on the complex structure.
+
+::: {.callout-important}
+## Prerequisites
+
+- Completed analysis of 1BRS crystal structure from previous practical
+- FASTA sequences of Barnase and Barstar from PDB
+- Gmail account for AlphaFold server access
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end you should be able to:
+
+- Use AlphaFold3 server for protein complex prediction
+- Interpret AF3 confidence metrics (pTM and ipTM)
+- Design and analyze mutational studies computationally
+- Compare predicted structures with experimental crystal structures
+- Understand limitations of AI-based structure prediction for mutations
+
+:::
+
+---
+
+# AlphaFold3 Prediction Setup
+
+## Preparing sequences
+
+You should have obtained the FASTA sequences from the previous practical. If not, go back and do so now.
+
+## Wild-type complex prediction
+
+**Access AlphaFold3 server**:
+
+- Navigate to https://alphafoldserver.com
+- Log in with your Gmail account
+
+**Submit wild-type prediction**:
+
+- Enter the WT sequence of **Barstar** (first protein)
+- Add entity as "protein"
+- Enter the WT sequence of **Barnase** (second protein)
+- Add entity as "protein"
+- Click "Continue and preview job"
+- Give a name to the job: `wtBarnase-wtBarstar`
+- Submit the job
+
+::: {.callout-note}
+## Processing time
+AF3 jobs can take several hours to complete. If the server is busy, it may take a very long, use the precomputed results available on Vera then instead.
+:::
+
+**Download results**:
+- Once completed, click on the job
+
+:::{ .callout-tip}
+Note the confidence metrics:
+
+- **pTM (global metric)**: Confidence in individual protein structures
+- **ipTM (interface metric)**: Confidence in protein-protein interface
+
+:::
+
+- Download results by clicking "Download"
+- Rename the file to `wtBarnase_wtBarstar.zip`
+   
+Extract on the cluster: 
+```bash
+# Unzip the results
+unzip wtBarnase_wtBarstar.zip -d wtBarnase_wtBarstar
+```
+
+---
+
+# Mutational Analysis
+
+Based on the previous structural analysis, we identified that ASP39 and ASP35 of Barstar are critical for binding. We'll test two different mutation scenarios:
+
+## Mutation to Alanine (conservative)
+
+**Prepare D39A-D35A mutant sequences**:
+
+- Take the Barstar sequence from the FASTA file
+- Find position 39 (ASP/D) and replace with Alanine (A)
+- Find position 35 (ASP/D) and replace with Alanine (A)
+- Keep Barnase sequence unchanged
+
+**Submit D39A-D35A prediction**:
+
+- Enter the mutated Barstar sequence
+- Enter the WT Barnase sequence
+- Job name: `wtBarnase_D39A-D35ABarstar`
+- Submit and download results when complete
+
+## Mutation to Arginine (charge reversal)
+
+**Prepare D39R-D35R mutant sequences**:
+
+- Take the Barstar sequence from the FASTA file
+- Find position 39 (ASP/D) and replace with Arginine (R)
+- Find position 35 (ASP/D) and replace with Arginine (R)
+- Keep Barnase sequence unchanged
+
+**Submit D39R-D35R prediction**:
+
+- Enter the mutated Barstar sequence
+- Enter the WT Barnase sequence
+- Job name: `wtBarnase_D39R-D35RBarstar`
+- Submit and download results when complete
+
+::::{.callout-important}
+## Q2 Compare the predicted complexes for WT vs. mutated sequences, how do the pTM and ipTM values change for each mutation?
+:::
+
+## Structural comparison with crystal structure
+
+**Prepare YASARA for comparison**:
+Clean up the YASARA’s screen (File > New > Yes) and open the prepared crystal structure from step 9 (1BRS_complex.pdb). Also open the “…model_0.cif” structure predicted by AF3 for the WT sequences (drag and drop). You can find it within the folder “wtBarnase_wtBarstar” from step18
+
+::: {.callout-tip}
+## AF3 output format
+AF3 predicts 5 models (model_0 to model_4) where model_0 always has the highest-ranking confidence value.
+
+For better visualization, it’s better to color each molecule in each complex differently.
+:::
+
+**Superpose predicted on crystal structure**:
+Now you have two protein complexes on YASARA, crystal structure and AF3 predicted for WT sequence. Now we superpose the predicted structure on crystal structure.
+
+- Analyze > Superpose > Objects
+- Select "fold_wtbaranase…" (predicted structure) from Sequence panel > OK
+- Select "1BRS_complex…" (crystal structure) from Sequence panel > OK
+- In "Set parameters" window: Uncheck all boxes except "Residue name" and "Residue number" > OK
+
+**Calculate RMSD for Barstar**:
+Then we calculate the RMSD value between Barstar proteins by
+
+- Analyze > RMSD of > Molecules
+- Choose "D" (Barstar of crystal structure) from Sequence panel > OK
+- Choose "A" (predicted Barstar) > OK > OK
+- RMSD value will be shown in the command window
+
+**Repeat for mutant structures**:
+
+- Clean up YASARA screen and repeat the superposition and RMSD calculation for both mutant predictions
+
+:::{.callout-important}
+## Q3 Complete the RMSD comparison table and place it in your report:
+
+| Comparison Pair      | RMSD (Å) |
+|----------------------|----------|
+| Crystal vs WT        |          |
+| Crystal vs D39A-D35A |          |
+| Crystal vs D39R-D35R |          |
+:::
+
+:::{.callout-important}
+## Q4 What do the AF3 metrics and RMSD values show?
+:::
+
+:::{.callout-important}
+## Q5 How do you interpret this finding? Why does the mutation to Arginine have that significant effect on the predicted structure but mutation to Alanine does not?
+:::
+
+---
+
+# What to submit
+Continue on the report from the previous practical and add the following sections:
+
+- Answers to Q2, Q3, Q4, and Q5 (count continues from previous practical)
+- Tables and images as needed to support your answers
