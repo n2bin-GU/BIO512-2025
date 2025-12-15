@@ -113,8 +113,8 @@ After Analysis is done, the results will be shown in an “html” file where yo
 ::: {.callout-important}
 ## Q4 What are the average RMSD values for the second half of each simulation (t > 15ns)?
 
-- With molecular glue: _____ Å
-- Without molecular glue: _____ Å
+- With molecular glue: _____ 
+- Without molecular glue: _____ 
 :::
 
 :::{.callout-important}

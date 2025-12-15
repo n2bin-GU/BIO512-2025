@@ -88,7 +88,7 @@
     "href": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html#generating-comparison-plots",
     "title": "Molecular Dynamics Simulation Analysis",
     "section": "5.1 Generating comparison plots",
-    "text": "5.1 Generating comparison plots\nCreate comparative visualization:\n\nPlot both RMSD curves on a single graph:\n\nLine 1: With molecular glue (rapamycin)\nLine 2: Without molecular glue\n\nUse different colors/styles to distinguish the two conditions\nInclude proper labels and legend\n\n\n\n\n\n\n\nQ4 What are the average RMSD values for the second half of each simulation (t &gt; 15ns)?\n\n\n\n\nWith molecular glue: _____ Å\nWithout molecular glue: _____ Å\n\n\n\n\n\n\n\n\n\nQ5 What differences do you observe in the RMSD profiles between the two simulations? (1-2 sentences)."
+    "text": "5.1 Generating comparison plots\nCreate comparative visualization:\n\nPlot both RMSD curves on a single graph:\n\nLine 1: With molecular glue (rapamycin)\nLine 2: Without molecular glue\n\nUse different colors/styles to distinguish the two conditions\nInclude proper labels and legend\n\n\n\n\n\n\n\nQ4 What are the average RMSD values for the second half of each simulation (t &gt; 15ns)?\n\n\n\n\nWith molecular glue: _____\nWithout molecular glue: _____\n\n\n\n\n\n\n\n\n\nQ5 What differences do you observe in the RMSD profiles between the two simulations? (1-2 sentences)."
   },
   {
     "objectID": "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html",
