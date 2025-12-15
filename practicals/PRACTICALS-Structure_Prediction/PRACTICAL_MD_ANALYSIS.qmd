@@ -16,38 +16,33 @@ format:
 
 # Introduction
 
-In this practical, we will analyze the results of molecular dynamics (MD) simulations to understand the impact of molecular glue on protein complex stability. Two separate MD simulations have been conducted (~30 ns each): one with the molecular glue (rapamycin) and one without it. MD simulations can reveal how the molecular glue affects the dynamic behavior and stability of the FKBP12/FRB protein complex over time.
-
-The key metric we will focus on is the Root Mean Square Deviation (RMSD) of the protein backbone, which indicates conformational changes compared to the initial structure. Lower RMSD values suggest higher structural stability.
-
-::: {.callout-note}
-## Learning Objectives
-By the end you should be able to:
-
-- Analyze MD simulation trajectories using YASARA
-- Calculate and interpret RMSD values over time
-- Compare protein stability with and without molecular glue
-- Generate and interpret time-series plots of structural parameters
-- Draw conclusions about molecular glue effects on protein complex dynamics
-
-:::
+In this practical, we will analyze the results of molecular dynamics (MD) simulations to understand the impact of molecular glue on protein complex stability. Two separate MD simulations have been conducted (~30 ns each): one with the molecular glue (rapamycin) and one without it. MD simulations can reveal how the molecular glue affects the dynamic behavior and stability of the protein complex over time.
 
 ---
 
 # MD Analysis with Molecular Glue
 
-## Setting up the analysis environment
-
-1. **Set the working directory**:
-   - Open YASARA
-   - Set the working directory to ` your/path/MD/with_glue`
-
-2. **Set the target**:
-   - Options > Macro & Movies > Set target > 3FAP_complex.sce
-
 ## Running the analysis
 
-3. **Execute MD analysis**:
+::: {.callout-note}
+These simulations take a long time to run, so we have pre-computed the trajectories for you. Your task is to analyze these trajectories to extract meaningful insights about the effect of the molecular glue.
+:::
+
+**Set the working directory**:
+
+   - Open YASARA
+   - Set the working directory to your copied MD folder (if you want to be extra specific `./MD/with_glue`)
+
+**Set the target**:
+
+   - Options > Macro & Movies > Set target > 3FAP_complex.sce
+
+::: {.callout-tip}
+You might need to swap back to file extension instead of "from underscore" when setting the target.
+:::
+
+**Execute MD analysis**:
+
    - Options > Macro & Movies > play macro > md_analyze.mcr > OK
    
 ::: {.callout-note}
@@ -56,38 +51,29 @@ This analysis takes some time to complete. The macro will process the entire tra
 :::
 
 ## Interpreting the results
+After Analysis is done, the results will be shown in an “html” file where you can see all different analysis metric with explanations for each. For this tutorial, the most important metric is “Solute RMSD from the starting structure” focused on proteins backbone (RMSDBb) which indicates the protein’s conformational deviation compared to the initial structure by time. The raw data of the plots are available in the file named “3FAP_complex_analysis.tab”
 
-4. **Review the HTML report**:
+**Review the HTML report**:
+
    - After analysis is complete, results will be shown in an HTML file
    - The report contains different analysis metrics with explanations
    - Focus on **"Solute RMSD from the starting structure"** for protein backbone (RMSDBb)
-
-5. **Understanding RMSD**:
-   - RMSDBb indicates the protein's conformational deviation compared to the initial structure over time
-   - Raw data is available in `3FAP_complex_analysis.tab`
-
----
 
 # Data Processing and Visualization
 
 ## Extracting data
 
-6. **Download the analysis file**:
-   - Download `3FAP_complex_analysis.tab` to your local computer (using WinSCP or similar)
+**Download the analysis file**:
 
-7. **Open in spreadsheet software**:
+   - Download `3FAP_complex_analysis.tab` to your local computer (ex. zip it and *scp* or similar)
+
+**Open in spreadsheet software**:
+
    - Open the file using MS Excel or similar software
    - Locate the RMSDBb column and time column
 
-## Creating time-series plots
+**Calculate average RMSD**:
 
-8. **Plot RMSD vs time**:
-   - Create a scatter plot or line graph with:
-     - X-axis: Time (ns)
-     - Y-axis: RMSDBb (Å)
-   - This shows how structural stability changes over the simulation
-
-9. **Calculate average RMSD**:
    - Calculate the average RMSD over the second half of the simulation (t > 15ns)
    - This represents the equilibrated state of the system
    - Record this value for comparison
@@ -98,15 +84,17 @@ This analysis takes some time to complete. The macro will process the entire tra
 
 ## Repeat analysis for control system
 
-10. **Set new working directory**:
-    - Change working directory to `MD/without_glue`
+**Set new working directory**:
 
-11. **Repeat steps 2-9**:
-    - Set target to the complex without glue
-    - Run md_analyze.mcr
-    - Download and process the analysis results
-    - Plot RMSD vs time
-    - Calculate average RMSD for t > 15ns
+   - Change working directory to `MD/without_glue`
+
+**Repeat steps 2-9**:
+
+   - Set target to the complex without glue
+   - Run md_analyze.mcr
+   - Download and process the analysis results
+   - Plot RMSD vs time
+   - Calculate average RMSD for t > 15ns
 
 ---
 
@@ -114,91 +102,28 @@ This analysis takes some time to complete. The macro will process the entire tra
 
 ## Generating comparison plots
 
-12. **Create comparative visualization**:
-    - Plot both RMSD curves on a single graph:
-      - Line 1: With molecular glue (rapamycin)
-      - Line 2: Without molecular glue
-    - Use different colors/styles to distinguish the lines
-    - Include proper labels and legend
+**Create comparative visualization**:
 
-## Statistical comparison
+   - Plot both RMSD curves on a single graph:
+     - Line 1: With molecular glue (rapamycin)
+     - Line 2: Without molecular glue
+   - Use different colors/styles to distinguish the two conditions
+   - Include proper labels and legend
 
-13. **Compare average RMSD values**:
-    - Compare the average RMSD values from step 9 for both systems
-    - The lower RMSD indicates higher structural stability
-    - Calculate the difference between the two conditions
+::: {.callout-important}
+## Q4 What are the average RMSD values for the second half of each simulation (t > 15ns)?
 
----
+- With molecular glue: _____ 
+- Without molecular glue: _____ 
+:::
 
-# Data Analysis Questions
-
-Answer the following questions based on your analysis:
-
-## Quantitative Analysis
-
-1. **What are the average RMSD values** for the second half of each simulation (t > 15ns)?
-   - With molecular glue: _____ Å
-   - Without molecular glue: _____ Å
-
-2. **What is the difference** in average RMSD between the two conditions? What does this tell you about the effect of rapamycin?
-
-3. **Describe the time evolution** of RMSD in both simulations. Do you see different patterns of equilibration?
-
-## Structural Interpretation
-
-4. **How does the molecular glue affect** the overall stability of the protein complex? Provide quantitative evidence.
-
-5. **What biological significance** does this stability difference have for mTOR signaling?
-
-6. **Are there any periods** during the simulation where the differences are most pronounced? What might this indicate?
-
-## Methodological Considerations
-
-7. **Why do we focus on the second half** of the simulation for calculating averages?
-
-8. **What other parameters** from the MD analysis might be relevant for understanding molecular glue effects?
-
-9. **What are the limitations** of this analysis approach? How might you improve it?
-
----
-
-# Advanced Analysis (Optional)
-
-For students interested in deeper analysis:
-
-## Additional metrics
-
-- **Hydrogen bond analysis**: Count hydrogen bonds between rapamycin and the proteins over time
-- **Contact analysis**: Monitor specific residue-residue contacts
-- **Flexibility analysis**: Calculate B-factors or root mean square fluctuation (RMSF)
-
-## Extended comparisons
-
-- **Different time windows**: Compare stability at different simulation periods
-- **Per-residue analysis**: Identify which protein regions are most affected by the molecular glue
-
----
-
-::: {.callout-note}
-## Key Takeaways
-
-- MD simulations reveal dynamic effects of molecular glues on protein complexes
-- RMSD analysis provides quantitative measures of structural stability
-- Rapamycin stabilizes the FKBP12/FRB complex by reducing conformational fluctuations
-- Comparative analysis between conditions is essential for understanding molecular mechanisms
-- Equilibration time must be considered when analyzing MD trajectories
-- Visual and statistical analysis complement each other in MD interpretation
-
+:::{.callout-important}
+## Q5 What differences do you observe in the RMSD profiles between the two simulations? (1-2 sentences).
 :::
 
 ---
 
-## Expected Outcomes
+# How to Submit Your Work
 
-Based on the biological role of rapamycin, you should observe:
-
-- **Lower RMSD values** in the presence of rapamycin
-- **More stable complex** with molecular glue
-- **Reduced conformational fluctuations** when rapamycin bridges the proteins
-
-These results support the mechanism by which rapamycin acts as a molecular glue to stabilize protein-protein interactions and modulate cellular signaling pathways.
+- Continue on the notebook from the previous practical 
+- Include screenshots of relevant structures and analyses (you can use the snipping tool or any screenshot tool, then drag and drop the image into the jupyter notebook cell) 

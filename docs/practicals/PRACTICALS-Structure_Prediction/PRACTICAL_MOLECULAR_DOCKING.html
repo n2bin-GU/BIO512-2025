@@ -329,11 +329,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">AlphaFold3 Prediction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.html">
  <span class="dropdown-text">Molecular Docking</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.html">
  <span class="dropdown-text">MD Analysis</span></a>
   </li>  
     </ul>
@@ -377,14 +377,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
   <li><a href="#structure-preparation" id="toc-structure-preparation" class="nav-link" data-scroll-target="#structure-preparation"><span class="header-section-number">2</span> Structure Preparation</a>
   <ul class="collapse">
-  <li><a href="#setting-up-yasara-workspace" id="toc-setting-up-yasara-workspace" class="nav-link" data-scroll-target="#setting-up-yasara-workspace"><span class="header-section-number">2.1</span> Setting up YASARA workspace</a></li>
-  <li><a href="#understanding-the-structure" id="toc-understanding-the-structure" class="nav-link" data-scroll-target="#understanding-the-structure"><span class="header-section-number">2.2</span> Understanding the structure</a></li>
-  <li><a href="#structure-cleaning-and-preparation" id="toc-structure-cleaning-and-preparation" class="nav-link" data-scroll-target="#structure-cleaning-and-preparation"><span class="header-section-number">2.3</span> Structure cleaning and preparation</a></li>
+  <li><a href="#setting-up-the-structure" id="toc-setting-up-the-structure" class="nav-link" data-scroll-target="#setting-up-the-structure"><span class="header-section-number">2.1</span> Setting up the structure</a></li>
+  <li><a href="#structure-cleaning-and-preparation" id="toc-structure-cleaning-and-preparation" class="nav-link" data-scroll-target="#structure-cleaning-and-preparation"><span class="header-section-number">2.2</span> Structure cleaning and preparation</a></li>
   </ul></li>
   <li><a href="#receptor-and-ligand-separation" id="toc-receptor-and-ligand-separation" class="nav-link" data-scroll-target="#receptor-and-ligand-separation"><span class="header-section-number">3</span> Receptor and Ligand Separation</a>
   <ul class="collapse">
-  <li><a href="#splitting-the-complex" id="toc-splitting-the-complex" class="nav-link" data-scroll-target="#splitting-the-complex"><span class="header-section-number">3.1</span> Splitting the complex</a></li>
-  <li><a href="#saving-individual-components" id="toc-saving-individual-components" class="nav-link" data-scroll-target="#saving-individual-components"><span class="header-section-number">3.2</span> Saving individual components</a></li>
+  <li><a href="#splitting-the-complex-and-saving-the-individual-components" id="toc-splitting-the-complex-and-saving-the-individual-components" class="nav-link" data-scroll-target="#splitting-the-complex-and-saving-the-individual-components"><span class="header-section-number">3.1</span> Splitting the complex and saving the individual components</a></li>
   </ul></li>
   <li><a href="#docking-simulation-setup" id="toc-docking-simulation-setup" class="nav-link" data-scroll-target="#docking-simulation-setup"><span class="header-section-number">4</span> Docking Simulation Setup</a>
   <ul class="collapse">
@@ -397,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#visual-inspection-of-docking-poses" id="toc-visual-inspection-of-docking-poses" class="nav-link" data-scroll-target="#visual-inspection-of-docking-poses"><span class="header-section-number">5.2</span> Visual inspection of docking poses</a></li>
   <li><a href="#quantitative-assessment" id="toc-quantitative-assessment" class="nav-link" data-scroll-target="#quantitative-assessment"><span class="header-section-number">5.3</span> Quantitative assessment</a></li>
   </ul></li>
-  <li><a href="#review-questions" id="toc-review-questions" class="nav-link" data-scroll-target="#review-questions"><span class="header-section-number">6</span> Review Questions</a></li>
+  <li><a href="#how-to-submit-your-work" id="toc-how-to-submit-your-work" class="nav-link" data-scroll-target="#how-to-submit-your-work"><span class="header-section-number">6</span> How to Submit Your Work</a></li>
   </ul>
 </nav>
     </div>
@@ -440,7 +438,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that “glues” them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.</p>
-<p>In this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.</p>
+<p>In this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and then we will compare the docking result with the co-crystallized pose.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -452,12 +450,19 @@ Create a new working directory
 </div>
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new folder for this practical</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ex.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/BIO512/MD_practicals</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># All input and output files will be placed in this directory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Also note that you need to download the materials from the Vera </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>your_vera_username<span class="op">&gt;</span>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/<span class="pp">*</span> ~/BIO512/MD_practicals/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /cephyr/NOBACKUP/groups/n2bin-gu/students/<span class="op">&lt;</span>y/n<span class="op">&gt;</span>/BIO512/MD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Open a new desktop session on Vera via OnDemand, then do the following:</p>
+<ol type="1">
+<li>Open your symlinked folder to the BIO512 group directory (i.e.&nbsp;/cephyr/NOBACKUP/groups/n2bin-gu/) using the file manager</li>
+<li>Find the directory with the install_yasara executable (in ./BIO512/jalil) and make a copy of the folder to your home directory and execute it (you might need to wait a moment)</li>
+<li>Once YASARA is open, go Options &gt; Working directory &gt; navigate and find your ‘MD’ folder &gt; OK to set your working directory</li>
+</ol>
+<p>We also recommend using jupyter lab for the notebook submission, since base64 encoding of images is a simple drag and drop operation in jupyter lab. To launch jupyter lab, please do the following (locally ofc):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Launch the BIO512_v1 env </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate BIO512_v1</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Launch jupyter lab</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -475,8 +480,6 @@ Learning Objectives
 <li>Prepare protein structures for molecular docking using YASARA</li>
 <li>Perform protein-ligand docking simulations</li>
 <li>Analyze docking results and binding energies</li>
-<li>Compare predicted poses with crystal structures using RMSD calculations</li>
-<li>Evaluate the success of docking predictions</li>
 </ul>
 </div>
 </div>
@@ -484,22 +487,12 @@ Learning Objectives
 </section>
 <section id="structure-preparation" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Structure Preparation</h1>
-<section id="setting-up-yasara-workspace" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="setting-up-yasara-workspace"><span class="header-section-number">2.1</span> Setting up YASARA workspace</h2>
-<ol type="1">
-<li><strong>Set the working directory</strong> (important):
-<ul>
-<li>Open YASARA</li>
-<li>Options &gt; Working directory &gt; navigate and find the ‘Docking’ folder &gt; OK</li>
-</ul></li>
-<li><strong>Download the structure</strong>:
+<section id="setting-up-the-structure" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="setting-up-the-structure"><span class="header-section-number">2.1</span> Setting up the structure</h2>
+<p><strong>Download the structure</strong>:</p>
 <ul>
 <li>File &gt; Load &gt; PDB file from Internet &gt; 3FAP</li>
-</ul></li>
-</ol>
-</section>
-<section id="understanding-the-structure" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="understanding-the-structure"><span class="header-section-number">2.2</span> Understanding the structure</h2>
+</ul>
 <p>In the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:</p>
 <ul>
 <li><strong>Mol A</strong> = chain A of the protein</li>
@@ -510,22 +503,20 @@ Learning Objectives
 <li><strong>Mol B (in red)</strong> = water molecules of chain B</li>
 </ul>
 </section>
-<section id="structure-cleaning-and-preparation" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="structure-cleaning-and-preparation"><span class="header-section-number">2.3</span> Structure cleaning and preparation</h2>
-<ol start="3" type="1">
-<li><strong>Remove water molecules</strong>:
+<section id="structure-cleaning-and-preparation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="structure-cleaning-and-preparation"><span class="header-section-number">2.2</span> Structure cleaning and preparation</h2>
+<p><strong>Remove water molecules</strong>:</p>
 <ul>
 <li>From the right-hand panel, right-click on both water entries and click ‘Delete’</li>
-</ul></li>
-<li><strong>Add missing hydrogen atoms</strong>:
+</ul>
+<p><strong>Add missing hydrogen atoms</strong>:</p>
 <ul>
 <li>Edit &gt; Clean &gt; All</li>
-</ul></li>
-<li><strong>Minimize the energy of the system</strong>:
+</ul>
+<p><strong>Minimize the energy of the system</strong>:</p>
 <ul>
 <li>Options &gt; Choose Experiment &gt; Energy minimization</li>
-</ul></li>
-</ol>
+</ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -536,52 +527,57 @@ Troubleshooting
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>On Linux, you may need to pause the minimization and continue to make it work: Options &gt; Control experiment &gt; Pause/Continue</p>
+<p>On Linux, you may need to pause the minimization if it hangs: Options &gt; Control experiment &gt; Pause/Continue</p>
 </div>
 </div>
-<ol start="6" type="1">
-<li><strong>Delete SimCell</strong>:
+<p><strong>Delete SimCell</strong>:</p>
 <ul>
 <li>From the right-hand panel, right-click on SimCell and Delete</li>
-</ul></li>
-<li><strong>Save the prepared complex</strong>:
+</ul>
+<p><strong>Save the prepared complex</strong>:</p>
 <ul>
 <li>File &gt; Save as &gt; PDB file &gt; select 3FAP from both Sequence and Name panels &gt; give a name (3FAP_complex.pdb)</li>
-</ul></li>
-</ol>
+</ul>
 <hr>
 </section>
 </section>
 <section id="receptor-and-ligand-separation" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Receptor and Ligand Separation</h1>
-<section id="splitting-the-complex" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="splitting-the-complex"><span class="header-section-number">3.1</span> Splitting the complex</h2>
-<ol start="8" type="1">
-<li><strong>Split receptor and ligand</strong>:
+<section id="splitting-the-complex-and-saving-the-individual-components" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="splitting-the-complex-and-saving-the-individual-components"><span class="header-section-number">3.1</span> Splitting the complex and saving the individual components</h2>
+<p><strong>Split receptor and ligand</strong>:</p>
 <ul>
 <li>From the right-side panel, right click on 3FAP &gt; split &gt; Split at selected molecules &gt; select the ligand (second A in the sequence panel)</li>
 <li>Now you can see two objects in the right-hand panel: receptor and ligand</li>
-</ul></li>
-<li><strong>Rename the objects</strong>:
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Visualization tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can change the color of the receptor and ligand by right-clicking on them in the right-hand panel. It should make it much easier to see the ligand.</p>
+</div>
+</div>
+<p><strong>Rename the objects</strong>:</p>
 <ul>
 <li>Right click on the receptor object &gt; Name &gt; enter “Receptor”</li>
 <li>Right click on the ligand object &gt; Name &gt; enter “Ligand”</li>
-</ul></li>
-</ol>
-</section>
-<section id="saving-individual-components" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="saving-individual-components"><span class="header-section-number">3.2</span> Saving individual components</h2>
-<ol start="10" type="1">
-<li><strong>Save the receptor</strong>:
+</ul>
+<p><strong>Save the receptor</strong>:</p>
+<pre><code>- File &gt; Save as &gt; PDB file &gt; select Receptor &gt; OK &gt; give a name (3FAP_receptor.pdb)</code></pre>
+<p><strong>Save the ligand</strong>:</p>
+<pre><code>- File &gt; Save as &gt; Other file format &gt; select Ligand from the Object panel &gt; find sdf-MDL Mol from the Format panel &gt; enter a name (3FAP_ligand) &gt; OK</code></pre>
+<p>At this point, you should have three files in your working directory:</p>
 <ul>
-<li>File &gt; Save as &gt; PDB file &gt; select Receptor &gt; OK &gt; give a name (3FAP_receptor.pdb)</li>
-</ul></li>
-<li><strong>Save the ligand</strong>:
-<ul>
-<li>File &gt; Save as &gt; Other file format &gt; select Ligand from the Object panel &gt; find sdf-MDL Mol from the Format panel &gt; enter a name (3FAP_ligand) &gt; OK</li>
-</ul></li>
-</ol>
-<p>At this point, you should have three files in your working directory: - 3FAP_complex.pdb - 3FAP_receptor.pdb - 3FAP_ligand.sdf</p>
+<li>3FAP_complex.pdb</li>
+<li>3FAP_receptor.pdb</li>
+<li>3FAP_ligand.sdf</li>
+</ul>
 <hr>
 </section>
 </section>
@@ -589,34 +585,33 @@ Troubleshooting
 <h1 data-number="4"><span class="header-section-number">4</span> Docking Simulation Setup</h1>
 <section id="defining-the-simulation-cell" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="defining-the-simulation-cell"><span class="header-section-number">4.1</span> Defining the simulation cell</h2>
-<ol start="12" type="1">
-<li><strong>Generate the simulation cell</strong>:
-<ul>
-<li>From the right-hand panel, right-click on Ligand object &gt; Select &gt; newly</li>
-<li>Then Simulation &gt; Define simulation cell &gt; around selected atoms</li>
-</ul></li>
-<li><strong>Remove the ligand</strong>:
-<ul>
-<li>Right-click on the Ligand object &gt; Delete</li>
-</ul></li>
-<li><strong>Save the receptor + simulation cell</strong>:
-<ul>
-<li>File &gt; Save as &gt; YASARA Scene &gt; give a name (3FAP_receptor.sce)</li>
-</ul></li>
-</ol>
+<p><strong>Generate the simulation cell</strong>:</p>
+<pre><code>- From the right-hand panel, right-click on Ligand object &gt; Select &gt; newly
+- Then Simulation &gt; Define simulation cell &gt; around selected atoms</code></pre>
+<p><strong>Remove the ligand</strong>:</p>
+<pre><code>- Right-click on the Ligand object &gt; Delete</code></pre>
+<p><strong>Save the receptor + simulation cell</strong>:</p>
+<pre><code>- File &gt; Save as &gt; YASARA Scene &gt; give a name (3FAP_receptor.sce)</code></pre>
 </section>
 <section id="running-the-docking-simulation" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="running-the-docking-simulation"><span class="header-section-number">4.2</span> Running the docking simulation</h2>
-<ol start="15" type="1">
-<li><strong>Set up docking</strong>:
-<ul>
-<li>Options &gt; Macro &amp; Movie &gt; set target &gt; select 3FAP_receptor.sce &gt; select ‘from underscore’ &gt; OK</li>
-</ul></li>
-<li><strong>Run docking</strong>:
-<ul>
-<li>Options &gt; Macro &amp; Movie &gt; Play macro &gt; find and click on dock_run.mcr &gt; OK</li>
-</ul></li>
-</ol>
+<p><strong>Set up docking</strong>:</p>
+<pre><code>- Options &gt; Macro &amp; Movie &gt; set target &gt; select 3FAP_receptor.sce &gt; select 'from underscore' &gt; OK</code></pre>
+<p><strong>Run docking</strong>:</p>
+<pre><code>- Options &gt; Macro &amp; Movie &gt; Play macro &gt; find and click on dock_run.mcr &gt; OK</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Finding the dock_run.mcr macro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The dock_run.mcr macro is located in the BIO512/jalil folder that you copied, it should be found immediately when you open the macro selection window.</p>
+</div>
+</div>
 <hr>
 </section>
 </section>
@@ -624,46 +619,67 @@ Troubleshooting
 <h1 data-number="5"><span class="header-section-number">5</span> Results Analysis</h1>
 <section id="binding-energy-analysis" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="binding-energy-analysis"><span class="header-section-number">5.1</span> Binding energy analysis</h2>
-<ol start="17" type="1">
-<li><strong>Analyze the results</strong>:
-<ul>
-<li>Check for the log file (3FAP.log) in the working directory</li>
-<li>Look at the binding energy values in the first table (Bind.energy)</li>
-<li>The first entry always has the best binding energy value</li>
-</ul></li>
-</ol>
+<p><strong>Analyze the results</strong>:</p>
+<pre><code>- Check for the log file (3FAP.log) in the working directory
+- Look at the binding energy values in the first table (Bind.energy)
+- The first entry always has the best binding energy value</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q1 What is the binding energy of the best docking pose?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
 </section>
 <section id="visual-inspection-of-docking-poses" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="visual-inspection-of-docking-poses"><span class="header-section-number">5.2</span> Visual inspection of docking poses</h2>
-<ol start="18" type="1">
-<li><strong>Open predicted and crystal structures</strong>:
-<ul>
-<li>Open the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)</li>
-<li>Open the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)</li>
-</ul></li>
-<li><strong>Optimize visualization</strong>:
-<ul>
-<li>View &gt; Hide atoms &gt; Aliphatic hydrogens</li>
-<li>View &gt; Style atoms &gt; Stick &gt; ALL</li>
-<li>View &gt; Hide atoms &gt; Molecule &gt; A (first entry in the Sequence panel)</li>
-<li>View &gt; Hide atoms &gt; Molecule &gt; A (second entry in the Sequence panel)</li>
-</ul></li>
-<li><strong>Visual comparison</strong>:
-<ul>
-<li>Visually inspect how well the crystal pose and the predicted docking pose overlap</li>
-<li>Note any significant differences between the two poses</li>
-</ul></li>
-</ol>
+<p><strong>Open predicted and crystal structures</strong>:</p>
+<pre><code>- Open the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)
+- Open the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)</code></pre>
+<p><strong>Optimize visualization</strong>:</p>
+<pre><code>- View &gt; Hide atoms &gt; Aliphatic hydrogens
+- View &gt; Style atoms &gt; Stick &gt; ALL
+- View &gt; Hide atoms &gt; Molecule &gt; A (first entry in the Sequence panel)
+- View &gt; Hide atoms &gt; Molecule &gt; A (second entry in the Sequence panel)</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q2 Visually inspect how well the crystal pose and the predicted docking pose overlapped. Do you see a big difference? (1 sentence)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
 </section>
 <section id="quantitative-assessment" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="quantitative-assessment"><span class="header-section-number">5.3</span> Quantitative assessment</h2>
-<ol start="21" type="1">
-<li><strong>Calculate RMSD from crystal pose</strong>:
-<ul>
-<li>Analyze &gt; RMSD of &gt; Molecules &gt; docked ligand (second A in the Sequence panel) &gt; OK &gt; crystal ligand (third A in the Sequence panel) &gt; OK &gt; select Molecule &gt; OK</li>
-<li>The RMSD value will be displayed in the panel below the screen</li>
-</ul></li>
-</ol>
+<p><strong>Calculate RMSD from crystal pose</strong>:</p>
+<pre><code>- Color the molecules to detect the crystal ligand and docked ligand more easily
+- Analyze &gt; RMSD of &gt; Molecules &gt; docked ligand &gt; OK &gt; crystal ligand &gt; OK &gt; select Molecule &gt; OK
+- The RMSD value will be displayed in the panel below the screen</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q3 What is the RMSD between your predicted pose and the crystal structure? Is this considered a successful prediction?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -680,35 +696,12 @@ Success Criteria
 <hr>
 </section>
 </section>
-<section id="review-questions" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Review Questions</h1>
-<ol type="1">
-<li><p><strong>What was the binding energy of your best docking pose?</strong> How does this compare to typical protein-ligand interactions?</p></li>
-<li><p><strong>What is the RMSD between your predicted pose and the crystal structure?</strong> Is this considered a successful prediction?</p></li>
-<li><p><strong>Describe the key interactions</strong> you observe between rapamycin and the protein complex. What makes this compound effective as a molecular glue?</p></li>
-<li><p><strong>What are the limitations</strong> of molecular docking that you should be aware of when interpreting these results?</p></li>
-<li><p><strong>How might you improve</strong> the docking results if the RMSD was too high?</p></li>
-</ol>
-<hr>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Key Takeaways
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<section id="how-to-submit-your-work" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> How to Submit Your Work</h1>
 <ul>
-<li>Proper structure preparation is crucial for successful molecular docking</li>
-<li>YASARA provides an integrated workflow for structure preparation, docking, and analysis</li>
-<li>RMSD comparison with crystal structures validates docking accuracy</li>
-<li>Molecular glues like rapamycin stabilize protein complexes through specific binding interactions</li>
-<li>Visual inspection complements quantitative metrics in evaluating docking success</li>
+<li>Submit answers to the questions in a jupyter notebook (question and answer in the same cell)</li>
+<li>Include screenshots of relevant structures and analyses (you can use the snipping tool or any screenshot tool, then drag and drop the image into the jupyter notebook cell)</li>
 </ul>
-</div>
-</div>
 
 
 </section>

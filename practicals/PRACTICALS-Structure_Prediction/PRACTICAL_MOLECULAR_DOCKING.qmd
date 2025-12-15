@@ -18,18 +18,30 @@ format:
 
 The goal of this practical is to understand how molecular glue stabilizes protein-protein interactions. We will work with FKBP12 – a small cytosolic immunophilin and the FRB domain of mTOR. Rapamycin acts as the bridge that "glues" them together, forming a stable FKBP12/rapamycin/FRB ternary complex. When this complex forms, mTOR signaling is reduced, cells decrease anabolic programs (e.g., protein synthesis and growth), slow or arrest the cell cycle, and often increase autophagy.
 
-In this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and compare the docking result with the co-crystallized pose.
+In this practical, we will perform molecular docking to dock the molecular glue in the interface of two proteins and then we will compare the docking result with the co-crystallized pose.
 
 ::: {.callout-important}
 ## Create a new working directory
 ```bash
 # Create a new folder for this practical
-# ex.
-mkdir -p ~/BIO512/MD_practicals
-# All input and output files will be placed in this directory
+mkdir -p /cephyr/NOBACKUP/groups/n2bin-gu/students/<y/n>/BIO512/MD
 
-# Also note that you need to download the materials from the Vera 
-scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/MD_practicals/* ~/BIO512/MD_practicals/
+```
+
+Open a new desktop session on Vera via OnDemand, then do the following:
+
+1. Open your symlinked folder to the BIO512 group directory (i.e. /cephyr/NOBACKUP/groups/n2bin-gu/) using the file manager
+2. Find the directory with the install_yasara executable (in ./BIO512/jalil) and make a copy of the folder to your home directory and execute it (you might need to wait a moment)
+3. Once YASARA is open, go Options > Working directory > navigate and find your ‘MD’ folder > OK to set your working directory
+
+We also recommend using jupyter lab for the notebook submission, since base64 encoding of images is a simple drag and drop operation in jupyter lab. To launch jupyter lab, please do the following (locally ofc):
+
+```bash
+# Launch the BIO512_v1 env 
+conda activate BIO512_v1
+
+# Launch jupyter lab
+jupyter lab 
 ```
 :::
 
@@ -40,8 +52,6 @@ By the end you should be able to:
 - Prepare protein structures for molecular docking using YASARA
 - Perform protein-ligand docking simulations
 - Analyze docking results and binding energies
-- Compare predicted poses with crystal structures using RMSD calculations
-- Evaluate the success of docking predictions
 
 :::
 
@@ -49,16 +59,11 @@ By the end you should be able to:
 
 # Structure Preparation
 
-## Setting up YASARA workspace
+## Setting up the structure
 
-1. **Set the working directory** (important):
-   - Open YASARA
-   - Options > Working directory > navigate and find the 'Docking' folder > OK
+**Download the structure**:
 
-2. **Download the structure**:
    - File > Load > PDB file from Internet > 3FAP
-
-## Understanding the structure
 
 In the right-hand panel, you can see 3FAP. Click on it to expand it. There are five molecules under 3FAP:
 
@@ -70,50 +75,63 @@ In the right-hand panel, you can see 3FAP. Click on it to expand it. There are f
 
 ## Structure cleaning and preparation
 
-3. **Remove water molecules**:
+**Remove water molecules**:
+
    - From the right-hand panel, right-click on both water entries and click 'Delete'
 
-4. **Add missing hydrogen atoms**:
+**Add missing hydrogen atoms**:
+
    - Edit > Clean > All
 
-5. **Minimize the energy of the system**:
+**Minimize the energy of the system**:
+
    - Options > Choose Experiment > Energy minimization
    
 ::: {.callout-tip}
 ## Troubleshooting
-On Linux, you may need to pause the minimization and continue to make it work:
+On Linux, you may need to pause the minimization if it hangs:
 Options > Control experiment > Pause/Continue
 :::
 
-6. **Delete SimCell**:
+**Delete SimCell**:
+
    - From the right-hand panel, right-click on SimCell and Delete
 
-7. **Save the prepared complex**:
+**Save the prepared complex**:
+
    - File > Save as > PDB file > select 3FAP from both Sequence and Name panels > give a name (3FAP_complex.pdb)
 
 ---
 
 # Receptor and Ligand Separation
 
-## Splitting the complex
+## Splitting the complex and saving the individual components
 
-8. **Split receptor and ligand**:
+**Split receptor and ligand**:
+
    - From the right-side panel, right click on 3FAP > split > Split at selected molecules > select the ligand (second A in the sequence panel)
    - Now you can see two objects in the right-hand panel: receptor and ligand
 
-9. **Rename the objects**:
+::: {.callout-tip}
+## Visualization tip
+You can change the color of the receptor and ligand by right-clicking on them in the right-hand panel. It should make it much easier to see the ligand.
+:::
+
+**Rename the objects**:
+
    - Right click on the receptor object > Name > enter "Receptor"
    - Right click on the ligand object > Name > enter "Ligand"
 
-## Saving individual components
+**Save the receptor**:
 
-10. **Save the receptor**:
     - File > Save as > PDB file > select Receptor > OK > give a name (3FAP_receptor.pdb)
 
-11. **Save the ligand**:
+**Save the ligand**:
+
     - File > Save as > Other file format > select Ligand from the Object panel > find sdf-MDL Mol from the Format panel > enter a name (3FAP_ligand) > OK
 
 At this point, you should have three files in your working directory:
+
 - 3FAP_complex.pdb
 - 3FAP_receptor.pdb
 - 3FAP_ligand.sdf
@@ -124,23 +142,33 @@ At this point, you should have three files in your working directory:
 
 ## Defining the simulation cell
 
-12. **Generate the simulation cell**:
+**Generate the simulation cell**:
+
     - From the right-hand panel, right-click on Ligand object > Select > newly
     - Then Simulation > Define simulation cell > around selected atoms
 
-13. **Remove the ligand**:
+**Remove the ligand**:
+
     - Right-click on the Ligand object > Delete
 
-14. **Save the receptor + simulation cell**:
+**Save the receptor + simulation cell**:
+
     - File > Save as > YASARA Scene > give a name (3FAP_receptor.sce)
 
 ## Running the docking simulation
 
-15. **Set up docking**:
+**Set up docking**:
+
     - Options > Macro & Movie > set target > select 3FAP_receptor.sce > select 'from underscore' > OK
 
-16. **Run docking**:
+**Run docking**:
+
     - Options > Macro & Movie > Play macro > find and click on dock_run.mcr > OK
+
+::: {.callout-note}
+## Finding the dock_run.mcr macro
+The dock_run.mcr macro is located in the BIO512/jalil folder that you copied, it should be found immediately when you open the macro selection window.
+:::
 
 ---
 
@@ -148,32 +176,45 @@ At this point, you should have three files in your working directory:
 
 ## Binding energy analysis
 
-17. **Analyze the results**:
+**Analyze the results**:
+
     - Check for the log file (3FAP.log) in the working directory
     - Look at the binding energy values in the first table (Bind.energy)
     - The first entry always has the best binding energy value
 
+::: {.callout-important}
+## Q1 What is the binding energy of the best docking pose?
+:::
+
 ## Visual inspection of docking poses
 
-18. **Open predicted and crystal structures**:
+**Open predicted and crystal structures**:
+
     - Open the best predicted binding pose (3FAP_001.yob) by YASARA (drag and drop)
     - Open the crystal structure of the ligand (3FAP_ligand.sdf) (drag and drop)
 
-19. **Optimize visualization**:
+**Optimize visualization**:
+
     - View > Hide atoms > Aliphatic hydrogens
     - View > Style atoms > Stick > ALL
     - View > Hide atoms > Molecule > A (first entry in the Sequence panel)
     - View > Hide atoms > Molecule > A (second entry in the Sequence panel)
 
-20. **Visual comparison**:
-    - Visually inspect how well the crystal pose and the predicted docking pose overlap
-    - Note any significant differences between the two poses
+::: {.callout-important}
+## Q2 Visually inspect how well the crystal pose and the predicted docking pose overlapped. Do you see a big difference? (1 sentence)
+:::
 
 ## Quantitative assessment
 
-21. **Calculate RMSD from crystal pose**:
-    - Analyze > RMSD of > Molecules > docked ligand (second A in the Sequence panel) > OK > crystal ligand (third A in the Sequence panel) > OK > select Molecule > OK
+**Calculate RMSD from crystal pose**:
+
+    - Color the molecules to detect the crystal ligand and docked ligand more easily
+    - Analyze > RMSD of > Molecules > docked ligand > OK > crystal ligand > OK > select Molecule > OK
     - The RMSD value will be displayed in the panel below the screen
+
+::: {.callout-important}
+## Q3 What is the RMSD between your predicted pose and the crystal structure? Is this considered a successful prediction?
+:::
 
 ::: {.callout-note}
 ## Success Criteria
@@ -182,27 +223,7 @@ Usually, RMSD < 2.0 Å is considered as a successful docking simulation.
 
 ---
 
-# Review Questions
+# How to Submit Your Work
 
-1. **What was the binding energy of your best docking pose?** How does this compare to typical protein-ligand interactions?
-
-2. **What is the RMSD between your predicted pose and the crystal structure?** Is this considered a successful prediction?
-
-3. **Describe the key interactions** you observe between rapamycin and the protein complex. What makes this compound effective as a molecular glue?
-
-4. **What are the limitations** of molecular docking that you should be aware of when interpreting these results?
-
-5. **How might you improve** the docking results if the RMSD was too high?
-
----
-
-::: {.callout-note}
-## Key Takeaways
-
-- Proper structure preparation is crucial for successful molecular docking
-- YASARA provides an integrated workflow for structure preparation, docking, and analysis
-- RMSD comparison with crystal structures validates docking accuracy
-- Molecular glues like rapamycin stabilize protein complexes through specific binding interactions
-- Visual inspection complements quantitative metrics in evaluating docking success
-
-:::
+- Submit answers to the questions in a jupyter notebook (question and answer in the same cell)
+- Include screenshots of relevant structures and analyses (you can use the snipping tool or any screenshot tool, then drag and drop the image into the jupyter notebook cell) 
